@@ -1,0 +1,44 @@
+
+<div id="login" v-cloak>
+
+<div class="lowin">
+    <div class="lowin-brand padd-img">
+      <img class="img-logo" src="images/logo.png" alt="logo">
+    </div>
+    <div class="lowin-wrapper">
+      <div class="lowin-box lowin-login">
+        <div class="lowin-box-inner">
+          <ajax-form action="login" :syncing.sync="syncing" :cloud-error.sync="cloudError" :form-data="formData" :form-rules="formRules" :form-errors.sync="formErrors" @submitted="submittedForm()">
+            <p>Iniciar Sesión</p>
+            <div class="lowin-group">
+              <label>Correo <a href="#" class="login-back-link">Sign in?</a></label>
+              <input type="email" id="email" autocomplete="email" name="email" class="form-control lowin-input"  :class="[formErrors.emailAddress ? 'is-invalid' : '']" v-model.trim="formData.emailAddress" autocomplete="email" focus-first>
+              <div class="invalid-feedback" v-if="formErrors.emailAddress">Please provide a valid email address.</div>
+            </div>
+            <div class="lowin-group password-group">
+              <label>Contraseña <a href="/password/forgot" class="forgot-link">olvido su Contraseña?</a></label>
+              <input type="password" id="password" name="password" class="form-control lowin-input"  :class="[formErrors.password ? 'is-invalid' : '']" v-model.trim="formData.password" autocomplete="current-password">
+              <div class="invalid-feedback" v-if="formErrors.password">Please enter your password.</div>
+            </div>
+            <div class="form-group form-check">
+              <input class="form-check-input" type="checkbox" id="remember" name="rememberMe" v-model="formData.rememberMe"/>
+              <label class="form-check-label" for="remember">Recuerdarme</label>
+            </div>
+
+            <p class="text-danger" v-if="cloudError==='badCombo'"><small>The credentials you entered are not associated with an account. Please check your email and/or password and try again.</small></p>
+            <p class="text-danger" v-else-if="cloudError"><small>An error occured while processing your request. Please check your information and try again, or <a href="/contact">contact support</a> if the error persists.</small></p>
+
+            <ajax-button :syncing="syncing" class="lowin-btn login-btn btn-block">Ingresar</ajax-button>
+
+          </ajax-form>  
+          
+        </div>
+
+      </div>
+
+    </div>
+    
+  </div>
+  <div><small>Copyright &copy; 2018 ESPOL. Todos los derechos reservados.</small></div>
+</div>
+<%- /* Expose locals as `window.SAILS_LOCALS` :: */ exposeLocalsToBrowser() %>
