@@ -1,1 +1,29 @@
 /* your styles go here */
+
+.dashboard-titulo{
+	padding: 10px;
+	background-color: indianred;
+    color: white;
+}
+
+#titulo_juego{
+	text-align: center;
+}
+
+.noDatos{
+	padding-top: 30px;
+}
+
+.noDatos1{
+	font-size: 5vw;
+	font-weight: bold;
+	color: rgba(128,128,128,0.2);
+	text-align: center;
+}
+
+.noDatos2{
+	font-size: 3vw;
+	font-weight: bold;
+	color: rgba(128,128,128,0.2);
+	text-align: center;
+}

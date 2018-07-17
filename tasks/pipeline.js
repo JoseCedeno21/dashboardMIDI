@@ -34,6 +34,7 @@
 var cssFilesToInject = [
 
   // Bring in `.css` files for themes and style guides (e.g. Bootstrap, Foundation)
+  'bower_components/bootswatch/dist/css/bootstrap.css',
   'dependencies/**/*.css',
 
   // All of the rest of your custom `.css` files will be injected here,
@@ -64,6 +65,13 @@ var jsFilesToInject = [
   // Load `sails.io` before everything else.
   'dependencies/sails.io.js',
 
+  //bower 
+  '/bower_components/jquery/dist/jquery.js',
+  '/bower_components/angular/angular.js',
+  '/bower_components/angular-route/angular-route.js',
+  '/bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js',
+  '/bower_components/bootstrap/dist/js/boostrap.js',
+
   // Bring in `.js` files for any other client-side JavaScript dependencies.
   // (e.g. Lodash, Vue.js, jQuery, Bootstrap, Ember, Angular, etc.)
   // > Be sure to list dependencies that depend on each other in the right order!
@@ -79,6 +87,10 @@ var jsFilesToInject = [
   // Bring in components & utilities before bringing in the rest (i.e. page scripts)
   'js/components/**/*.js',
   'js/utilities/**/*.js',
+
+  //appAngular
+  'appAngular/routes/*js',
+  'appAngular/**/*.js',
 
   // All of the rest of your custom client-side js files will be injected here,
   // in no particular order.  To customize the ordering, add additional items
@@ -113,7 +125,9 @@ var jsFilesToInject = [
 // >   https://sailsjs.com/docs/concepts/assets/task-automation
 //
 var templateFilesToInject = [
-  'templates/**/*.html'
+  'templates/**/*.html',
+  'templates/*.html',
+  'appAngular/views/*.html'
 ];
 
 

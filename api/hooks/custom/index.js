@@ -198,7 +198,7 @@ will be disabled and/or hidden in the UI.
             var MS_TO_BUFFER = 60*1000;
             var now = Date.now();
             if (loggedInUser.lastSeenAt < now - MS_TO_BUFFER) {
-              User.update({id: loggedInUser.id})
+              Usuarios.update({id: loggedInUser.id})
               .set({ lastSeenAt: now })
               .exec((err)=>{
                 if (err) {

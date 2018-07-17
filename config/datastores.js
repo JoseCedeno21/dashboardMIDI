@@ -54,13 +54,23 @@ module.exports.datastores = {
   //},
 
   //postgres:{
-    adapter: 'sails-postgresql',
-    url: 'postgres://ubayzrpz:MT-EGdHBNyJe-ytl04SvYAr0-FGcTm0f@elmer.db.elephantsql.com:5432/ubayzrpz',
+    //adapter: 'sails-postgresql',
+    //url: 'postgres://ubayzrpz:MT-EGdHBNyJe-ytl04SvYAr0-FGcTm0f@elmer.db.elephantsql.com:5432/ubayzrpz',
     //host:'',
     //user:'',
     //password:'',
     //database:''
   //}
+
+    adapter: 'sails-postgresql',
+    database: 'proyecto',
+    host: 'localhost',
+    user: 'postgres',
+    password: 'proyecto',
+    port: 5432,
+    pool: false,
+    ssl: false
+
   },
 
 };

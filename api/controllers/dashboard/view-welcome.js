@@ -10,7 +10,7 @@ module.exports = {
   exits: {
 
     success: {
-      viewTemplatePath: 'pages/dashboard/principal',
+      viewTemplatePath: 'layouts/layout-dashboard',
       description: 'Display the welcome page for authenticated users.'
     },
 
@@ -18,7 +18,7 @@ module.exports = {
 
 
   fn: async function (inputs, exits) {
-
+    //window.location.href = '/';
     return exits.success();
 
   }
