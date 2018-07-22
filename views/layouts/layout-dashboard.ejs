@@ -9,6 +9,10 @@
     <meta name="robots" content="all,follow">
     <!-- Bootstrap CSS-->
     <link rel="stylesheet" href="dependencies/vendor/bootstrap/css/bootstrap.min.css">
+    <!-- Angular DataTables-->
+    <link rel="stylesheet" type="text/css" href="/styles/css/dataTables.bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="/styles/css/angular-datatables.css">
+    
     <!-- Font Awesome CSS-->
     <link rel="stylesheet" href="dependencies/vendor/font-awesome/css/font-awesome.min.css">
     <!-- Fontastic Custom icon font-->
@@ -37,30 +41,23 @@
         <div class="sidenav-header d-flex align-items-center justify-content-center">
           <!-- User Info-->
           <div class="sidenav-header-inner text-center"><img src="images/avatar-1.jpg" alt="person" class="img-fluid rounded-circle">
-            <h2 class="h5">Anderson Hardy</h2><span>Web Developer</span>
+            <h2 class="h5">Proyecto</h2><span>Dashboard</span>
           </div>
           <!-- Small Brand information, appears on minimized sidebar-->
           <div class="sidenav-header-logo"><a href="index.html" class="brand-small text-center"> <strong>B</strong><strong class="text-primary">D</strong></a></div>
         </div>
         <!-- Sidebar Navigation Menus-->
         <div class="main-menu">
-          <h5 class="sidenav-heading">Main</h5>
+          <h5 class="sidenav-heading">Gráficos</h5>
           <ul id="side-main-menu" class="side-menu list-unstyled">                  
             <li class="item active"><a href="/dashboard#/"> <i class="icon-home"></i>General                             </a></li>
             <li class="item"><a href="/dashboard#/especifico"> <i class="icon-form"></i>Específico                             </a></li>
-            <li class="item"><a href="/charts"> <i class="fa fa-bar-chart"></i>Charts                             </a></li>
-            <li class="item"><a href="tables.html"> <i class="icon-grid"></i>Tables                             </a></li>
-            <li class="item"><a href="#exampledropdownDropdown" aria-expanded="false" data-toggle="collapse"> <i class="icon-interface-windows"></i>Example dropdown </a>
-              <ul id="exampledropdownDropdown" class="collapse list-unstyled ">
-                <li><a href="#">Page</a></li>
-                <li><a href="#">Page</a></li>
-                <li><a href="#">Page</a></li>
-              </ul>
-            </li>
+            <li class="item"><a href="/dashboard#/tablaPosiciones"> <i class="fa fa-bar-chart"></i>Tabla Puntuacioens                             </a></li>
+            <!--<li class="item"><a href="/dashboard#/comparaciones"> <i class="icon-grid"></i>Comparar                             </a></li>-->
           </ul>
         </div>
         <div class="admin-menu">
-          <h5 class="sidenav-heading">Second menu</h5>
+          <h5 class="sidenav-heading">Reportes</h5>
           <ul id="side-admin-menu" class="side-menu list-unstyled"> 
             <li> <a href="#"> <i class="icon-screen"> </i>Demo</a></li>
             <li> <a href=""> <i class="icon-picture"> </i>Demo</a></li>
@@ -148,14 +145,11 @@
     <% /* Auto-injected «script» tags: */ %>
     <!--SCRIPTS-->
     <script src="/dependencies/sails.io.js"></script>
-    <script src="/bower_components/jquery/dist/jquery.js"></script>
-    <script src="/bower_components/angular/angular.js"></script>
-    <script src="/bower_components/angular-route/angular-route.js"></script>
-    <script src="/bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
     <script src="/dependencies/lodash.js"></script>
     <script src="/dependencies/jquery.min.js"></script>
     <script src="/dependencies/bowser.js"></script>
     <script src="/dependencies/vue.js"></script>
+    <script src="/dependencies/jquery.dataTables.min.js"></script>
     <script src="/dependencies/bootstrap-4/bootstrap-4.bundle.js"></script>
     <script src="/dependencies/cloud.js"></script>
     <script src="/dependencies/parasails.js"></script>
@@ -173,15 +167,21 @@
     <script src="/dependencies/vendor/popperjs/umd/popper-utils.min.js"></script>
     <script src="/dependencies/vendor/popperjs/umd/popper.js"></script>
     <script src="/dependencies/vendor/popperjs/umd/popper.min.js"></script>
+    <script src="/bower_components/angular/angular.js"></script>
+    <script src="/bower_components/angular-route/angular-route.js"></script>
+    <script src="/bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
     <script src="/js/cloud.setup.js"></script>
     <script src="/js/components/ajax-button.component.js"></script>
     <script src="/js/components/ajax-form.component.js"></script>
     <script src="/js/components/modal.component.js"></script>
     <script src="/js/utilities/open-stripe-checkout.js"></script>
     <script src="/appAngular/routes/rutas.js"></script>
+    <script src="/appAngular/controllers/comparacionesController.js"></script>
     <script src="/appAngular/controllers/controlador.js"></script>
     <script src="/appAngular/controllers/especificoController.js"></script>
+    <script src="/appAngular/controllers/tablaController.js"></script>
     <script src="/appAngular/services/servicios.js"></script>
+    <script src="/js/angular-datatables.js"></script>
     <script src="/js/charts-home.js"></script>
     <script src="/js/front.js"></script>
     <script src="/js/grasp_mobile_progress_circle-1.0.0.min.js"></script>

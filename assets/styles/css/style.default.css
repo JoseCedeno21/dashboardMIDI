@@ -720,7 +720,15 @@ nav.navbar a.menu-btn:hover {
 
 .dashboard-header .pie-chart {
   position: relative;
-  width: 300px;
+  width: 350px;
+  height: 300px;
+  max-width: 100%;
+  margin: 0 auto;
+}
+
+.dashboard-header .pie-chart2 {
+  position: relative;
+  width: 450px;
   height: 300px;
   max-width: 100%;
   margin: 0 auto;

@@ -1,0 +1,20 @@
+<div class="breadcrumb-holder" style="line-height: 50px">
+	<div class="row" style="padding-top: 5px">
+		<div class="form-group col-md-2 col-ls-6" style="text-align: right; padding-top: 5px">
+	        <div class="name" id="tituloSelect"><strong class="text-uppercase">Elegir Juego:</strong></div>
+	    </div>
+	    <div class="form-group col-md-3 col-ls-6">
+	        <select class="form-control" id="select" name="game1" ng-model="select1.gameId" style="margin-top: 10px" ng-change="datosGame1()">
+	            <option ng-value="game.id" value="game.id" ng-repeat="game in games">{{game.nombre.trim()}}</option>
+	        </select>
+	    </div>
+	    <div class="form-group col-md-2 col-ls-6" style="text-align: right; padding-top: 5px">
+	        <div class="name" id="tituloSelect"><strong class="text-uppercase">Elegir Juego:</strong></div>
+	    </div>
+	    <div class="form-group col-md-3 col-ls-6">
+	        <select class="form-control" id="select2" name="game2" ng-model="select2.gameId" style="margin-top: 10px" ng-change="datosGame2()">
+	            <option ng-value="game.id" value="game.id" ng-repeat="game in games">{{game.nombre.trim()}}</option>
+	        </select>
+	    </div>
+	</div>
+</div>

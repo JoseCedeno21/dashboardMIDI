@@ -90,14 +90,19 @@ app.controller('EspecificoController', ['$scope', '$rootScope', 'TodoService', f
 		$scope.añadirHtml();
 	}
 
+	$scope.fechaString = function(fecha){
+		var date = new Date(fecha);
+		var dia = date.getDate();
+		var mes = date.getMonth();
+		var anio = date.getFullYear();
+		var f = dia+"/"+mes+"/"+anio;
+		return f; 
+	}
+
 	  //funcion para añadir los graficos a la pagina principal por medio de codigo html 
   	$scope.añadirHtml = function(){
-      //$("#titulo_juego").append('<div style="text-align:center"><h1 class="">Juego: '+$scope.datos.nombre+'</h1></div>');
       $('#grafico').html('<div id="graficos"></div>')
-      //var div = document.getElementById("graf_3");
-      //if(div != null){
-      //div.parentElement.removeChild(div);
-      //}
+
       for (var i=0; i< $scope.datos.chapters.length; i++){
         console.log("entra")
         var nombre_niveles = [];
@@ -120,31 +125,25 @@ app.controller('EspecificoController', ['$scope', '$rootScope', 'TodoService', f
             var suma_tiempo = 0;
             var cantidad = 0;
             for (var k=0; k<chapters.niveles[0][j].datos[0].length; k++){
-            	//info[0][k] = chapters.niveles[0][j].datos[0][k].fecha_inicio;
-                //info[1][k] = chapters.niveles[0][j].datos[0][k].fecha_fin;
-                //info[2][k] = chapters.niveles[0][j].datos[0][k].intentos;
-                fecha_inicio.push(chapters.niveles[0][j].datos[0][k].fecha_inicio);
-                
-                fecha_fin.push(chapters.niveles[0][j].datos[0][k].fecha_fin);
+
+                var fi = $scope.fechaString(chapters.niveles[0][j].datos[0][k].fecha_inicio);
+                fecha_inicio.push(fi);
+                var ff = $scope.fechaString(chapters.niveles[0][j].datos[0][k].fecha_fin);
+                fecha_fin.push(ff);
                 
                 intentos.push(chapters.niveles[0][j].datos[0][k].intentos);
-                
-
-            	var complete = "";
-            	//info[4][k] = "";
+             
+            	var complete = "No";
                 if(chapters.niveles[0][j].datos[0][k].estado == "completado"){
                     cantidad++;    
-                    complete = "X";
-                    //info[4][k] = "X";               
+                    complete = "Sí";
+              
                 } 
                 completado.push(complete)
                 suma_correctas = suma_correctas + chapters.niveles[0][j].datos[0][k].correctas;
                 suma_incorrectas = suma_incorrectas + chapters.niveles[0][j].datos[0][k].incorrectas;
                 suma_tiempo = suma_tiempo + chapters.niveles[0][j].datos[0][k].tiempo_juego; 
-                
-
-                
-                //informacionTabla.push()
+ 
             }
             
             promedio_correctas[j] = suma_correctas ;
@@ -153,13 +152,26 @@ app.controller('EspecificoController', ['$scope', '$rootScope', 'TodoService', f
             cantidad_completados[j] = cantidad;
             cantidad_abandonado[j] = chapters.niveles[0][j].datos[0].length - cantidad;
         }
+        var info_learn = [];
+        var fi = $scope.fechaString(chapters.learning[0].datos[0][0].fecha_inicio);
+        info_learn[0] = fi;
+        var ff = $scope.fechaString(chapters.learning[0].datos[0][0].fecha_fin);
+        info_learn[1] = ff;
+        info_learn[2] = chapters.learning[0].datos[0][0].tiempo_juego;
+        info_learn[3] = "No";
+        if(chapters.learning[0].datos[0][0].estado == "completado"){
+        	info_learn[3] = "Sí";
+        }
+        
+        info_learn[4] = chapters.learning[0].datos[0][0].num_play;
+
         info.push(fecha_inicio);
         info.push(fecha_fin);
         info.push(intentos);
         info.push(completado);
         //var nivelesVar = 
-        console.log("EL INFO");
-        console.log(info);
+        console.log("EL CHAPTER");
+        console.log(chapters);
         console.log(informacionTabla)
         $("#graficos").append('<div id="graf_'+i+'"></div>');
 
@@ -185,11 +197,17 @@ app.controller('EspecificoController', ['$scope', '$rootScope', 'TodoService', f
                                     '</div>'+
                                 '</div>'+
                             '</div>'+
-                            '<div class="col-lg-4 col-md-6">'+
-                                '<div class="card project-progress" id="tabla'+i+'">'+
-                                	'<p> Tabla de información por niveles del capítulo.</p>'+
+                            '<div class="col-lg-4 col-md-6 text-center">'+
+                                '<div class="card project-progress" id="tabla_learn'+i+'">'+
+                                	'<h2 class="display h4"> Información de Historia</h2>'+
                                 '</div>'+
                             '</div>'+
+                            '<div class="col-lg-8 col-md-6" style="padding-top:25px">'+
+                                '<div class="card project-progress" id="tabla_juego'+i+'">'+
+                         
+                                '</div>'+
+                            '</div>'+
+                            
                         '</div>'+
                     '</div>'+
                 '</section>';
@@ -198,37 +216,53 @@ app.controller('EspecificoController', ['$scope', '$rootScope', 'TodoService', f
         
         var criterios = ["Fecha Inicio", "Fecha_Fin", "Intentos", "Completado"];
 
-        var divTabla = document.getElementById('tabla'+i+'');
+        // tabla de informacion de juego
+        var divTabla = document.getElementById('tabla_juego'+i+'');
 		var tabla   = document.createElement("table");
 		var tblHead = document.createElement("thead");
 		var trHead = document.createElement("tr");
 
 		var thHead = document.createElement("th");
-		var textoth = document.createTextNode("criterio");
+		var textoth = document.createTextNode(" ");
 		thHead.appendChild(textoth);
 		trHead.appendChild(thHead);
 
-		for(var p=0; p<nombre_niveles.length; p++){
+		var thHead = document.createElement("th");
+		var textoth = document.createTextNode("Información de Juego");
+		thHead.setAttribute("colspan","4");
+		thHead.className = "text-center";
+		thHead.appendChild(textoth);
+		trHead.appendChild(thHead);
+
+		tblHead.appendChild(trHead);
+		var trHead = document.createElement("tr");
+
+		var thHead = document.createElement("th");
+		var textoth = document.createTextNode("Nivel");
+		thHead.appendChild(textoth);
+		trHead.appendChild(thHead);
+
+		for(var p=0; p<criterios.length; p++){
 			var thHead = document.createElement("th");
-			var textoth = document.createTextNode(nombre_niveles[p].trim());
+			var textoth = document.createTextNode(criterios[p].trim());
 			thHead.appendChild(textoth);
 			trHead.appendChild(thHead);
 		}
 		tblHead.appendChild(trHead);
 
 		var tblBody = document.createElement("tbody");
-		for (var m = 0; m < 4; m++) {
+		for (var m = 0; m < nombre_niveles.length; m++) {
 		    var trBody = document.createElement("tr");
 
 			var thBody = document.createElement("th");
-		    var textoCelda = document.createTextNode(criterios[m]);
+		    var textoCelda = document.createTextNode(nombre_niveles[m].trim());
 		    thBody.appendChild(textoCelda);
 		    trBody.appendChild(thBody);
 
-		    for (var n = 0; n < nombre_niveles.length; n++) {
+		    for (var n = 0; n < criterios.length; n++) {
 			  
 		      var tdBody = document.createElement("td");
-		      var textoCelda = document.createTextNode(info[m][n]);
+		      var textoCelda = document.createTextNode(info[n][m]);
 		      tdBody.appendChild(textoCelda);
 		      trBody.appendChild(tdBody);
 		    }
@@ -237,11 +271,54 @@ app.controller('EspecificoController', ['$scope', '$rootScope', 'TodoService', f
 		  tabla.appendChild(tblHead);
 		  tabla.appendChild(tblBody);
 		  divTabla.appendChild(tabla);
-		  tabla.setAttribute("border", "1");
-		//document.getElementBy
-		//tabla.className = "table";
-		//tabla.className = "table-bordered";
+		tabla.className = "table table-bordered text-center";
 		
+
+		var criterios_learn = ["Fecha Inicio", "Fecha_Fin", "duracion", "Completado", "intentos"];
+		//tabla de informacion de historia
+		var divTabla = document.getElementById('tabla_learn'+i+'');
+        var tabla   = document.createElement("table");
+        var tblHead = document.createElement("thead");
+        var trHead = document.createElement("tr");
+
+        var thHead = document.createElement("th");
+        var textoth = document.createTextNode(" ");
+        thHead.appendChild(textoth);
+        trHead.appendChild(thHead);
+
+        //for(var p=0; p<nombre_capitulos.length; p++){
+        var thHead = document.createElement("th");
+            //var textoth = document.createTextNode(nombre_capitulos[p].trim());
+        var textoth = document.createTextNode("Datos");
+        thHead.appendChild(textoth);
+        trHead.appendChild(thHead);
+        
+        tblHead.appendChild(trHead);
+
+        var tblBody = document.createElement("tbody");
+        for (var m = 0; m < criterios_learn.length; m++) {
+            var trBody = document.createElement("tr");
+
+            var thBody = document.createElement("th");
+            var textoCelda = document.createTextNode(criterios_learn[m]);
+            thBody.appendChild(textoCelda);
+            trBody.appendChild(thBody);
+
+            //for (var n = 0; n < nombre_capitulos.length; n++) {
+              
+              var tdBody = document.createElement("td");
+              var textoCelda = document.createTextNode(info_learn[m]);
+              tdBody.appendChild(textoCelda);
+              trBody.appendChild(tdBody);
+            //}
+            tblBody.appendChild(trBody);
+          }
+          tabla.appendChild(tblHead);
+          tabla.appendChild(tblBody);
+          divTabla.appendChild(tabla);
+          //tabla.setAttribute("border", "1");
+        tabla.className = "table table-bordered text-center";
+
 
         var correctas = $('#correctas'+i)
         var myBarChart = new Chart(correctas, {

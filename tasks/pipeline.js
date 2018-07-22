@@ -65,13 +65,6 @@ var jsFilesToInject = [
   // Load `sails.io` before everything else.
   'dependencies/sails.io.js',
 
-  //bower 
-  '/bower_components/jquery/dist/jquery.js',
-  '/bower_components/angular/angular.js',
-  '/bower_components/angular-route/angular-route.js',
-  '/bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js',
-  '/bower_components/bootstrap/dist/js/boostrap.js',
-
   // Bring in `.js` files for any other client-side JavaScript dependencies.
   // (e.g. Lodash, Vue.js, jQuery, Bootstrap, Ember, Angular, etc.)
   // > Be sure to list dependencies that depend on each other in the right order!
@@ -79,7 +72,16 @@ var jsFilesToInject = [
   'dependencies/jquery.min.js',
   'dependencies/bowser.js',
   'dependencies/vue.js',
+  'dependencies/jquery.dataTables.min.js',
   'dependencies/**/*.js',
+
+
+
+  //bower 
+  '/bower_components/angular/angular.js',
+  '/bower_components/angular-route/angular-route.js',
+  '/bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js',
+  '/bower_components/bootstrap/dist/js/boostrap.js',
 
   // First amongst the app-level files, bring in cloud configuration
   'js/cloud.setup.js',

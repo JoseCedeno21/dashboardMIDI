@@ -14,18 +14,19 @@ module.exports.routes = {
   //  ╦ ╦╔═╗╔╗ ╔═╗╔═╗╔═╗╔═╗╔═╗
   //  ║║║║╣ ╠╩╗╠═╝╠═╣║ ╦║╣ ╚═╗
   //  ╚╩╝╚═╝╚═╝╩  ╩ ╩╚═╝╚═╝╚═╝
-  'GET /':                   { action: 'view-homepage-or-redirect', locals:{layout:'layouts/layout-login'} },
+  'GET /':                              { action: 'view-homepage-or-redirect', locals:{layout:'layouts/layout-login'} },
   //'GET /welcome':            { action: 'dashboard/view-welcome', locals:{layout:'layouts/layout-dashboard'} },
-  'GET /dashboard':            { action: 'dashboard/view-welcome', locals:{layout:'layouts/layout-dashboard'} },
-  'GET /datosGame/:id':               { controller: 'dashboard/GetInformacionController', action:'datos' },
-  'GET /cantidades':            { controller: 'dashboard/GetInformacionController', action:'cantidades' },
-  'GET /games':            { controller: 'dashboard/GetInformacionController', action:'games' },
-  'GET /rooms':            { controller: 'dashboard/GetInformacionController', action:'rooms' },
-  'GET /jugadoresByRoom/:idRoom':            { controller: 'dashboard/GetInformacionController', action:'jugadoresByRoom' },
+  'GET /dashboard':                     { action: 'dashboard/view-welcome', locals:{layout:'layouts/layout-dashboard'} },
+  'GET /datosGame/:id':                 { controller: 'dashboard/GetInformacionController', action:'datos' },
+  'GET /cantidades':                    { controller: 'dashboard/GetInformacionController', action:'cantidades' },
+  'GET /games':                         { controller: 'dashboard/GetInformacionController', action:'games' },
+  'GET /rooms':                         { controller: 'dashboard/GetInformacionController', action:'rooms' },
+  'GET /jugadores':                     { controller: 'dashboard/GetInformacionController', action:'jugadores' },
+  'GET /jugadoresByRoom/:idRoom':       { controller: 'dashboard/GetInformacionController', action:'jugadoresByRoom' },
   'GET /gameByRoom/:idRoom':            { controller: 'dashboard/GetInformacionController', action:'gameByRoom' },
-  'GET /chaptersByGame/:idGame':            { controller: 'dashboard/GetInformacionController', action:'chaptersByGame' },
-  'GET /nivelesByChapter/:idChapter':            { controller: 'dashboard/GetInformacionController', action:'NivelesByChapter' },
-  'GET /datosByJugador/:idJugador':            { controller: 'dashboard/GetInformacionController', action:'datosByJugador' },
+  'GET /chaptersByGame/:idGame':        { controller: 'dashboard/GetInformacionController', action:'chaptersByGame' },
+  'GET /nivelesByChapter/:idChapter':   { controller: 'dashboard/GetInformacionController', action:'NivelesByChapter' },
+  'GET /datosByJugador/:idJugador':     { controller: 'dashboard/GetInformacionController', action:'datosByJugador' },
 
 
   //'GET /forms':            { action: 'dashboard/view-forms' },

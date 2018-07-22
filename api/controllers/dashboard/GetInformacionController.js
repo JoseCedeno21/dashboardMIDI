@@ -14,7 +14,7 @@ module.exports = {
   	game.chapters = [];
   	for(var j=0; j<chapters.length; j++){  		
   		game.chapters.push(chapters[j]);
-  		var niveles = await Nivel.find({id_chapter:chapters[j].id})
+  		var niveles = await Nivel.find({id_chapter:chapters[j].id});
   		game.chapters[j].niveles = [];
   		game.chapters[j].niveles.push(niveles);
   		for(var i=0; i<niveles.length; i++){		
@@ -22,6 +22,15 @@ module.exports = {
   			game.chapters[j].niveles[0][i].datos = [];
   			game.chapters[j].niveles[0][i].datos.push(nivel_usuario);
   		}
+  		var learning = await Learning.findOne({id_chapter:chapters[j].id});
+  		game.chapters[j].learning = [];
+  		game.chapters[j].learning.push(learning);
+  		console.log(learning)
+  		var learn_jugador = await Learn_jugador.find({id_learning:learning.id});
+  		console.log("ahora el learn")
+  		console.log(learn_jugador)
+  		game.chapters[j].learning[0].datos = [];
+  		game.chapters[j].learning[0].datos.push(learn_jugador);
   	}
   	res.json(game);
   },
@@ -50,6 +59,16 @@ module.exports = {
   rooms: async function(req, res){
   	var room = await Room.find();
   	res.json(room);
+  },
+
+  jugadores: async function(req, res){
+    var jugadores = await Jugador.find();
+    for(var i=0; i<jugadores.length; i++){
+      jugadores[i].cantidad = {};
+      var cantidad = await Nivel_usuario.count({id_usuario:jugadores[i].id})
+      jugadores[i].cantidad = cantidad;
+    }
+    res.json(jugadores);
   },
 
   jugadoresByRoom: async function(req, res){
@@ -97,6 +116,15 @@ module.exports = {
 	  				countDatosNivel++;
 	  			}
 	  		}
+	  		var learning = await Learning.findOne({id_chapter:chapters[j].id});
+	  		game[k].chapters[j].learning = [];
+	  		game[k].chapters[j].learning.push(learning);
+	  		//console.log(learning)
+	  		var learn_jugador = await Learn_jugador.find({id_learning:learning.id,id_jugador:req.params.idJugador});
+	  		//console.log("ahora el learn")
+	  		//console.log(learn_jugador)
+	  		game[k].chapters[j].learning[0].datos = [];
+	  		game[k].chapters[j].learning[0].datos.push(learn_jugador);
 	  	}
 	  	if(countDatosNivel > 0){
 	  		games.push(game[k]);	

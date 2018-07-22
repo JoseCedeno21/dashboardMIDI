@@ -10,7 +10,7 @@ app.controller('TodoCtrl', ['$scope', '$rootScope', 'TodoService', function($sco
     return this.replace(/^\s+|\s+$/g, ""); 
   };
 
-  
+  //$('#titulo_juego').hide();
 
   //se obtiene todos los juegos
   TodoService.getGames().then(function(response) {
@@ -57,14 +57,33 @@ app.controller('TodoCtrl', ['$scope', '$rootScope', 'TodoService', function($sco
 
   //funcion para añadir los graficos a la pagina principal por medio de codigo html 
   $scope.añadirHtml = function(){
+      var titulo = '<section class="dashboard-titulo">'+
+        '<div class="container-fluid">'+
+          '<div class="row" >'+
+            '<div class="col-md-12 col-xl-12" id="titulo_juego">'+
+              '<div style="text-align:center"><h1 class="">Juego: '+$scope.datos.nombre+'</h1></div>'+
+            '</div>'+
+          '</div>'+
+        '</div>'+
+      '</section>'
+      $('#titulo2').html(titulo);
+      //document.getElementById('titulo_juego').setAttribute("hidden",false)
+      //$('#titulo_juego').show();
       //$("#titulo_juego").append('<div style="text-align:center"><h1 class="">Juego: '+$scope.datos.nombre+'</h1></div>');
       $('#grafico').html('<div id="graficos"></div>')
       //var div = document.getElementById("graf_3");
       //if(div != null){
       //div.parentElement.removeChild(div);
       //}
+      var nombre_capitulos = [];
+      var promedio_tiempo_learn = [];
+      var promedio_intentos_learn = [];
+      var cantidad_completados_learn = [];
+      var cantidad_abandonado_learn = [];
+      var info_learn = [];
       for (var i=0; i< $scope.datos.chapters.length; i++){
         console.log("entra")
+        nombre_capitulos[i] = $scope.datos.chapters[i].nombre.trim();
         
         $("#graficos").append('<div id="graf_'+i+'"></div>');
 
@@ -78,7 +97,7 @@ app.controller('TodoCtrl', ['$scope', '$rootScope', 'TodoService', function($sco
                                 '<div class="card project-progress">'+    
                                     '<p> Cantidad promedio de respuestas correctas e incorrectas.</p>'+
                                     '<div class="pie-chart">'+
-                                        '<canvas id="correctas'+i+'" width="300" height="300"> </canvas>'+
+                                        '<canvas id="correctas'+i+'" width="350" height="300"> </canvas>'+
                                     '</div>'+
                                 '</div>'+
                             '</div>'+
@@ -86,7 +105,7 @@ app.controller('TodoCtrl', ['$scope', '$rootScope', 'TodoService', function($sco
                                 '<div class="card project-progress">'+
                                     '<p> Tiempo promedio en segundos para completar los niveles.</p>'+
                                     '<div class="pie-chart">'+
-                                        '<canvas id="tiempo'+i+'" width="300" height="300"> </canvas>'+
+                                        '<canvas id="tiempo'+i+'" width="350" height="300"> </canvas>'+
                                     '</div>'+
                                 '</div>'+
                             '</div>'+
@@ -94,7 +113,7 @@ app.controller('TodoCtrl', ['$scope', '$rootScope', 'TodoService', function($sco
                                 '<div class="card project-progress">'+
                                     '<p> Cantidad promedio por niveles completados y abandonados</p>'+
                                     '<div class="pie-chart">'+
-                                        '<canvas id="completos'+i+'" width="300" height="300"></canvas>'+
+                                        '<canvas id="completos'+i+'" width="350" height="300"></canvas>'+
                                     '</div>'+
                                 '</div>'+
                             '</div>'+
@@ -109,6 +128,9 @@ app.controller('TodoCtrl', ['$scope', '$rootScope', 'TodoService', function($sco
         var promedio_tiempo = [];
         var cantidad_completados = [];
         var cantidad_abandonado = [];
+
+        
+
         var chapters = $scope.datos.chapters[i];
         for (var j=0; j< chapters.niveles[0].length; j++){
             nombre_niveles[j] = chapters.niveles[0][j].nombre.trim();
@@ -116,6 +138,7 @@ app.controller('TodoCtrl', ['$scope', '$rootScope', 'TodoService', function($sco
             var suma_incorrectas = 0;
             var suma_tiempo = 0;
             var cantidad = 0;
+            
             for (var k=0; k<chapters.niveles[0][j].datos[0].length; k++){
                 if(chapters.niveles[0][j].datos[0][k].estado == "completado"){
                     cantidad++;
@@ -129,7 +152,27 @@ app.controller('TodoCtrl', ['$scope', '$rootScope', 'TodoService', function($sco
             promedio_tiempo[j] = suma_tiempo / cantidad;
             cantidad_completados[j] = cantidad;
             cantidad_abandonado[j] = chapters.niveles[0][j].datos[0].length - cantidad;
+
+            
         }
+        var cantidad_learn = 0;
+        var suma_tiempo_learn = 0;
+        var suma_intentos_learn = 0;
+        info_learn.push(chapters.learning[0].duracion);
+        for (var m=0; m<chapters.learning[0].datos[0].length; m++){
+            if(chapters.learning[0].datos[0][m].estado == "completado"){
+                cantidad_learn++;
+                suma_tiempo_learn = suma_tiempo_learn + chapters.learning[0].datos[0][m].tiempo_juego;
+                suma_intentos_learn = suma_intentos_learn + chapters.learning[0].datos[0][m].num_play;
+            }
+        }
+        promedio_tiempo_learn[i] = suma_tiempo_learn / cantidad_learn;
+        promedio_intentos_learn[i] = suma_intentos_learn / cantidad_learn;
+        cantidad_completados_learn[i] = cantidad_learn;
+        cantidad_abandonado_learn[i] = chapters.learning[0].datos[0].length - cantidad_learn;
+        console.log(promedio_tiempo_learn);
+        console.log(cantidad_completados_learn);
+        console.log(cantidad_abandonado_learn);
 
         var correctas = $('#correctas'+i)
         var myBarChart = new Chart(correctas, {
@@ -191,6 +234,40 @@ app.controller('TodoCtrl', ['$scope', '$rootScope', 'TodoService', function($sco
             }
         });
 
+        var datos_learn = '<section class="dashboard-header section-padding">'+
+                    '<div class="container-fluid" style="text-align:center">'+
+                        '<div class="row d-flex align-items-md-stretch">'+
+                            '<div class="col-lg-12 col-md-12">'+
+                                '<h2 class="display h4"> </h2>'+
+                            '</div>'+
+                            '<div class="col-lg-2 col-md-6">'+
+                                '<div class="card project-progress" id="tablaTiempos">'+
+                                    '<p> Tabla de duraciones de animaciones por capitulo.</p>'+
+                                '</div>'+
+                            '</div>'+
+                            '<div class="col-lg-5 col-md-6">'+
+                                '<div class="card project-progress">'+    
+                                    '<p> Tiempo promedio en que se ha visualizado la historia.</p>'+
+                                    '<div class="pie-chart2">'+
+                                        '<canvas id="tiempos_learn" width="450" height="300"> </canvas>'+
+                                    '</div>'+
+                                '</div>'+
+                            '</div>'+
+                            '<div class="col-lg-5 col-md-6">'+
+                                '<div class="card project-progress">'+
+                                    '<p> Cantidad promedio de historia visualizada completamente.</p>'+
+                                    '<div class="pie-chart2">'+
+                                        '<canvas id="completos_learn" width="450" height="300"> </canvas>'+
+                                    '</div>'+
+                                '</div>'+
+                            '</div>'+
+                        '</div>'+
+                    '</div>'+
+                '</section>';
+
+
+
+        $('#graficos_learn').html(datos_learn);
         //grafico de completos
         var completos = $('#completos'+i)
         var myBarChart = new Chart(completos, {
@@ -211,6 +288,117 @@ app.controller('TodoCtrl', ['$scope', '$rootScope', 'TodoService', function($sco
             options: {
                 scales: {
                     xAxes: [{
+                        stacked: true,
+
+                    }],
+                    yAxes: [{
+                        stacked: true,
+                        scaleLabel: {
+                            display: true,
+                            labelString: 'Cantidad'
+                          }
+                    }]
+                }
+            }
+        });
+      }
+
+      //tabla
+      console.log("EL INFO LEARN")
+      console.log(info_learn);
+      var criterios = ["Fecha Inicio", "Fecha_Fin", "Intentos", "Completado"];
+
+        var divTabla = document.getElementById('tablaTiempos');
+        var tabla   = document.createElement("table");
+        var tblHead = document.createElement("thead");
+        var trHead = document.createElement("tr");
+
+        var thHead = document.createElement("th");
+        var textoth = document.createTextNode(" ");
+        thHead.appendChild(textoth);
+        trHead.appendChild(thHead);
+
+        //for(var p=0; p<nombre_capitulos.length; p++){
+        var thHead = document.createElement("th");
+            //var textoth = document.createTextNode(nombre_capitulos[p].trim());
+        var textoth = document.createTextNode("Segundos");
+        thHead.appendChild(textoth);
+        trHead.appendChild(thHead);
+        
+        tblHead.appendChild(trHead);
+
+        var tblBody = document.createElement("tbody");
+        for (var m = 0; m < nombre_capitulos.length; m++) {
+            var trBody = document.createElement("tr");
+
+            var thBody = document.createElement("th");
+            var textoCelda = document.createTextNode(nombre_capitulos[m]);
+            thBody.appendChild(textoCelda);
+            trBody.appendChild(thBody);
+
+            //for (var n = 0; n < nombre_capitulos.length; n++) {
+              
+              var tdBody = document.createElement("td");
+              var textoCelda = document.createTextNode(info_learn[m]);
+              tdBody.appendChild(textoCelda);
+              trBody.appendChild(tdBody);
+            //}
+            tblBody.appendChild(trBody);
+          }
+          tabla.appendChild(tblHead);
+          tabla.appendChild(tblBody);
+          divTabla.appendChild(tabla);
+          //tabla.setAttribute("border", "1");
+        tabla.className = "table table-bordered";
+
+      //grafico de tiempos historia
+        var tiempo = $('#tiempos_learn')
+        var myBarChart = new Chart(tiempo, {
+            type: 'bar',
+            data: {
+                labels: nombre_capitulos,
+                datasets: [
+                    {
+                        label: "tiempo",
+                        data: promedio_tiempo_learn,
+                        backgroundColor: "#E3A151" }
+                ]
+            },
+            options: {
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero: true
+                        },
+                        scaleLabel: {
+                            display: true,
+                            labelString: 'Segundos'
+                          }
+                    }]
+                }
+            }
+        });
+
+        //grafico de completos learn
+        var completos = $('#completos_learn')
+        var myBarChart = new Chart(completos, {
+            type: 'bar',
+            data: {
+                labels: nombre_capitulos,
+                datasets: [
+                    {
+                        label: "Completos",
+                        data: cantidad_completados_learn,
+                        backgroundColor: "rgba(75,192,192,1)" },
+                    {
+                        label: "Abandonos",
+                        data: cantidad_abandonado_learn,
+                        backgroundColor: "#84D89A" }
+                ]
+            },
+            options: {
+                scales: {
+                    xAxes: [{
                         stacked: true
                     }],
                     yAxes: [{
@@ -223,11 +411,11 @@ app.controller('TodoCtrl', ['$scope', '$rootScope', 'TodoService', function($sco
                 }
             }
         });
+        
+
+    }
 
 
-
-      }
-    };
 
 
 
