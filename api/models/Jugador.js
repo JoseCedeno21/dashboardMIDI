@@ -20,6 +20,10 @@ module.exports = {
     id_room: {
         type: 'number',
         required: true
+    },
+    puntos:{
+        type: 'number',
+        required: true
     }
 
     //  ╔═╗╦═╗╦╔╦╗╦╔╦╗╦╦  ╦╔═╗╔═╗

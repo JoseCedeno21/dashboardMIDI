@@ -8,7 +8,7 @@ module.exports.email = {
  		pass: 'gabriel.espol.1995'
  	},
  	templateDir: 'views/emails',
- 	from: 'jose.gabriell.21@gmail.com',
+ 	from: 'ProyectoDashboard',
  	testMode: false,
  	//ssl: true
 

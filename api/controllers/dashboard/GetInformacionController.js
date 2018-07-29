@@ -25,10 +25,10 @@ module.exports = {
   		var learning = await Learning.findOne({id_chapter:chapters[j].id});
   		game.chapters[j].learning = [];
   		game.chapters[j].learning.push(learning);
-  		console.log(learning)
+  		//console.log(learning)
   		var learn_jugador = await Learn_jugador.find({id_learning:learning.id});
-  		console.log("ahora el learn")
-  		console.log(learn_jugador)
+  		//console.log("ahora el learn")
+  		//console.log(learn_jugador)
   		game.chapters[j].learning[0].datos = [];
   		game.chapters[j].learning[0].datos.push(learn_jugador);
   	}

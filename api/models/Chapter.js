@@ -17,8 +17,7 @@ module.exports = {
         type: 'string'
     },
     id_chapter: {
-        type: 'number',
-        required: true
+        type: 'number'
     },
     id_game: {
         type: 'number',

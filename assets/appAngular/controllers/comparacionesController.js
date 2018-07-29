@@ -9,17 +9,20 @@ app.controller('comparacionesController', ['$scope', '$rootScope', 'TodoService'
 	    $scope.games = response;
   	});
 
+  	$("#comparacion").hide()
+
   	$scope.datosFunction = function(){
     //console.log(id);
     	console.log($scope.select1.gameId)
       	TodoService.getDatos($scope.select1.gameId).then(function(response) {
         	$scope.datos1 = response;
-        	var nombre_juego = $scope.datos.nombre;
-        	console.log(nombre_juego)
+        	var nombre_juego1 = $scope.datos1.nombre;
+        	console.log(nombre_juego1)
         	TodoService.getDatos($scope.select2.gameId).then(function(response) {
 	        	$scope.datos2 = response;
-	        	var nombre_juego = $scope.datos.nombre;
-	        	console.log(nombre_juego)
+	        	var nombre_juego2 = $scope.datos2.nombre;
+	        	console.log(nombre_juego2)
+	        	$("#comparacion").show();
 	        	$scope.añadirHtml();
 	      	});
       	});
@@ -29,17 +32,183 @@ app.controller('comparacionesController', ['$scope', '$rootScope', 'TodoService'
   	}
 
   	$scope.añadirHtml = function(){
-      $('#grafico').html('<div id="graficos"></div>')
+  	  $("#comparacion").show();
+      //$('#grafico').html('<div id="graficos"></div>')
       var nombre_capitulos = [];
       var promedio_tiempo_learn = [];
       var promedio_intentos_learn = [];
       var cantidad_completados_learn = [];
       var cantidad_abandonado_learn = [];
       var info_learn = [];
-      for (var i=0; i< $scope.datos1.chapters.length; i++){
-        console.log("entra")
-        nombre_capitulos[i] = $scope.datos.chapters[i].nombre.trim();
+      //for (var i=0; i< $scope.datos1.chapters.length; i++){
+
         
+
+
+        //$('#graf_'+i+'').html(datos);
+        $scope.juegoCompletas = [];
+        $scope.juegoAbandono = [];
+        $scope.historiaCompletas = [];
+        $scope.historiaAbandono = [];
+        $scope.juegoTiempo = [];
+        for(var n=0; n<2; n++){
+	        
+	        if(n == 0){
+	        	var chapters = $scope.datos1.chapters;
+	        } else {
+	        	var chapters = $scope.datos2.chapters;
+	        }
+	        var suma_promedio_incorrectas = 0;
+		    var suma_promedio_total_tiempo = 0;
+		    var suma_promedio_total_abandonos = 0;
+
+		    var suma_total_completados_learn = 0;
+		    var suma_total_abandonos_learn = 0;
+
+		    var suma_total_completados_juego = 0;
+		    var suma_total_abandonos_juego = 0;
+		    console.log(chapters)
+	        for(var z=0; z<chapters.length; z++){
+	        	var suma_total_preguntas = 0;
+		        var suma_total_incorrectas = 0;
+		        var suma_promedio_tiempo = 0;
+		        var suma_total_completados = 0;
+		        var suma_total_abandonos = 0;
+		        for (var j=0; j< chapters[z].niveles[0].length; j++){
+		            var suma_correctas = 0;
+		            var suma_incorrectas = 0;
+		            var suma_tiempo = 0;
+		            var cantidad = 0;            
+		            for (var k=0; k<chapters[z].niveles[0][j].datos[0].length; k++){
+		                if(chapters[z].niveles[0][j].datos[0][k].estado == "completado"){
+		                    cantidad++;
+		                    suma_correctas = suma_correctas + chapters[z].niveles[0][j].datos[0][k].correctas;
+		                    suma_incorrectas = suma_incorrectas + chapters[z].niveles[0][j].datos[0][k].incorrectas;
+		                    suma_tiempo = suma_tiempo + chapters[z].niveles[0][j].datos[0][k].tiempo_juego;
+		                }  
+		            }
+		            suma_total_preguntas = suma_total_preguntas + (suma_correctas/cantidad);
+		            suma_total_incorrectas = suma_total_incorrectas + (suma_incorrectas/cantidad);
+		            suma_promedio_tiempo = suma_promedio_tiempo + (suma_tiempo/cantidad);
+		            suma_total_completados = suma_total_completados + cantidad;
+		            suma_total_abandonos = suma_total_abandonos + (chapters[z].niveles[0][j].datos[0].length - cantidad);
+	          
+		        }
+		        suma_total_completados_juego = suma_total_completados_juego + suma_total_completados;
+		        suma_total_abandonos_juego = suma_total_abandonos_juego + suma_total_abandonos;
+		        //total_preguntas_juego = total_preguntas_juego + suma_total_preguntas;
+		        suma_promedio_incorrectas = suma_promedio_incorrectas + ((suma_total_incorrectas*100)/suma_total_preguntas);
+		        suma_promedio_total_tiempo = suma_promedio_total_tiempo + (suma_promedio_tiempo / chapters[z].niveles[0].length);
+		        suma_promedio_total_abandonos = suma_promedio_total_abandonos + ((suma_total_abandonos*100)/(suma_total_completados+suma_total_abandonos));
+
+		        var cantidad_learn = 0;
+		        var suma_tiempo_learn = 0;
+		        var suma_intentos_learn = 0;
+		        info_learn.push(chapters[z].learning[0].duracion);
+		        for (var m=0; m<chapters[z].learning[0].datos[0].length; m++){
+		            if(chapters[z].learning[0].datos[0][m].estado == "completado"){
+		                cantidad_learn++;
+		                suma_tiempo_learn = suma_tiempo_learn + chapters[z].learning[0].datos[0][m].tiempo_juego;
+		                suma_intentos_learn = suma_intentos_learn + chapters[z].learning[0].datos[0][m].num_play;
+		            }
+		        }
+		        suma_total_completados_learn = suma_total_completados_learn + cantidad;
+		        suma_total_abandonos_learn = suma_total_abandonos_learn + (chapters[z].learning[0].datos[0].length - cantidad_learn);
+
+		        promedio_tiempo_learn[i] = suma_tiempo_learn / cantidad_learn;
+		        promedio_intentos_learn[i] = suma_intentos_learn / cantidad_learn;
+		        cantidad_completados_learn[i] = cantidad_learn;
+		        cantidad_abandonado_learn[i] = chapters[z].learning[0].datos[0].length - cantidad_learn;
+
+		    }
+
+		    $scope.juegoCompletas[n] = suma_total_completados_juego;
+        	$scope.juegoAbandono[n] = suma_total_abandonos_juego;
+
+		    $scope.historiaCompletas[n] = suma_total_completados_learn;
+		    $scope.historiaAbandono[n] = suma_total_abandonos_learn;
+		    $scope.juegoTiempo[n] = suma_promedio_total_abandonos;
+
+		    var porcentaje_incorrectas = (suma_promedio_incorrectas / chapters.length).toFixed(2);
+		    var porcentaje_tiempo = suma_promedio_total_tiempo / chapters.length;
+		    var porcentaje_abandonos = (suma_total_abandonos_juego*100)/(suma_total_completados_juego+suma_total_abandonos_juego)
+
+
+	        var incorrectas = $('#incorrectas'+n)
+	        var myBarChart = new Chart(incorrectas, {
+	            type: 'bar',
+	            data: {
+	                labels: [""],
+	                datasets: [
+	                    {
+	                        label: "Incorrectas",
+	                        data: [porcentaje_incorrectas],
+	                        backgroundColor: "#5C9CEA" 
+	                    }
+	                ]
+	            },
+	            options: {
+	                scales: {
+	                    xAxes: [{
+	                        stacked: true
+	                    }],
+	                    yAxes: [{
+	                        stacked: true,
+	                        scaleLabel: {
+	                            display: true,
+	                            labelString: 'Porcentaje'
+	                        },
+	                        ticks: {
+				                suggestedMax: 100,
+				            }
+	                    }]
+	                }
+	            }
+	        });
+
+	        //grafico de completos 
+	        var completos = $('#completas'+n)
+	        var myBarChart = new Chart(completos, {
+	            type: 'bar',
+	            data: {
+	                labels: [""],
+	                datasets: [
+	                    {
+	                        label: "Abandonos",
+	                        data: [porcentaje_abandonos],
+	                        backgroundColor: "rgba(75,192,192,1)" 
+	                    }
+	                ]
+	            },
+	            options: {
+	                scales: {
+	                    xAxes: [{
+	                        stacked: true
+	                    }],
+	                    yAxes: [{
+	                        stacked: true,
+	                        scaleLabel: {
+	                            display: true,
+	                            labelString: 'Porcentaje'
+	                        },
+	                        ticks: {
+				                suggestedMax: 100,
+				            }
+	                    }]
+	                }
+	            }
+	        });
+
+
+	    }
+
+      //}  
+
+    }
+
+}]);
+
+/*
         $("#graficos").append('<div id="graf_'+i+'"></div>');
 
         var datos = '<section class="dashboard-header section-padding">'+
@@ -97,175 +266,4 @@ app.controller('comparacionesController', ['$scope', '$rootScope', 'TodoService'
                     '</div>'+
                 '</section>';
 
-        $('#graf_'+i+'').html(datos);
-        for(var n=0; n<2; n++){
-	        var nombre_niveles = [];
-	        var promedio_correctas = [];
-	        var promedio_incorrectas = [];
-	        var promedio_tiempo = [];
-	        var cantidad_completados = [];
-	        var cantidad_abandonado = [];
-	        if(n == 0){
-	        	var chapters = $scope.datos1.chapters[i];
-	        } else {
-	        	var chapters = $scope.datos2.chapters[i];
-	        }
-	        for (var j=0; j< chapters.niveles[0].length; j++){
-	            nombre_niveles[j] = chapters.niveles[0][j].nombre.trim();
-	            var suma_correctas = 0;
-	            var suma_incorrectas = 0;
-	            var suma_tiempo = 0;
-	            var cantidad = 0;            
-	            for (var k=0; k<chapters.niveles[0][j].datos[0].length; k++){
-	                if(chapters.niveles[0][j].datos[0][k].estado == "completado"){
-	                    cantidad++;
-	                    suma_correctas = suma_correctas + chapters.niveles[0][j].datos[0][k].correctas;
-	                    suma_incorrectas = suma_incorrectas + chapters.niveles[0][j].datos[0][k].incorrectas;
-	                    suma_tiempo = suma_tiempo + chapters.niveles[0][j].datos[0][k].tiempo_juego;
-	                }  
-	            }
-	            promedio_correctas[j] = suma_correctas / cantidad;
-	            promedio_incorrectas[j] = suma_incorrectas / cantidad;
-	            promedio_tiempo[j] = suma_tiempo / cantidad;
-	            cantidad_completados[j] = cantidad;
-	            cantidad_abandonado[j] = chapters.niveles[0][j].datos[0].length - cantidad;            
-	        }
-	        var cantidad_learn = 0;
-	        var suma_tiempo_learn = 0;
-	        var suma_intentos_learn = 0;
-	        info_learn.push(chapters.learning[0].duracion);
-	        for (var m=0; m<chapters.learning[0].datos[0].length; m++){
-	            if(chapters.learning[0].datos[0][m].estado == "completado"){
-	                cantidad_learn++;
-	                suma_tiempo_learn = suma_tiempo_learn + chapters.learning[0].datos[0][m].tiempo_juego;
-	                suma_intentos_learn = suma_intentos_learn + chapters.learning[0].datos[0][m].num_play;
-	            }
-	        }
-	        promedio_tiempo_learn[i] = suma_tiempo_learn / cantidad_learn;
-	        promedio_intentos_learn[i] = suma_intentos_learn / cantidad_learn;
-	        cantidad_completados_learn[i] = cantidad_learn;
-	        cantidad_abandonado_learn[i] = chapters.learning[0].datos[0].length - cantidad_learn;
-	        console.log(promedio_tiempo_learn);
-	        console.log(cantidad_completados_learn);
-	        console.log(cantidad_abandonado_learn);
-
-	        var correctas = $('#correctas'+n+i)
-	        var myBarChart = new Chart(correctas, {
-	            type: 'bar',
-	            data: {
-	                labels: nombre_niveles,
-	                datasets: [
-	                    {
-	                        label: "Correctas",
-	                        data: promedio_correctas,
-	                        backgroundColor: "#5C9CEA" },
-	                    {
-	                        label: "Incorrectas",
-	                        data: promedio_incorrectas,
-	                        backgroundColor: "#EDA2BA" }
-	                ]
-	            },
-	            options: {
-	                scales: {
-	                    xAxes: [{
-	                        stacked: true
-	                    }],
-	                    yAxes: [{
-	                        stacked: true,
-	                        scaleLabel: {
-	                            display: true,
-	                            labelString: 'Cantidad'
-	                          }
-	                    }]
-	                }
-	            }
-	        });
-
-	        //grafico de completos 
-	        var completos = $('#completas'+n+i)
-	        var myBarChart = new Chart(completos, {
-	            type: 'bar',
-	            data: {
-	                labels: nombre_capitulos,
-	                datasets: [
-	                    {
-	                        label: "Completos",
-	                        data: cantidad_completados,
-	                        backgroundColor: "rgba(75,192,192,1)" },
-	                    {
-	                        label: "Abandonos",
-	                        data: cantidad_abandonado,
-	                        backgroundColor: "#84D89A" }
-	                ]
-	            },
-	            options: {
-	                scales: {
-	                    xAxes: [{
-	                        stacked: true
-	                    }],
-	                    yAxes: [{
-	                        stacked: true,
-	                        scaleLabel: {
-	                            display: true,
-	                            labelString: 'Cantidad'
-	                          }
-	                    }]
-	                }
-	            }
-	        });
-
-
-	      	//tabla
-	      	console.log("EL INFO LEARN")
-	      	console.log(info_learn);
-	      	var criterios = ["Tiempo", "Completado"];
-
-	        var divTabla = document.getElementById('tablaTiempos'+n);
-	        var tabla   = document.createElement("table");
-	        var tblHead = document.createElement("thead");
-	        var trHead = document.createElement("tr");
-
-	        var thHead = document.createElement("th");
-	        var textoth = document.createTextNode(" ");
-	        thHead.appendChild(textoth);
-	        trHead.appendChild(thHead);
-
-	        //for(var p=0; p<nombre_capitulos.length; p++){
-	        var thHead = document.createElement("th");
-	            //var textoth = document.createTextNode(nombre_capitulos[p].trim());
-	        var textoth = document.createTextNode("Segundos");
-	        thHead.appendChild(textoth);
-	        trHead.appendChild(thHead);
-	        
-	        tblHead.appendChild(trHead);
-
-	        var tblBody = document.createElement("tbody");
-	        for (var m = 0; m < nombre_capitulos.length; m++) {
-	            var trBody = document.createElement("tr");
-
-	            var thBody = document.createElement("th");
-	            var textoCelda = document.createTextNode(nombre_capitulos[m]);
-	            thBody.appendChild(textoCelda);
-	            trBody.appendChild(thBody);
-
-	            //for (var n = 0; n < nombre_capitulos.length; n++) {
-	              
-	            var tdBody = document.createElement("td");
-	            var textoCelda = document.createTextNode(info_learn[m]);
-	            tdBody.appendChild(textoCelda);
-	            trBody.appendChild(tdBody);
-	            //}
-	            tblBody.appendChild(trBody);
-	        }
-	        tabla.appendChild(tblHead);
-	        tabla.appendChild(tblBody);
-	        divTabla.appendChild(tabla);
-	        //tabla.setAttribute("border", "1");
-	        tabla.className = "table table-bordered";
-	    }
-
-      }  
-
-    }
-
-}]);
+*/

@@ -61,7 +61,7 @@ module.exports.routes = {
   'POST  /api/v1/entrance/send-password-recovery-email': { action: 'entrance/send-password-recovery-email' },
   'POST  /api/v1/entrance/update-password-and-login':    { action: 'entrance/update-password-and-login' },
   'POST  /api/v1/deliver-contact-form-message':          { action: 'deliver-contact-form-message' },
-  'POST  /api/v1/entrance/AlmacenarDatosController' : { controller: 'entrance/AlmacenarDatosController', action:'mostrar', csrf: false},
+  'POST  /api/v1/entrance/AlmacenarDatosController' : { controller: 'entrance/AlmacenarDatosController', action:'guardar', csrf: false},
 
 
   //  ╦ ╦╔═╗╔╗ ╦ ╦╔═╗╔═╗╦╔═╔═╗

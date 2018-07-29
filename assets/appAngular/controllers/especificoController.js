@@ -202,8 +202,8 @@ app.controller('EspecificoController', ['$scope', '$rootScope', 'TodoService', f
                                 	'<h2 class="display h4"> Información de Historia</h2>'+
                                 '</div>'+
                             '</div>'+
-                            '<div class="col-lg-8 col-md-6" style="padding-top:25px">'+
-                                '<div class="card project-progress" id="tabla_juego'+i+'">'+
+                            '<div class="col-lg-8 col-md-6" style="padding-top:60px">'+
+                                '<div class="card project-progress" style="padding-top:10px" id="tabla_juego'+i+'">'+
                          
                                 '</div>'+
                             '</div>'+

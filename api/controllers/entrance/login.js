@@ -79,9 +79,9 @@ and exposed as \`req.me\`.)`
     //})
 
     /*var newRecord = await Usuarios.create({
-      correo: "josegab@pruebas.com",
+      correo: "jose.gabriell.21@gmail.com",
       password: await sails.helpers.passwords.hashPassword("1234"),
-      nombre: "jose",
+      nombre: "Gabriel",
       tosAcceptedByIp: this.req.ip
     }, sails.config.custom.verifyEmailAddresses? {
       emailProofToken: await sails.helpers.strings.random('url-friendly'),

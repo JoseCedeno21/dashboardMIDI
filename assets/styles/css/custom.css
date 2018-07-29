@@ -42,3 +42,11 @@
 #tituloSelect, #select{
 	display: inline;
 }
+
+.titulosPadding{
+	padding-top: 80px;
+}
+
+th{
+	background-color: #eaf2f8;
+}

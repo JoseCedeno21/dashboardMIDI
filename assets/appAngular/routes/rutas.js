@@ -20,6 +20,14 @@ app.config(['$routeProvider',
       templateUrl: '/appAngular/views/comparaciones.html',
       controller: 'comparacionesController'
     }).
+    when('/reporteJuegos', {
+      templateUrl: '/appAngular/views/reporteJuegos.html',
+      controller: 'reporteGameController'
+    }).
+    when('/reporteNiños', {
+      templateUrl: '/appAngular/views/reporteNiños.html',
+      controller: 'reporteNiñoController'
+    }).
     otherwise({
       redirectTo: '/',
       caseInsensitiveMatch: true

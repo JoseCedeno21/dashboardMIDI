@@ -47,21 +47,24 @@
           <div class="sidenav-header-logo"><a href="index.html" class="brand-small text-center"> <strong>B</strong><strong class="text-primary">D</strong></a></div>
         </div>
         <!-- Sidebar Navigation Menus-->
-        <div class="main-menu">
-          <h5 class="sidenav-heading">Gráficos</h5>
-          <ul id="side-main-menu" class="side-menu list-unstyled">                  
-            <li class="item active"><a href="/dashboard#/"> <i class="icon-home"></i>General                             </a></li>
-            <li class="item"><a href="/dashboard#/especifico"> <i class="icon-form"></i>Específico                             </a></li>
-            <li class="item"><a href="/dashboard#/tablaPosiciones"> <i class="fa fa-bar-chart"></i>Tabla Puntuacioens                             </a></li>
-            <!--<li class="item"><a href="/dashboard#/comparaciones"> <i class="icon-grid"></i>Comparar                             </a></li>-->
-          </ul>
-        </div>
-        <div class="admin-menu">
-          <h5 class="sidenav-heading">Reportes</h5>
-          <ul id="side-admin-menu" class="side-menu list-unstyled"> 
-            <li> <a href="#"> <i class="icon-screen"> </i>Demo</a></li>
-            <li> <a href=""> <i class="icon-picture"> </i>Demo</a></li>
-          </ul>
+        <div id="activeMenu">
+          <div class="main-menu">
+            <h5 class="sidenav-heading">Gráficos</h5>
+            <ul id="side-main-menu" class="side-menu list-unstyled">                  
+              <li class="item active"><a href="/dashboard#/"> <i class="icon-home"></i>General                             </a></li>
+              <li class="item"><a href="/dashboard#/especifico"> <i class="icon-form"></i>Específico                             </a></li>
+              <li class="item"><a href="/dashboard#/tablaPosiciones"> <i class="fa fa-bar-chart"></i>Tabla Puntuacioens                             </a></li>
+              <li class="item"><a href="/dashboard#/comparaciones"> <i class="fa fa-bar-chart"></i>Comparaciones                             </a></li>
+              <!--<li class="item"><a href="/dashboard#/comparaciones"> <i class="icon-grid"></i>Comparar                             </a></li>-->
+            </ul>
+          </div>
+          <div class="admin-menu">
+            <h5 class="sidenav-heading">Reportes</h5>
+            <ul id="side-admin-menu" class="side-menu list-unstyled"> 
+              <li class="item"> <a href="/dashboard#/reporteJuegos"> <i class="icon-screen"> </i>Juegos</a></li>
+              <li class="item"> <a href="/dashboard#/reporteNiños"> <i class="icon-picture"> </i>Niños</a></li>
+            </ul>
+          </div>
         </div>
       </div>
     </nav>
@@ -179,6 +182,8 @@
     <script src="/appAngular/controllers/comparacionesController.js"></script>
     <script src="/appAngular/controllers/controlador.js"></script>
     <script src="/appAngular/controllers/especificoController.js"></script>
+    <script src="/appAngular/controllers/reporteGameController.js"></script>
+    <script src="/appAngular/controllers/reporteNiñoController.js"></script>
     <script src="/appAngular/controllers/tablaController.js"></script>
     <script src="/appAngular/services/servicios.js"></script>
     <script src="/js/angular-datatables.js"></script>
@@ -203,7 +208,7 @@
     <!--SCRIPTS END-->
     <script type="text/javascript">
       
-      var header = document.getElementById("side-main-menu");
+      var header = document.getElementById("activeMenu");
       var btns = header.getElementsByClassName("item");
       for (var i = 0; i < btns.length; i++) {
         btns[i].addEventListener("click", function() {

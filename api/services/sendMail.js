@@ -7,8 +7,8 @@ module.exports.sendWelcomeMail = function(obj) {
 	token: obj.token
  	},
  	{
- 	to: 'jose.gabriel_21@hotmail.com',
- 	subject: 'Welcome Email'
+ 	to: 'jose.gabriell.21@gmail.com',
+ 	subject: 'Actualizar Contraseña'
  	},
  	function(err) {
  		if(err){

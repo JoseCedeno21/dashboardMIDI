@@ -39,12 +39,14 @@ app.controller('TablaController', ['$scope', '$rootScope', 'TodoService', functi
 		        		}
 		        	}
 		        }
-		        $scope.jugadores.push({
-		        	nombre: $scope.temporal[m].nombre,
-		        	cantidad: suma_niveles,
-		        	puntos: suma_puntos,
-		        	tiempo: suma_tiempo			
-		        })
+		        if(suma_puntos > 0){
+			        $scope.jugadores.push({
+			        	nombre: $scope.temporal[m].nombre,
+			        	cantidad: suma_niveles,
+			        	puntos: suma_puntos,
+			        	tiempo: suma_tiempo			
+			        })
+		        }
 
 		    }
 
