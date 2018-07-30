@@ -90,4 +90,31 @@ app.service('TodoService', function($http, $q) {
       });
       return defer.promise;
     }
+    'getLevels': function() {
+      var defer = $q.defer();
+      $http.get('/niveles').success(function(resp){
+        defer.resolve(resp);
+      }).error( function(err) {
+        defer.reject(err);
+      });
+      return defer.promise;
+    },
+    'getNivelById': function(id) {
+      var defer = $q.defer();
+      $http.get('/nivel/'+id).success(function(resp){
+        defer.resolve(resp);
+      }).error( function(err) {
+        defer.reject(err);
+      });
+      return defer.promise;
+    },
+    'getLevelUserByLevel': function(id) {
+      var defer = $q.defer();
+      $http.get('/leveluser/'+id).success(function(resp){
+        defer.resolve(resp);
+      }).error( function(err) {
+        defer.reject(err);
+      });
+      return defer.promise;
+    },
 }});

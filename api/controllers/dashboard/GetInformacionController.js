@@ -56,6 +56,16 @@ module.exports = {
   	res.json(game);
   },
 
+  niveles: async function(req, res){
+    var nivel = await Nivel.find();
+    res.json(nivel);
+  },
+
+  nivel: async function(req, res){
+    var nivel = await Nivel.find({id:req.params.id});
+    res.json(nivel);
+  },
+
   rooms: async function(req, res){
   	var room = await Room.find();
   	res.json(room);
@@ -89,6 +99,11 @@ module.exports = {
   nivelesByChapter: async function(req, res){
   	var niveles = await Nivel.find({id_chapter:req.params.idChapter});
   	res.json(niveles);
+  },
+
+  leveluserBylevel: async function(req, res){
+    var level = await Nivel_usuario.find({id_nivel:req.params.idLevel});
+    res.json(level);
   },
 
   datosByJugador: async function(req, res){
