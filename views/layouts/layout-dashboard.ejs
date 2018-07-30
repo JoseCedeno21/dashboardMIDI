@@ -7,6 +7,8 @@
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="robots" content="all,follow">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" crossorigin="anonymous">
+
     <!-- Bootstrap CSS-->
     <link rel="stylesheet" href="dependencies/vendor/bootstrap/css/bootstrap.min.css">
     <!-- Angular DataTables-->
@@ -40,29 +42,29 @@
         <!-- Sidebar Header    -->
         <div class="sidenav-header d-flex align-items-center justify-content-center">
           <!-- User Info-->
-          <div class="sidenav-header-inner text-center"><img src="images/avatar-1.jpg" alt="person" class="img-fluid rounded-circle">
+          <div class="sidenav-header-inner text-center"><img src="images/logo.png" alt="person" class="img-fluid rounded-circle">
             <h2 class="h5">Proyecto</h2><span>Dashboard</span>
           </div>
           <!-- Small Brand information, appears on minimized sidebar-->
-          <div class="sidenav-header-logo"><a href="index.html" class="brand-small text-center"> <strong>B</strong><strong class="text-primary">D</strong></a></div>
+          <div class="sidenav-header-logo"><a href="/dashboard#/" class="brand-small text-center"> <strong>MI</strong><strong class="text-primary">DI</strong></a></div>
         </div>
         <!-- Sidebar Navigation Menus-->
         <div id="activeMenu">
           <div class="main-menu">
             <h5 class="sidenav-heading">Gráficos</h5>
             <ul id="side-main-menu" class="side-menu list-unstyled">                  
-              <li class="item active"><a href="/dashboard#/"> <i class="icon-home"></i>General                             </a></li>
-              <li class="item"><a href="/dashboard#/especifico"> <i class="icon-form"></i>Específico                             </a></li>
-              <li class="item"><a href="/dashboard#/tablaPosiciones"> <i class="fa fa-bar-chart"></i>Tabla Puntuacioens                             </a></li>
-              <li class="item"><a href="/dashboard#/comparaciones"> <i class="fa fa-bar-chart"></i>Comparaciones                             </a></li>
+              <li class="item active"><a href="/dashboard#/"> <i class="fa fa-chart-line"></i>General                             </a></li>
+              <li class="item"><a href="/dashboard#/especifico"> <i class="fa fa-chart-bar"></i>Específico                             </a></li>
+              <li class="item"><a href="/dashboard#/tablaPosiciones"> <i class="fas fa-list-ul"></i>Tabla Puntuaciones                             </a></li>
+              <li class="item"><a href="/dashboard#/comparaciones"> <i class="fas fa-columns"></i>Comparaciones                             </a></li>
               <!--<li class="item"><a href="/dashboard#/comparaciones"> <i class="icon-grid"></i>Comparar                             </a></li>-->
             </ul>
           </div>
           <div class="admin-menu">
             <h5 class="sidenav-heading">Reportes</h5>
             <ul id="side-admin-menu" class="side-menu list-unstyled"> 
-              <li class="item"> <a href="/dashboard#/reporteJuegos"> <i class="icon-screen"> </i>Juegos</a></li>
-              <li class="item"> <a href="/dashboard#/reporteNiños"> <i class="icon-picture"> </i>Niños</a></li>
+              <li class="item"> <a href="/dashboard#/reporteJuegos"> <i class="far fa-file-alt"> </i>Juegos</a></li>
+              <li class="item"> <a href="/dashboard#/reporteNiños"> <i class="far fa-id-badge"> </i>Niños</a></li>
             </ul>
           </div>
         </div>
@@ -74,37 +76,11 @@
         <nav class="navbar">
           <div class="container-fluid">
             <div class="navbar-holder d-flex align-items-center justify-content-between">
-              <div class="navbar-header"><a id="toggle-btn" href="#" class="menu-btn"><i class="icon-bars"> </i></a><a href="index.html" class="navbar-brand">
+              <div class="navbar-header"><a id="toggle-btn" href="#" class="menu-btn"><i class="fas fa-bars"> </i></a><a href="index.html" class="navbar-brand">
                   <div class="brand-text d-none d-md-inline-block"><span> </span><strong class="text-primary">Dashboard</strong></div></a></div>
               <ul class="nav-menu list-unstyled d-flex flex-md-row align-items-md-center">
-                <!-- Notifications dropdown-->
-                <li class="nav-item dropdown"> <a id="notifications" rel="nofollow" data-target="#" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="nav-link"><i class="fa fa-bell"></i><span class="badge badge-warning">12</span></a>
-                  <ul aria-labelledby="notifications" class="dropdown-menu">
-                    <li><a rel="nofollow" href="#" class="dropdown-item"> 
-                        <div class="notification d-flex justify-content-between">
-                          <div class="notification-content"><i class="fa fa-envelope"></i>You have 6 new messages </div>
-                          <div class="notification-time"><small>4 minutes ago</small></div>
-                        </div></a></li>
-                    <li><a rel="nofollow" href="#" class="dropdown-item"> 
-                        <div class="notification d-flex justify-content-between">
-                          <div class="notification-content"><i class="fa fa-twitter"></i>You have 2 followers</div>
-                          <div class="notification-time"><small>4 minutes ago</small></div>
-                        </div></a></li>
-                    <li><a rel="nofollow" href="#" class="dropdown-item"> 
-                        <div class="notification d-flex justify-content-between">
-                          <div class="notification-content"><i class="fa fa-upload"></i>Server Rebooted</div>
-                          <div class="notification-time"><small>4 minutes ago</small></div>
-                        </div></a></li>
-                    <li><a rel="nofollow" href="#" class="dropdown-item"> 
-                        <div class="notification d-flex justify-content-between">
-                          <div class="notification-content"><i class="fa fa-twitter"></i>You have 2 followers</div>
-                          <div class="notification-time"><small>10 minutes ago</small></div>
-                        </div></a></li>
-                    <li><a rel="nofollow" href="#" class="dropdown-item all-notifications text-center"> <strong> <i class="fa fa-bell"></i>view all notifications                                            </strong></a></li>
-                  </ul>
-                </li>
                 <!-- Log out-->
-                <li class="nav-item"><a href="/logout" class="nav-link logout"> <span class="d-none d-sm-inline-block">Logout</span><i class="fa fa-sign-out"></i></a></li>
+                <li class="nav-item"><a href="/logout" class="nav-link logout"> <span class="d-none d-sm-inline-block">Cerrar Sesión</span><i class="fa fa-sign-out"></i></a></li>
               </ul>
             </div>
           </div>
@@ -117,7 +93,7 @@
         <div class="container-fluid">
           <div class="row">
             <div class="col-sm-6">
-              <p>Your company &copy; 2017-2019</p>
+              <p>Proyecto &copy; 2017-2019</p>
             </div>
             <div class="col-sm-6 text-right">
               <p>Design by <a href="https://bootstrapious.com" class="external">Bootstrapious</a></p>

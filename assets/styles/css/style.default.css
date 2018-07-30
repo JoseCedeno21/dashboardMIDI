@@ -502,7 +502,7 @@ nav.navbar a.menu-btn:hover {
 }
 
 .side-navbar.shrink {
-  width: 70px;
+  width: 85px;
   text-align: center;
 }
 
@@ -548,7 +548,7 @@ nav.navbar a.menu-btn:hover {
 .side-navbar.shrink i {
   display: block;
   margin-right: 0;
-  font-size: 1rem;
+  font-size: 1.3rem;
 }
 
 .side-navbar.shrink .arrow {

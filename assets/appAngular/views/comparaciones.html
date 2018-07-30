@@ -23,37 +23,46 @@
 	</div>
 </div>
 
+<div id="noDatos" class="titulosPadding">
+    <div class="noDatos1">NO HAY DATOS PARA MOSTRAR</div>
+    <div class="noDatos2">Por Favor Seleccione los juegos y presione el botón para comparar</div>
+</div>
+
 <section style="padding: 30px" id="comparacion">
 	<div class="row">
 		<div class="col-3 text-center">
-			<h3> Juego: {{datos1.nombre}}</h3>
+			<h2> Juego: {{datos1.nombre}}</h2>
+			<hr>
 			<div class="card project-progress">                    
                 <div class="pie-chart">
                     <canvas id="incorrectas0" width="300" height="300"> </canvas>
                 </div>
             </div>
 		</div>
-		<div class="col-3 " style="padding-top: 25px">
+		<div class="col-3 " style="padding-top: 55px">
 			<p>Numero de historias:</p>
-			<p>- completadas: {{historiaCompletas[0]}}</p>
-			<p>- abandonadas: {{historiaAbandono[0]}}</p>
+			<p>- Completadas: {{historiaCompletas[0]}}</p>
+			<p>- Abandonadas: {{historiaAbandono[0]}}</p>
 			<hr>
-			<p>Tiempo aproximado en terminar el juego: {{juegoTiempo[1]}} segundos</p>
+			<p>Tiempo aproximado en terminar el juego:</p>
+			<p>- {{juegoTiempo[0]}} segundos ({{juegoTiempoMinutos[0]}} minutos)</p>
 		</div>
 		<div class="col-3 text-center">
-			<h3> Juego: {{datos2.nombre}}</h3>
+			<h2> Juego: {{datos2.nombre}}</h2>
+			<hr>
 			<div class="card project-progress">    
                 <div class="pie-chart">
                     <canvas id="incorrectas1" width="300" height="300"> </canvas>
                 </div>
             </div>
 		</div>
-		<div class="col-3" style="padding-top: 25px">
+		<div class="col-3" style="padding-top: 55px">
 			<p>Numero de historias:</p>
-			<p>- completadas: {{historiaCompletas[1]}}</p>
-			<p>- abandonadas: {{historiaAbandono[1]}}</p>
+			<p>- Completadas: {{historiaCompletas[1]}}</p>
+			<p>- Abandonadas: {{historiaAbandono[1]}}</p>
 			<hr>
-			<p>Tiempo aproximado en terminar el juego: {{juegoTiempo[1]}} segundos</p>
+			<p>Tiempo aproximado en terminar el juego:</p>
+			<p>- {{juegoTiempo[1]}} segundos ({{juegoTiempoMinutos[1]}} minutos)</p>
 		</div>
 		<div class="col-3">
 			<div class="card project-progress">    

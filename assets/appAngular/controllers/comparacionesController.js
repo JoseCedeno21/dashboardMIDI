@@ -32,6 +32,7 @@ app.controller('comparacionesController', ['$scope', '$rootScope', 'TodoService'
   	}
 
   	$scope.añadirHtml = function(){
+  	  $("#noDatos").hide();
   	  $("#comparacion").show();
       //$('#grafico').html('<div id="graficos"></div>')
       var nombre_capitulos = [];
@@ -51,6 +52,7 @@ app.controller('comparacionesController', ['$scope', '$rootScope', 'TodoService'
         $scope.historiaCompletas = [];
         $scope.historiaAbandono = [];
         $scope.juegoTiempo = [];
+        $scope.juegoTiempoMinutos = [];
         for(var n=0; n<2; n++){
 	        
 	        if(n == 0){
@@ -127,7 +129,8 @@ app.controller('comparacionesController', ['$scope', '$rootScope', 'TodoService'
 
 		    $scope.historiaCompletas[n] = suma_total_completados_learn;
 		    $scope.historiaAbandono[n] = suma_total_abandonos_learn;
-		    $scope.juegoTiempo[n] = suma_promedio_total_abandonos;
+		    $scope.juegoTiempo[n] = Math.round(suma_promedio_total_tiempo);
+		    $scope.juegoTiempoMinutos[n] = Math.round(suma_promedio_total_tiempo/60)
 
 		    var porcentaje_incorrectas = (suma_promedio_incorrectas / chapters.length).toFixed(2);
 		    var porcentaje_tiempo = suma_promedio_total_tiempo / chapters.length;
