@@ -117,4 +117,13 @@ app.service('TodoService', function($http, $q) {
       });
       return defer.promise;
     },
+    'getLearnUserByLevel': function(id) {
+      var defer = $q.defer();
+      $http.get('/learnuser/'+id).success(function(resp){
+        defer.resolve(resp);
+      }).error( function(err) {
+        defer.reject(err);
+      });
+      return defer.promise;
+    },
 }});

@@ -106,6 +106,19 @@ module.exports = {
     res.json(level);
   },
 
+  learnuserBylevel: async function(req, res){
+    var level = {};
+    var countDatosNivel = 0;
+    
+    level = await Nivel.find({id:req.params.idLevel});
+    var learn_user = await Learn_jugador.find({id_learning:level[0].id_learning});
+
+    console.log(learn_user);
+    console.log(learn_user.length)
+    res.json(learn_user);
+  
+  },
+
   datosByJugador: async function(req, res){
   	var game = {};
   	var games = [];
