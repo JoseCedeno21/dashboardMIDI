@@ -89,7 +89,7 @@ app.service('TodoService', function($http, $q) {
         defer.reject(err);
       });
       return defer.promise;
-    }
+    },
     'getLevels': function() {
       var defer = $q.defer();
       $http.get('/niveles').success(function(resp){
