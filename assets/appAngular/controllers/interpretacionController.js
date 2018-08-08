@@ -51,13 +51,14 @@ app.controller('interpretacionController', ['$scope', '$rootScope', 'TodoService
 		});
 		//$scope.temp = 
       	TodoService.getLevelUserByLevel($scope.select.levelId).then(function(response) {
+      		$scope.resultados = [];
       		$scope.level = response;
       		for(var i=0; i<$scope.level.length; i++){
 				t_play_prom = t_play_prom + $scope.level[i].tiempo_juego;
 				num_try_prom = num_try_prom + $scope.level[i].intentos;
 				n_wrong_prom = n_wrong_prom + $scope.level[i].incorrectas;
 				n_right_prom = n_right_prom + $scope.level[i].correctas;
-				
+
 				t_play[i] = $scope.level[i].tiempo_juego;
 				num_try[i] = $scope.level[i].intentos;
 				n_wrong[i] = $scope.level[i].incorrectas;
@@ -65,7 +66,7 @@ app.controller('interpretacionController', ['$scope', '$rootScope', 'TodoService
 				//Solo se toma en cuenta los usuarios que competaron el nivel
 				if ($scope.level[i].estado == "completado") {
 					intentos_ok = intentos_ok + $scope.level[i].intentos;
-					correctas_ok = correctas + $scope.level[i].correctas;
+					correctas_ok = correctas_ok + $scope.level[i].correctas;
 					tiempo_juego_ok = tiempo_juego_ok + $scope.level[i].tiempo_juego;
 				}
 			}
@@ -77,7 +78,7 @@ app.controller('interpretacionController', ['$scope', '$rootScope', 'TodoService
 			//q_mid = numbers.statistic.quantile(num_try, 2, 4);
 
 			intentos_ok = intentos_ok / $scope.level.length;
-			correctas_ok = correctas  / $scope.level.length;
+			correctas_ok = correctas_ok  / $scope.level.length;
 			tiempo_juego_ok = tiempo_juego_ok  / $scope.level.length;
 		
       		
@@ -102,46 +103,58 @@ app.controller('interpretacionController', ['$scope', '$rootScope', 'TodoService
 	        			break;
 	        		case "Frecuencia de Intentos por Meta":
 		        		resultado = FrecuenciaIntentosMeta(intentos_ok, correctas_ok).toFixed(3);
+		        		$scope.resultados[i].resultado = resultado;
 	        			break;
 					case "Tiempo de Meta":
-						resultado = TiempoMeta(tiempo_juego_ok).toFixed(3);
+						resultado = TiempoMeta(tiempo_juego_ok).toFixed(2);
+						$scope.resultados[i].resultado = resultado + " seg";
 						break;
 					case "Eficiencia de Meta":
 						resultado = EficienciaMeta().toFixed(3);
+						$scope.resultados[i].resultado = resultado;
 						break;
 					case "Eficiencia Relativa al Nivel del Usuario":
 						resultado = EficienciaRelativaUsuario().toFixed(3);
+						$scope.resultados[i].resultado = resultado;
 						break;
 					case "Accesibilidad":
 						resultado = Accesibilidad().toFixed(3);
+						$scope.resultados[i].resultado = resultado;
 						break;
 					case "Personalización":
 						resultado = Personalizacion().toFixed(3);
+						$scope.resultados[i].resultado = resultado;
 						break;
 					case "Seguridad y Salud del Jugador":
 						resultado = SeguridadSaludJugador().toFixed(3);
+						$scope.resultados[i].resultado = resultado;
 						break;
 					case "Daño software":
 						resultado = Daniosoftware().toFixed(3);
+						$scope.resultados[i].resultado = resultado;
 						break;
 					case "Escala de Satisfacción":
 						resultado = EscalaSatisfaccion().toFixed(3);
+						$scope.resultados[i].resultado = resultado;
 						break;
 					case "Cuestionario de Satisfacción":
 						resultado = CuestionarioSatisfaccion().toFixed(3);
+						$scope.resultados[i].resultado = resultado;
 						break;
 					case "Preferencia de Uso":
 						resultado = PreferenciaUso().toFixed(3);
+						$scope.resultados[i].resultado = resultado;
 						break;
 					case "Socialización":
 						resultado = Socializacion().toFixed(3);
+						$scope.resultados[i].resultado = resultado;
 						break;
 	        		default:
 	        		//lo que sobre
 	        	}
 	        }
 
-	        $scope.levels = [];
+	        
 
 
 
