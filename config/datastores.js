@@ -66,7 +66,7 @@ module.exports.datastores = {
     database: 'proyecto',
     host: 'localhost',
     user: 'postgres',
-    password: 'proyecto',
+    password: 'root',
     port: 5432,
     pool: false,
     ssl: false

@@ -82,7 +82,7 @@ app.controller('TodoCtrl', ['$scope', '$rootScope', 'TodoService', function($sco
       var cantidad_abandonado_learn = [];
       var info_learn = [];
       for (var i=0; i< $scope.datos.chapters.length; i++){
-        console.log("entra")
+        
         nombre_capitulos[i] = $scope.datos.chapters[i].nombre.trim();
         
         $("#graficos").append('<div id="graf_'+i+'"></div>');

@@ -31,6 +31,7 @@ module.exports.routes = {
   'GET /chaptersByGame/:idGame':        { controller: 'dashboard/GetInformacionController', action:'chaptersByGame' },
   'GET /nivelesByChapter/:idChapter':   { controller: 'dashboard/GetInformacionController', action:'NivelesByChapter' },
   'GET /datosByJugador/:idJugador':     { controller: 'dashboard/GetInformacionController', action:'datosByJugador' },
+  'GET /metrics':                       { controller: 'dashboard/GetInformacionController', action:'metrics' },
 
 
   //'GET /forms':            { action: 'dashboard/view-forms' },

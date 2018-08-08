@@ -27,17 +27,19 @@
 			  <thead>
 			    <tr>
 			      <th scope="col">#</th>
-			      <th scope="col">Pregunta</th> 
-			      <th scope="col">Respuesta</th>
-			      <th scope="col" ng-if="temp">Tiempo(s)</th>
+			      <th scope="col">Característica</th> 
+			      <th scope="col">Nombre</th>
+			      <th scope="col">Pregunta</th>
+			      <th scope="col">Resultado</th>
 			    </tr>
 			  </thead>
 			  <tbody>
-			    <tr ng-repeat="pregunta in questions | orderBy: '-id'">
+			    <tr ng-repeat="resultado in resultados | orderBy: '-id'">
 			      <th>{{$index+1}}</th>
-			      <td>{{pregunta.pregunta}}</td>
-			      <td>{{pregunta.respuesta}}</td>
-			      <td ng-if="temp">{{jugador.tiempo}}</td>
+			      <td>{{resultado.nombre_car}}</td>
+			      <td>{{resultado.nombre}}</td>
+			      <td>{{resultado.proposito}}</td>
+			      <td>{{resultado.resultado}}</td>
 			    </tr>
 			  </tbody>
 			</table>

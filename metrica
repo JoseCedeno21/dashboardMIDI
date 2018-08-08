@@ -1,0 +1,123 @@
+--
+-- PostgreSQL database dump
+--
+
+-- Dumped from database version 10.4
+-- Dumped by pg_dump version 10.4
+
+-- Started on 2018-08-07 20:29:27
+
+SET statement_timeout = 0;
+SET lock_timeout = 0;
+SET idle_in_transaction_session_timeout = 0;
+SET client_encoding = 'UTF8';
+SET standard_conforming_strings = on;
+SELECT pg_catalog.set_config('search_path', '', false);
+SET check_function_bodies = false;
+SET client_min_messages = warning;
+SET row_security = off;
+
+SET default_tablespace = '';
+
+SET default_with_oids = false;
+
+--
+-- TOC entry 207 (class 1259 OID 38436)
+-- Name: metrica; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.metrica (
+    "createdAt" bigint,
+    "updatedAt" bigint,
+    id integer NOT NULL,
+    nombre text,
+    proposito text,
+    formula text,
+    interpretacion text,
+    id_metrica real
+);
+
+
+ALTER TABLE public.metrica OWNER TO postgres;
+
+--
+-- TOC entry 206 (class 1259 OID 38430)
+-- Name: metrica_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.metrica_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.metrica_id_seq OWNER TO postgres;
+
+--
+-- TOC entry 2873 (class 0 OID 0)
+-- Dependencies: 206
+-- Name: metrica_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.metrica_id_seq OWNED BY public.metrica.id;
+
+
+--
+-- TOC entry 2742 (class 2604 OID 38442)
+-- Name: metrica id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.metrica ALTER COLUMN id SET DEFAULT nextval('public.metrica_id_seq'::regclass);
+
+
+--
+-- TOC entry 2867 (class 0 OID 38436)
+-- Dependencies: 207
+-- Data for Name: metrica; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.metrica ("createdAt", "updatedAt", id, nombre, proposito, formula, interpretacion, id_metrica) FROM stdin;
+0	0	1	Efectividad en la Meta	¿Qué porcentaje de metas y retos se han alcanzado correctamente?	X = |1-ΣAi|\nAi Valor proporcional de cada acción incorrecta	X ϵ [0, 1], cercano 1, lo mejor	1
+0	0	2	Completitud de la Meta	¿Qué porcentaje de metas y retos se han completado?	X = A/B\nA = n. de metas completadas\nB = n. total de metas intentadas	X ϵ [0, 1], cercano 1, lo mejor	1
+0	0	3	Frecuencia de Intentos por Meta	¿Cuál ha sido la frecuencia de intentos?	X = A/T\nA = n. de intentos realizados por jugador\nT = tiempo o número de metas	Jugador experto cercano a 0. Al comienzo > 0	1
+0	0	4	Tiempo de Meta	¿Cuánto tiempo requiere el jugador para lograr una meta?	X = Ta	Jugadores novatos necesitan más tiempo	2
+0	0	5	Eficiencia de Meta	¿Cómo de eficiente es el usuario?	X = M1/T	X ϵ [0, 1],\ncercano a valores intermedios	2
+0	0	6	Eficiencia Relativa al Nivel del Usuario	¿Cómo de eficiente es un jugador experto frente a un jugador nuevo?	X = A/B\nA = eficiencia del jugador normal\nB = eficiencia del jugador experto	X ϵ [0, 1],\ncercano 1, lo mejor	2
+0	0	7	Accesibilidad	¿Qué porcentaje de metas se logran utilizando distintas formas de interacción diferentes a las usadas por defecto?	X = A/B\nA = metas con diferentes métodos de interacción\nB = n. total de metas	X ϵ [0, 1],\ncercano 1 lo mejor	3
+0	0	8	Personalización	¿Qué proporción de la personalización disponible utiliza el jugador?	X = A/B\nA = elementos personalizables\nB = elementos en el juego	X ϵ [0, 1],\nsi cercano a 1 métodos de\ninteracción originales quizás deban ser cambiados	3
+0	0	9	Seguridad y Salud del Jugador	¿Cómo incide en la salud del jugador el uso del producto?	X = 1 – A / B\nA = n. de jugadores que informan de problemas relacionados con la seguridad\nB = número total de jugadores	X ϵ [0, 1],\ncercano 1, lo mejor	4
+0	0	10	Daño software	¿Cómo incide la corrupción del software en el juego?	X = 1 – A / B\nA = número de veces que el videojuego falla y es detectado por el jugador.\nB = n. total de situaciones de uso	X ϵ [0, 1],\ncercano 1, lo mejor	4
+0	0	11	Escala de Satisfacción	¿Cómo de satisfecho está el jugador?	X = A/B\nA = cuestionario con escala psicométrica\nB = media popular	X>0 el mayor, lo mejor	5
+0	0	12	Cuestionario de Satisfacción	¿Cómo de satisfecho está el jugador con las características propias del videojuego?	X = ΣAi /B\nAi = respuesta a la pregunta\nB = número de respuestas	Comparar con valores previos, o con la media popular	5
+0	0	13	Preferencia de Uso	¿Qué porcentaje de usuarios prefieren el videojuego frente a otro?	X = A/B\nA = n. de veces que características propias del juego es usada\nB = n. de veces que jugadores intentan jugar a un juego	X ϵ [0, 1],\ncercano 1, lo mejor	5
+0	0	14	Socialización	¿Qué porcentaje de los retos son resueltos jugando en grupo?	X = A/B\nA = n. de veces que el juego se usa en un contexto social\nB = n. de veces que el juego es usado	X ϵ [0, 1],\ncercano 1, juego social, cercano a 0, juego individual	5
+\.
+
+
+--
+-- TOC entry 2874 (class 0 OID 0)
+-- Dependencies: 206
+-- Name: metrica_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.metrica_id_seq', 14, true);
+
+
+--
+-- TOC entry 2744 (class 2606 OID 38490)
+-- Name: metrica metrica_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.metrica
+    ADD CONSTRAINT metrica_pkey PRIMARY KEY (id);
+
+
+-- Completed on 2018-08-07 20:29:27
+
+--
+-- PostgreSQL database dump complete
+--
+

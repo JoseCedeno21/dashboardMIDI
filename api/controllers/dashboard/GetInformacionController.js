@@ -119,6 +119,26 @@ module.exports = {
   
   },
 
+  metrics: async function(req, res){
+    var metrica_tmp = await Metrica.find();
+    var caracteristica;
+    var metrica = [];
+    for(var i=0; i<metrica_tmp.length; i++){
+      caracteristica = await Caracteristica.findOne({id:metrica_tmp[i].id_metrica});
+      metrica.push({
+        id: metrica_tmp[i].id,
+        nombre: metrica_tmp[i].nombre,
+        proposito: metrica_tmp[i].proposito,
+        formula: metrica_tmp[i].formula,
+        interpretacion: metrica_tmp[i].interpretacion,
+        nombre_car: caracteristica.nombre,
+        descripcion_car: caracteristica.descripcion
+        });
+      }
+    res.json(metrica);
+  
+  },
+
   datosByJugador: async function(req, res){
   	var game = {};
   	var games = [];
@@ -128,7 +148,6 @@ module.exports = {
   	console.log(game.length)
   	for(var k=0; k<game.length; k++){
   		var countDatosNivel = 0;
-  		console.log("entra")
   		var chapters = await Chapter.find({id_game:game[k].id});
 	  	game[k].chapters = [];
 	  	for(var j=0; j<chapters.length; j++){  		
@@ -147,10 +166,9 @@ module.exports = {
 	  		var learning = await Learning.findOne({id_chapter:chapters[j].id});
 	  		game[k].chapters[j].learning = [];
 	  		game[k].chapters[j].learning.push(learning);
-	  		//console.log(learning)
+	  		console.log("learning: " + learning);
 	  		var learn_jugador = await Learn_jugador.find({id_learning:learning.id,id_jugador:req.params.idJugador});
-	  		//console.log("ahora el learn")
-	  		//console.log(learn_jugador)
+	  		console.log("learn_jugador: " + learn_jugador);
 	  		game[k].chapters[j].learning[0].datos = [];
 	  		game[k].chapters[j].learning[0].datos.push(learn_jugador);
 	  	}

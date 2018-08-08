@@ -126,4 +126,13 @@ app.service('TodoService', function($http, $q) {
       });
       return defer.promise;
     },
+    'getMetrics': function() {
+      var defer = $q.defer();
+      $http.get('/metrics').success(function(resp){
+        defer.resolve(resp);
+      }).error( function(err) {
+        defer.reject(err);
+      });
+      return defer.promise;
+    },
 }});

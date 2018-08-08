@@ -17,12 +17,6 @@ module.exports = {
         type: 'number',
         required: true
     },
-    nombre: {
-        type: 'string',
-    },
-    descripcion: {
-        type: 'string'
-    },
     fecha_inicio: {
         type: 'ref',
         columnType: 'date'
