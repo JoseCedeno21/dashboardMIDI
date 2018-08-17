@@ -46,7 +46,7 @@ module.exports = {
     *    (See https://sailsjs.com/config/datastores for help.)                 *
     *                                                                          *
     ***************************************************************************/
-    //default: {
+    default: {
       // adapter: 'sails-mysql',
       // url: 'mysql://user:password@host:port/database',
       //--------------------------------------------------------------------------
@@ -71,10 +71,10 @@ module.exports = {
       *                                                                           *
       ****************************************************************************/
       // ssl: true,
-      //adapter:require('sails-postgresql'),
+      adapter:require('sails-postgresql'),
       url: 'postgres://hwtciktbuwvtmg:93aeee3a8f36ea56f4d54ba42266edeaa60b71be5b48d6b264efb32e5f0166dc@ec2-50-17-250-38.compute-1.amazonaws.com:5432/d98uk5dj1sifu'
 
-    //},
+    },
     //connection: 'postgres'
 
   },
