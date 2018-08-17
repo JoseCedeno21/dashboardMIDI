@@ -32,7 +32,7 @@ module.exports.security = {
      allRoutes: true,
      allowOrigins: '*',
      allowCredentials: true,
-     allowAnyOriginWithCredentialsUnsafe: true;
+     allowAnyOriginWithCredentialsUnsafe: true,
    },
 
 
