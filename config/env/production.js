@@ -257,7 +257,7 @@ module.exports = {
     onlyAllowOrigins: [
       'https://example.com',
       'https://staging.example.com',
-      'https://hidden-wildwood-12729.herokuapp.com/',
+      'https://hidden-wildwood-12729.herokuapp.com',
     ],
 
 
