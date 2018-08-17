@@ -13,8 +13,8 @@ module.exports = function(grunt) {
     'jst:dev',
     'less:dev',
     'copy:dev',
-    'coffee:dev',
-    'symlink:dev'
+    'coffee:dev'
+    //'symlink:dev'
   ]);
 };
 
