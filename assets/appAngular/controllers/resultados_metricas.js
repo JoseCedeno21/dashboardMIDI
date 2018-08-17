@@ -36,49 +36,99 @@ function pregunta1(){
 	else $scope.questions[1].respuesta = "Normal";
 	console.log("Supuesta respuesta: " + $scope.questions[0].respuesta);
 }
-
-function EfectividadMeta(correctas, incorrectas){
+//EFECTIVIDAD
+function EfectividadMeta(correctas, incorrectas){ //relacion del total de respuestas correctas vs el total de intentos
 	return correctas / (correctas + incorrectas);
 }
 
-function CompletitudMeta(correctas, intentos){
-	return correctas / (correctas + intentos);
+function CompletitudMeta(n_completos, n_user){ //numero de usuarios que completaron vs numero de usuarios totales
+	return n_completos / n_user;
 }
 
-function FrecuenciaIntentosMeta(intentos_ok, correctas_ok){
+function FrecuenciaIntentosMeta(intentos_ok, correctas_ok){ //numero de intentos en niveles completados vs numero de r. correctas en niveles completados
 	return intentos_ok / correctas_ok;
 }
 
-function TiempoMeta(tiempo_juego_ok){
+//EFICIENCIA
+function TiempoMeta(tiempo_juego_ok){ //Tiempo de juego en el nivel completado
 	return tiempo_juego_ok;
 }
-function EficienciaMeta(){
-	return 0;
+
+function EficienciaMeta(correctas_ok, tiempo_juego){ //Respuestas correctas en un nivel completado vs tiempo que tomó completarlo
+	return correctas_ok / tiempo_juego;
 }
-function EficienciaRelativaUsuario(){
-	return 0;
+
+function EficienciaMetaPorIncorrectas(incorrectas_ok, tiempo_juego){ //Respuestas incorrectas en un nivel completado vs tiempo que tomó completarlo
+	return incorrectas_ok / tiempo_juego;
 }
-function Accesibilidad(){
-	return 0;
+
+function EficienciaRelativaUsuarioOK(jugadores_OK, total_jugadores){ //Número de mejores jugadores vs total de jugadores
+	return jugadores_OK / total_jugadores;
 }
+
+function EficienciaRelativaUsuarioBAD(jugadores_BAD, total_jugadores){ //Número de jugadores que tuvieron dificultades vs total de jugadores
+	return jugadores_BAD / total_jugadores;
+}
+
+//FLEXIBILIDAD
+function AccesibilidadPorTiempo(t_rooms, t_total){ //Tiempo de rooms distintas a las condiciones por defecto vs total de tiempo por todos los rooms
+	return t_rooms / t_total;
+}
+
+function AccesibilidadPorMetas(correctas, incorrectas){ //Número r. correctas en rooms distintas a las condiciones por defecto vs total de r. correctas por todos los rooms
+	return correctas / (correctas + incorrectas);
+}
+
 function Personalizacion(){
 	return 0;
 }
+
+//SEGURIDAD
 function SeguridadSaludJugador(){
 	return 0;
 }
 function Daniosoftware(){
 	return 0;
 }
-function EscalaSatisfaccion(){
-	return 0;
+
+//SATISFACCION
+function EscalaSatisfaccion(n_completos, n_usuarios){ //Número de usuarios que completaron el nivel vs total de usuarios de ese nivel
+	return n_completos / n_usuarios;
 }
+
 function CuestionarioSatisfaccion(){
 	return 0;
 }
-function PreferenciaUso(){
+
+function PreferenciaUso(n_completos, n_usuarios, id_nivel, niveles){ //Escala de satisfaccion del nivel vs escala de satisfacción del resto de niveles
+	var contador_usuarios = 0;
+	var contador_completados = 0;
+	var satisfaccion_nivel = EscalaSatisfaccion(n_completos, n_usuarios);
+	var satisfaccion_general = -1;
+	for(var i = 0; i < niveles; i++){
+		if(niveles.id_nivel != id_nivel){
+			contador_usuarios++;
+			if (niveles.estado == "completado") {contador_completados++;}
+		}
+	}
+
+	if (contador_usuarios != 0)  satisfaccion_general = EscalaSatisfaccion(contador_completados, contador_usuarios);
+	return satisfaccion_nivel / satisfaccion_general;
+}
+
+function Socializacion(){
 	return 0;
 }
-function Socializacion(){
+
+//LEARNING
+function ComprensionDialogos(){
+	return 0;
+}
+
+function SatisfaccionLearning(){
+	return 0;
+}
+
+function IntuitivoLearning(){
 	return 0;
 }
