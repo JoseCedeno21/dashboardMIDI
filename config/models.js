@@ -133,8 +133,8 @@ module.exports.models = {
 
   cascadeOnDestroy: true,
 
-  somePostgresqlServer: generatePostgresqlObject(),
-  connection: 'somePostgresqlServer',
+ // somePostgresqlServer: generatePostgresqlObject(),
+  connection: generatePostgresqlObject(),
   migrate: 'safe',
 
 };
