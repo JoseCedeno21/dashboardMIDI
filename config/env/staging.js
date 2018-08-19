@@ -19,6 +19,7 @@
  */
 
 var PRODUCTION_CONFIG = require('./production');
+NODE_ENV=production sails_environment=staging node app
 //--------------------------------------------------------------------------
 // /\  Start with your production config, even if it's just a guess for now,
 // ||  then configure your staging environment afterwards.
