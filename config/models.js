@@ -79,7 +79,7 @@ module.exports.models = {
   *                                                                          *
   ***************************************************************************/
 
-  migrate: 'alter',
+  migrate: 'safe',
 
 
   /***************************************************************************
@@ -148,8 +148,8 @@ module.exports.models = {
 
   //somePostgresqlServer: generatePostgresqlObject(),
   //connection: 'somePostgresqlServer',
-  connection: generatePostgresqlObject(),
-  migrate: 'safe',
+  //connection: generatePostgresqlObject(),
+  //migrate: 'safe',
 
 };
 
