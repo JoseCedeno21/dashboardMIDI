@@ -121,4 +121,7 @@ module.exports.models = {
   cascadeOnDestroy: true
 
 
+  connection: 'somePostgresqlServer',
+  migrate: 'safe',
+
 };

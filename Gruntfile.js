@@ -13,7 +13,11 @@
  *   https://sailsjs.com/anatomy/Gruntfile.js
  */
 module.exports = function(grunt) {
-
+  try {
+	  require('dotenv').config();
+	} catch (ex) {
+	  // Add error handling here, if you want
+	}
   var loadGruntTasks = require('sails-hook-grunt/accessible/load-grunt-tasks');
 
   // Load Grunt task configurations (from `tasks/config/`) and Grunt
