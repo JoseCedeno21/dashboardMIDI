@@ -13,32 +13,6 @@
  * https://sailsjs.com/docs/concepts/models-and-orm/model-settings
  */
 
- function generatePostgresqlObject2() {
-  const local = String(process.env.DATABASE_URL).indexOf('localhost') !== -1
-
-  const adapter = 'sails-postgresql';
-  const url = local ? undefined : process.env.DATABASE_URL;
-  const address = local ? process.env.DATABASE_URL : undefined;
-  const ssl = !local;
-  const database = local ? 'sails_todo' : undefined;
-
-  const pgObject = { adapter, url, address, ssl, database };
-  return pgObject;
-}
-
- function generatePostgresqlObject() {
-  const local = String(process.env.DATABASE_URL).indexOf('localhost') !== -1
-
-  const adapter = 'sails-postgresql';
-  const url = local ? undefined : process.env.DATABASE_URL;
-  const address = local ? process.env.DATABASE_URL : undefined;
-  const ssl = !local;
-  const database = local ? 'sails_todo' : undefined;
-
-  const pgObject = { adapter, url, address, ssl, database };
-  return url;
-}
-
 module.exports.models = {
 
 
@@ -147,7 +121,7 @@ module.exports.models = {
   cascadeOnDestroy: true,
 
   //somePostgresqlServer: generatePostgresqlObject(),
-  //connection: 'somePostgresqlServer',
+  connection: 'somePostgresqlServer',
   //connection: generatePostgresqlObject(),
   //migrate: 'safe',
 
