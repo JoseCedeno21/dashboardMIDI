@@ -26,12 +26,6 @@
 // > Note: This is not required in order to lift, but it is a convenient default.
 process.chdir(__dirname);
 
-try {
-  require('dotenv').config();
-} catch (ex) {
-  // Add error handling here, if you want
-}
-
 // Attempt to import `sails` dependency, as well as `rc` (for loading `.sailsrc` files).
 var sails;
 var rc;

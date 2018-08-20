@@ -4,8 +4,8 @@ module.exports.email = {
 
 	service: 'Gmail',
  	auth: {
- 		user: 'jose.gabriell.21@gmail.com', 
- 		pass: 'gabriel.espol.1995'
+ 		user: 'mididashboard@gmail.com', 
+ 		pass: 'l30n1d4s'
  	},
  	templateDir: 'views/emails',
  	from: 'ProyectoDashboard',

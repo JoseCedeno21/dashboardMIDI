@@ -44,7 +44,7 @@ module.exports.datastores = {
   * (For production configuration, see `config/env/production.js`.)          *
   *                                                                          *
   ***************************************************************************/
-  somePostgresqlServer: generatePostgresqlObject(),
+  //somePostgresqlServer: generatePostgresqlObject(),
   default: {
 
     /***************************************************************************
@@ -84,8 +84,11 @@ module.exports.datastores = {
 //    pool: false,
 //    ssl: false
     adapter:require('sails-postgresql'),
-    url: 'postgresql://hwtciktbuwvtmg:93aeee3a8f36ea56f4d54ba42266edeaa60b71be5b48d6b264efb32e5f0166dc@ec2-50-17-250-38.compute-1.amazonaws.com:5432/d98uk5dj1sifu',
+    url: 'postgres://oaqzqzfiggigid:4adfe8835b33c7e412d855f417c4a8a48e2050c12ddc4132d1989b436374c92f@ec2-54-235-160-57.compute-1.amazonaws.com:5432/d1l654g9b0qf6e'
+    //url: 'postgresql://hqgddhdk:agq3vPvhFH76SBdIKOTUuUqi71ixQZdO@pellefant.db.elephantsql.com:5432/hqgddhdk',
     //url: 'postgresql://postgres:root@localhost:5432/proyecto',
+    native: true,
+    ssl: true,
   },
 
 };

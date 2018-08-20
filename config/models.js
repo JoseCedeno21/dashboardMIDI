@@ -53,7 +53,7 @@ module.exports.models = {
   *                                                                          *
   ***************************************************************************/
 
-  migrate: 'alter',
+  migrate: 'safe',
 
 
   /***************************************************************************
@@ -121,7 +121,7 @@ module.exports.models = {
   cascadeOnDestroy: true,
 
   //somePostgresqlServer: generatePostgresqlObject(),
-  connection: 'somePostgresqlServer',
+  //connection: 'somePostgresqlServer',
   //connection: generatePostgresqlObject(),
   //migrate: 'safe',
 
