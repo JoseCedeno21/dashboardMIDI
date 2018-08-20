@@ -72,7 +72,7 @@ module.exports = {
       ****************************************************************************/
       // ssl: true,
       adapter:require('sails-postgresql'),
-      url: 'postgres://oaqzqzfiggigid:4adfe8835b33c7e412d855f417c4a8a48e2050c12ddc4132d1989b436374c92f@ec2-54-235-160-57.compute-1.amazonaws.com:5432/d1l654g9b0qf6e'
+      url: 'postgres://oaqzqzfiggigid:4adfe8835b33c7e412d855f417c4a8a48e2050c12ddc4132d1989b436374c92f@ec2-54-235-160-57.compute-1.amazonaws.com:5432/d1l654g9b0qf6e',
       //url: 'postgresql://hqgddhdk:agq3vPvhFH76SBdIKOTUuUqi71ixQZdO@pellefant.db.elephantsql.com:5432/hqgddhdk',
       native: true,
       ssl: true,
