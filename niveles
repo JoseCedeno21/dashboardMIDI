@@ -97,6 +97,22 @@ COPY public.nivel ("createdAt", "updatedAt", id, nombre, descripcion, id_chapter
 \N	\N	16	Adivina el par	Elige los pares correspondientes	4	4
 \.
 
+INSERT INTO nivel VALUES('1531612938663','1531612938663',1, 'Coloca la línea', 'Arrastrar la línea en el Ecuador', 1, 1);
+INSERT INTO nivel VALUES('1531612938663','1531612938663',2, 'Pinta la bandera', 'Colorear la bandera del Ecuador', 1, 1);
+INSERT INTO nivel VALUES('1531612938663','1531612938663',3, 'Arma el escudo', 'Arrastrar elementos del escudo en su lugar correcto', 1, 1);
+INSERT INTO nivel VALUES('1531612938663','1531612938663',4, 'Canta el himno', 'Karaoke del himno nacional', 1, 1);
+INSERT INTO nivel VALUES('1531612938663','1531612938663',5, 'Rompecabezas', 'Arma un rompecabezas', 2, 2);
+INSERT INTO nivel VALUES('1531612938663','1531612938663',6, 'Escoge el derecho', 'Elige de las múltiples opciones', 2, 2);
+INSERT INTO nivel VALUES('1531612938663','1531612938663',7, 'Juguemos ruleta', 'Gira la ruleta para responder correctamente', 2, 2);
+INSERT INTO nivel VALUES('1531612938663','1531612938663',8, 'Recorre el camino', 'Debes recorrer un camino', 2, 2);
+INSERT INTO nivel VALUES('1531612938663','1531612938663',9, 'Une las áreas', 'Arrastrar para unir los elementos', 3, 3);
+INSERT INTO nivel VALUES('1531612938663','1531612938663',10, 'Arma la mochila', 'Elige los elementos que componen tu mochila', 3, 3);
+INSERT INTO nivel VALUES('1531612938663','1531612938663',11, 'Ordena el salón', 'Ordena los elementos que corresponden al correcto orden del salón', 3, 3);
+INSERT INTO nivel VALUES('1531612938663','1531612938663',12, 'Recorre cuál es el área', 'Recorre es área correcta', 3, 3);
+INSERT INTO nivel VALUES('1531612938663','1531612938663',13, 'Armando mi botiquín', 'Selecciona los elementos que corresponden a un botiquín de primeros auxilios', 4, 4);
+INSERT INTO nivel VALUES('1531612938663','1531612938663',14, 'Polito enfermo', 'Selecciona los elementos para curar a Polito', 4, 4);
+INSERT INTO nivel VALUES('1531612938663','1531612938663',15, 'Atrapa el objeto correcto que cae de arriba', 'Atrapa el objeto correcto que cae de arriba', 4, 4);
+INSERT INTO nivel VALUES('1531612938663','1531612938663',16, 'Adivina el par', 'Elige los pares correspondientes', 4, 4);
 
 --
 -- TOC entry 2874 (class 0 OID 0)

@@ -68,6 +68,10 @@ the account verification message.)`,
 
     // Build up data for the new user record and save it to the database.
     // (Also use `fetch` to retrieve the new ID so that we can use it below.)
+
+    console.log("new e-mail: " + newEmailAddress);
+    console.log("password: " + inputs.password);
+    console.log("nombre: " + inputs.fullName);
     var newUserRecord = await Usuarios.create(Object.assign({
       correo: newEmailAddress,
       password: await sails.helpers.passwords.hashPassword(inputs.password),
