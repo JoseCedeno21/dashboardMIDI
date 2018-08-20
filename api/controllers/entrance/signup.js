@@ -73,6 +73,8 @@ the account verification message.)`,
     console.log("password: " + inputs.password);
     console.log("nombre: " + inputs.fullName);
     var newUserRecord = await Usuarios.create(Object.assign({
+      createdAt: 1534726928373,
+      updatedAt: 1534726928373,
       correo: newEmailAddress,
       password: await sails.helpers.passwords.hashPassword(inputs.password),
       nombre: inputs.fullName,
