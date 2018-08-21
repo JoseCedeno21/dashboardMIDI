@@ -135,4 +135,22 @@ app.service('TodoService', function($http, $q) {
       });
       return defer.promise;
     },
+    'getRoomsByLevel': function(idlevel) {
+      var defer = $q.defer();
+      $http.get('/roomsByLevel/' + idlevel).success(function(resp){
+        defer.resolve(resp);
+      }).error( function(err) {
+        defer.reject(err);
+      });
+      return defer.promise;
+    },
+    'getLevelUserByLevelUser': function(idLevel_idUser) {
+      var defer = $q.defer();
+      $http.get('/leveluserByUser/' + idLevel_idUser).success(function(resp){
+        defer.resolve(resp);
+      }).error( function(err) {
+        defer.reject(err);
+      });
+      return defer.promise;
+    },
 }});

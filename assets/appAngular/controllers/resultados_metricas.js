@@ -62,8 +62,8 @@ function EficienciaMetaPorIncorrectas(incorrectas_ok, tiempo_juego){ //Respuesta
 	return incorrectas_ok / tiempo_juego;
 }
 
-function EficienciaRelativaUsuarioOK(jugadores_OK, total_jugadores){ //Número de mejores jugadores vs total de jugadores
-	return jugadores_OK / total_jugadores;
+function EficienciaRelativaUsuarioOK(cont_best_time, total_jugadores){ //Número de mejores jugadores vs total de jugadores
+	return cont_best_time / total_jugadores;
 }
 
 function EficienciaRelativaUsuarioBAD(jugadores_BAD, total_jugadores){ //Número de jugadores que tuvieron dificultades vs total de jugadores
@@ -71,16 +71,19 @@ function EficienciaRelativaUsuarioBAD(jugadores_BAD, total_jugadores){ //Número
 }
 
 //FLEXIBILIDAD
+function AccesibilidadPorMetas(rooms, incorrectas){ //Número r. correctas en rooms distintas a las condiciones por defecto vs total de r. correctas por todos los rooms
+	/*for(var i=0; i < rooms.length; i++){
+		if (rooms.tipo == 'Default') {
+			id_room_default.push(rooms.id);
+			efectividad_default = EfectividadMeta(correctas, incorrectas) + efectividad_default;
+		}
+	}*/
+	//return correctas / (correctas + incorrectas);
+	return 0;
+}
+
 function AccesibilidadPorTiempo(t_rooms, t_total){ //Tiempo de rooms distintas a las condiciones por defecto vs total de tiempo por todos los rooms
 	return t_rooms / t_total;
-}
-
-function AccesibilidadPorMetas(correctas, incorrectas){ //Número r. correctas en rooms distintas a las condiciones por defecto vs total de r. correctas por todos los rooms
-	return correctas / (correctas + incorrectas);
-}
-
-function Personalizacion(){
-	return 0;
 }
 
 //SEGURIDAD
@@ -131,4 +134,23 @@ function SatisfaccionLearning(){
 
 function IntuitivoLearning(){
 	return 0;
+}
+
+
+//Funciones estadísticas
+function quartile(arr, k, q) {
+	var sorted, count, index;
+
+	if(k === 0) return Math.min.apply(null, arr);
+
+	if (k === q) return Math.max.apply(null, arr);
+
+	sorted = arr.slice(0);
+	sorted.sort(function (a, b) { return a - b; });
+	count = sorted.length;
+	index = count * k / q;
+
+	if (index % 1 === 0) return 0.5 * sorted[index - 1] + 0.5 * sorted[index];
+
+	return sorted[Math.floor(index)];
 }

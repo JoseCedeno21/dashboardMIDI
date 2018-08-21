@@ -152,7 +152,7 @@ module.exports = {
 	  	game[k].chapters = [];
 	  	for(var j=0; j<chapters.length; j++){  		
 	  		game[k].chapters.push(chapters[j]);
-	  		var niveles = await Nivel.find({id_chapter:chapters[j].id})
+	  		var niveles = await Nivel.find({id_chapter:chapters[j].id});
 	  		game[k].chapters[j].niveles = [];
 	  		game[k].chapters[j].niveles.push(niveles);
 	  		for(var i=0; i<niveles.length; i++){		
@@ -177,6 +177,27 @@ module.exports = {
 	  	}
   	}
   	res.json(games);
+  },
+
+  roomsByLevel: async function(req, res){
+    var nivel = await Nivel.findOne({id:req.params.idlevel});
+    var chapter = await Chapter.findOne({id:nivel.id_chapter});
+    var game = await Game.findOne({id:chapter.id_game});
+    var rooms = await Room.find({id_juego:game.id});
+
+    res.json(rooms);
+  },
+
+  leveluserByLevelUser: async function(req, res){
+    var cadenaADividir = req.params.idLevelidUser;
+    var arrayDeCadena = cadenaADividir.split("-");
+
+    var idLevel = arrayDeCadena[0];
+    var idUser = arrayDeCadena[1];
+
+    var level_user = await Nivel_usuario.find({id_usuario:idUser, id_nivel:idLevel});
+
+    res.json(level_user);
   }
 
 };
