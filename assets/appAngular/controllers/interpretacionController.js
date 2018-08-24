@@ -1,5 +1,4 @@
 app.controller('interpretacionController', ['$scope', '$rootScope', 'TodoService', function($scope, $rootScope, TodoService) {
-	$scope.questions = [];
 	$scope.metricas = [];
 	$scope.resultados = [];
 	$scope.levels = [];
@@ -9,6 +8,7 @@ app.controller('interpretacionController', ['$scope', '$rootScope', 'TodoService
 	$scope.jugadores = [];	
 
 	var efectividad_default = 0;
+	var niveles = [], level_users = [];
 
 	//se obtiene todos los niveles
 	TodoService.getLevels().then(function(response) {
@@ -28,6 +28,13 @@ app.controller('interpretacionController', ['$scope', '$rootScope', 'TodoService
 	TodoService.getJugadores().then(function(response) {
 	    $scope.jugadores = response;
 	    //$scope.temporal = response;
+	});
+
+	TodoService.getLevels().then(function(response) {
+		niveles = response;
+	});
+	TodoService.getLevelUser().then(function(response) {
+		level_users = response;
 	});
 
 
@@ -156,15 +163,15 @@ app.controller('interpretacionController', ['$scope', '$rootScope', 'TodoService
 		        		//Eficiencia
 		        		case 1:
 		        			resultado = TiempoMeta(tiempo_juego_ok).toFixed(2);
-		        			$scope.resultados[i].resultado = resultado;
+		        			$scope.resultados[i].resultado = resultado + " seg";
 		        			break;
 		        		case 2:
-		        			resultado = EficienciaMeta(correctas_ok, tiempo_juego).toFixed(2);
-		        			$scope.resultados[i].resultado = resultado;
+		        			resultado = EficienciaMeta(correctas_ok, (tiempo_juego/60)).toFixed(2);
+		        			$scope.resultados[i].resultado = resultado + " corr/min";
 		        			break;
 		        		case 3:
-			        		resultado = EficienciaMetaPorIncorrectas(incorrectas_ok, tiempo_juego).toFixed(2);
-			        		$scope.resultados[i].resultado = resultado;
+			        		resultado = EficienciaMetaPorIncorrectas(incorrectas_ok, (tiempo_juego/60)).toFixed(2);
+			        		$scope.resultados[i].resultado = resultado + " incorr/min";;
 		        			break;
 						case 4:
 							var best_time = 0, cont_best_time = 0;
@@ -179,7 +186,7 @@ app.controller('interpretacionController', ['$scope', '$rootScope', 'TodoService
 							else
 								best_time = 1;
 							resultado = EficienciaRelativaUsuarioOK(cont_best_time, $scope.level.length).toFixed(2);
-							$scope.resultados[i].resultado = resultado;
+							$scope.resultados[i].resultado = resultado + "%";
 							break;
 						case 5:
 							var worst_time = 0, cont_worst_time = 0;
@@ -195,34 +202,34 @@ app.controller('interpretacionController', ['$scope', '$rootScope', 'TodoService
 								worst_time = 1;
 							
 							resultado = EficienciaRelativaUsuarioBAD(cont_worst_time, $scope.level.length).toFixed(2);
-							$scope.resultados[i].resultado = resultado;
+							$scope.resultados[i].resultado = resultado + "%";
 							break;
 						//Efectividad
 						case 6:
 							resultado = EfectividadMeta(n_right_prom, n_wrong_prom).toFixed(2);
-							$scope.resultados[i].resultado = resultado;
+							$scope.resultados[i].resultado = resultado + "% aciertos";
 							break;
 						case 7:
 							resultado = CompletitudMeta(n_user_complete, $scope.level.length).toFixed(2);
-							$scope.resultados[i].resultado = resultado;
+							$scope.resultados[i].resultado = resultado + "% j. completaron";
 							break;
 						case 8:
 							resultado = FrecuenciaIntentosMeta(intentos_ok, correctas_ok).toFixed(2);
-							$scope.resultados[i].resultado = resultado;
+							$scope.resultados[i].resultado = resultado + " intentos";
 							break;
 						//Flexibilidad
 						case 9:
-							resultado = AccesibilidadPorMetas(rooms_default, rooms_rest, $scope.level, jugadores_room_default, jugadores_room_rest).toFixed(2);
+							resultado = AccesibilidadPorMetas(rooms_default, rooms_rest, $scope.level, jugadores_room_default, jugadores_room_rest).toFixed(3);
 							$scope.resultados[i].resultado = resultado;
 							break;
 						case 10:
-							resultado = AccesibilidadPorTiempo(rooms_default, rooms_rest, $scope.level, TodoService).toFixed(2);
+							resultado = AccesibilidadPorTiempo(rooms_default, rooms_rest, $scope.level, jugadores_room_default, jugadores_room_rest).toFixed(3);
 							$scope.resultados[i].resultado = resultado;
 							break;
 						//Satisfaccion
-						case 12:
-							resultado = PreferenciaUso(n_user_complete, $scope.level, TodoService).toFixed(2);
-							$scope.resultados[i].resultado = resultado;
+						case 11:
+							resultado = PreferenciaUso(n_user_complete, $scope.level, niveles, level_users).toFixed(3);
+							$scope.resultados[i].resultado = resultado + "%";
 							break;
 		        		default:
 		        			break;

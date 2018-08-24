@@ -44,6 +44,7 @@ function TiempoMeta(tiempo_juego_ok){ //Tiempo de juego en el nivel completado
 }
 //Eficiencia de meta por respuestas correctas (id: 2)
 function EficienciaMeta(correctas_ok, tiempo_juego){ //Respuestas correctas en un nivel completado vs tiempo que tomó completarlo
+	if (tiempo_juego == 0) return 0;
 	return correctas_ok / tiempo_juego;
 }
 //Eficiencia de meta por respuestas incorrectas (id: 3)
@@ -52,26 +53,26 @@ function EficienciaMetaPorIncorrectas(incorrectas_ok, tiempo_juego){ //Respuesta
 }
 //Eficiencia relativa a los mejores resultados de jugadores (id: 4)
 function EficienciaRelativaUsuarioOK(cont_best_time, total_jugadores){ //Número de mejores jugadores vs total de jugadores
-	return cont_best_time / total_jugadores;
+	return (cont_best_time / total_jugadores) * 100;
 }
 //Eficiencia relativa a los jugadores con dificultades en el nivel (id: 5)
 function EficienciaRelativaUsuarioBAD(jugadores_BAD, total_jugadores){ //Número de jugadores que tuvieron dificultades vs total de jugadores
-	return jugadores_BAD / total_jugadores;
+	return (jugadores_BAD / total_jugadores) * 100;
 }
 
 //EFECTIVIDAD
 //Efectividad de la meta (id: 6)
 function EfectividadMeta(correctas, incorrectas){ //relacion del total de respuestas correctas vs el total de intentos
 	if ((correctas + incorrectas) == 0) return 0;
-	return correctas / (correctas + incorrectas);
+	return (correctas / (correctas + incorrectas)) * 100;
 }
 //Completitud de la meta (id: 7)
 function CompletitudMeta(n_completos, n_user){ //numero de usuarios que completaron vs numero de usuarios totales
-	return n_completos / n_user;
+	return (n_completos / n_user) * 100;
 }
 //Frecuencia de intentos para llegar a la meta (id: 8)
 function FrecuenciaIntentosMeta(intentos_ok, correctas_ok){ //numero de intentos en niveles completados vs numero de r. correctas en niveles completados
-	return intentos_ok / correctas_ok;
+	return intentos_ok;
 }
 
 //FLEXIBILIDAD
@@ -104,7 +105,7 @@ function AccesibilidadPorMetas(rooms_default, rooms_rest, level, jugadores_room_
 	correctas_OK = correctas_OK / n_user_OK;
 	incorrectas_OK = incorrectas_OK / n_user_OK;
 
-	efectividad_default = EfectividadMeta(correctas_OK, incorrectas_OK);
+	efectividad_default = EfectividadMeta(correctas_OK, incorrectas_OK) / 100;
 
 	//FIN DEL CALCULO DE LA EFECTIVIDAD DEL ROOM POR DEFAULT
 
@@ -132,7 +133,7 @@ function AccesibilidadPorMetas(rooms_default, rooms_rest, level, jugadores_room_
 		intentos_OK = intentos_OK / n_user_OK;
 		correctas_OK = correctas_OK / n_user_OK;
 		incorrectas_OK = incorrectas_OK / n_user_OK;
-		efectividad_rest = EfectividadMeta(correctas_OK, incorrectas_OK);
+		efectividad_rest = EfectividadMeta(correctas_OK, incorrectas_OK) / 100;
 
 		diferencia = efectividad_default - efectividad_rest;
 		if (diferencia < 0) diferencia = diferencia * (-1);
@@ -144,24 +145,13 @@ function AccesibilidadPorMetas(rooms_default, rooms_rest, level, jugadores_room_
 	return efectividad_room;
 }
 //Accesibilidad por tiempo (id: 10)
-function AccesibilidadPorTiempo(rooms_default, rooms_rest, level, TodoService){ //Tiempo de rooms distintas a las condiciones por defecto vs total de tiempo por todos los rooms
-	var jugadores_room_default = [], nivel_usuario_default = [];
+function AccesibilidadPorTiempo(rooms_default, rooms_rest, level, jugadores_room_default, jugadores_room_rest){ //Tiempo de rooms distintas a las condiciones por defecto vs total de tiempo por todos los rooms
+	var nivel_usuario_default = [];
 	var correctas_OK = 0, tiempo_OK = 0, n_user_OK = 0;
 
-	var efectividad_default = 0, efectividad_rest = 0, eficiencia_room = 0, diferencia = 0;
+	var eficiencia_default = 0, eficiencia_rest = 0, eficiencia_room = 0, diferencia = 0;
 
 	//CALCULO DE LA EFECTIVIDAD DEL ROOM POR DEFAULT
-	for(var i = 0; i < rooms_default.length; i++){
-		TodoService.getUsersByRoom(rooms_default[i].id).then(function(response) {
-			//response son los jugadores del Room
-			if(response != null){
-				for(var j = 0; j < response.length; j++){
-					jugadores_room_default.push(response[i]);
-				}
-			}
-		});
-	}
-
 	for(var i = 0; i < level.length; i++){
 		for(var j = 0; j < jugadores_room_default.length; j++){
 			if(level[i].id_usuario == jugadores_room_default[j].id){
@@ -181,7 +171,7 @@ function AccesibilidadPorTiempo(rooms_default, rooms_rest, level, TodoService){ 
 	correctas_OK = correctas_OK / n_user_OK;
 	tiempo_OK = tiempo_OK / n_user_OK;
 
-	efectividad_default = EficienciaMeta(correctas_OK, tiempo_OK);
+	eficiencia_default = EficienciaMeta(correctas_OK, tiempo_OK);
 
 	//FIN DEL CALCULO DE LA EFECTIVIDAD DEL ROOM POR DEFAULT
 
@@ -190,27 +180,25 @@ function AccesibilidadPorTiempo(rooms_default, rooms_rest, level, TodoService){ 
 		correctas_OK = 0;
 		tiempo_OK = 0;
 		n_user_OK = 0;
-		TodoService.getUsersByRoom(rooms_rest[i].id).then(function(response) {
-			//response son los jugadores del Room
-			if(response != null){
-				for(var j = 0; j < response.length; j++){ //barrido de jugadores del room
-					for(var k = 0; k < level.length; k++){ // Busca los datos de nivel_usuario para sumar sus intentos, correctas e incorrectas
-						if (response[j].id == level[k].id_usuario && level[k].estado == "completado") {
-							correctas_OK = correctas_OK + level[k].intentos;
-							tiempo_OK = tiempo_OK + level[k].tiempo_juego;
-							n_user_OK++;
-							break;
-						}
-					}
+			
+		for(var j = 0; j < jugadores_room_rest.length; j++){ //barrido de jugadores del room
+			for(var k = 0; k < level.length; k++){ // Busca los datos de nivel_usuario para sumar sus tiempos y correctas
+				if (jugadores_room_rest[j].id == level[k].id_usuario && level[k].estado == "completado") {
+					correctas_OK = correctas_OK + level[k].correctas;
+					tiempo_OK = tiempo_OK + level[k].tiempo_juego;
+					n_user_OK++;
+					break;
 				}
 			}
-			if (n_user_OK == 0) n_user_OK = -1;
-		});
+		}
+		
+		if (n_user_OK == 0) n_user_OK = -1;
+	
 		correctas_OK = correctas_OK / n_user_OK;
 		tiempo_OK = tiempo_OK / n_user_OK;
-		efectividad_rest = EficienciaMeta(correctas_OK, tiempo_OK);
+		eficiencia_rest = EficienciaMeta(correctas_OK, tiempo_OK);
 
-		diferencia = efectividad_default - efectividad_rest;
+		diferencia = eficiencia_default - eficiencia_rest;
 		if (diferencia < 0) diferencia = diferencia * (-1);
 		eficiencia_room = eficiencia_room + diferencia;
 	}
@@ -221,28 +209,18 @@ function AccesibilidadPorTiempo(rooms_default, rooms_rest, level, TodoService){ 
 }
 
 //SATISFACCION
-//Escala de satisfacción del jugador (id: 11)
-function EscalaSatisfaccion(n_completos, n_usuarios){ //Número de usuarios que completaron el nivel vs total de usuarios de ese nivel
-	return n_completos / n_usuarios;
-}
-//Preferencias de uso con respecto del nivel vs el resto de niveles
-function PreferenciaUso(n_completos, nivel, TodoService){ //Escala de completitud de meta del nivel vs escala completitud de meta del resto de niveles
+
+//Preferencias de uso con respecto del nivel vs el resto de niveles (id: 11)
+function PreferenciaUso(n_completos, nivel, niveles, level_users){ //Escala de completitud de meta del nivel vs escala completitud de meta del resto de niveles
 	//Se usa la relacion de usuarios que completaron el nivel vs el numero total de usuarios, denota que usuarios terminaron el nivel vs los que abandonaron
 	var completitud_nivel = 0;
 	var id_nivel = nivel[0].id_nivel;
-	var niveles = [], level_users = [];
 	var n_nivel_OK = 0, n_nivel = 0;
 	var diferencia = 0;
 	var eficiencia_nivel = 0;
 	
-	completitud_nivel = CompletitudMeta(n_completos, nivel.length);
+	completitud_nivel = CompletitudMeta(n_completos, nivel.length) / 100;
 
-	TodoService.getLevels().then(function(response) {
-		niveles = response;
-	});
-	TodoService.getLevelUser().then(function(response) {
-		level_users = response;
-	});
 	
 	for(var i=0; i < niveles.length; i++){
 		for(var j=0; j < level_users.length; j++){
@@ -252,13 +230,13 @@ function PreferenciaUso(n_completos, nivel, TodoService){ //Escala de completitu
 			}
 		}
 		//promedio de un nivel
-		diferencia = completitud_nivel - CompletitudMeta(n_nivel_OK, n_nivel);
+		diferencia = completitud_nivel - CompletitudMeta(n_nivel_OK, n_nivel) / 100;
 		eficiencia_nivel = eficiencia_nivel + diferencia;
 	}
 
 	eficiencia_nivel = eficiencia_nivel / (niveles.length - 1);
 
-	return eficiencia_nivel;
+	return eficiencia_nivel * 100;
 }
 
 
