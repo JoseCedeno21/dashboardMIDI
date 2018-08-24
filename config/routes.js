@@ -22,6 +22,7 @@ module.exports.routes = {
   'GET /games':                         { controller: 'dashboard/GetInformacionController', action:'games' },
   'GET /niveles':                       { controller: 'dashboard/GetInformacionController', action:'niveles' },
   'GET /nivel/:id':                     { controller: 'dashboard/GetInformacionController', action:'nivel' },
+  'GET /roomsByLevel/:idlevel':         { controller: 'dashboard/GetInformacionController', action:'roomsByLevel' },
   'GET /leveluser/:idLevel':            { controller: 'dashboard/GetInformacionController', action:'leveluserBylevel' },
   'GET /learnuser/:idLevel':            { controller: 'dashboard/GetInformacionController', action:'learnuserBylevel' },
   'GET /rooms':                         { controller: 'dashboard/GetInformacionController', action:'rooms' },
@@ -32,8 +33,9 @@ module.exports.routes = {
   'GET /nivelesByChapter/:idChapter':   { controller: 'dashboard/GetInformacionController', action:'NivelesByChapter' },
   'GET /datosByJugador/:idJugador':     { controller: 'dashboard/GetInformacionController', action:'datosByJugador' },
   'GET /metrics':                       { controller: 'dashboard/GetInformacionController', action:'metrics' },
-  'GET /roomsByLevel/:idlevel':     { controller: 'dashboard/GetInformacionController', action:'roomsByLevel' },
-  'GET /levelAnduser/:idLevelidUser':     { controller: 'dashboard/GetInformacionController', action:'leveluserByLevelUser' },
+  'GET /getLevelUser':                  { controller: 'dashboard/GetInformacionController', action:'levelusers' },
+  'GET /usersByRoom/:idRoom':           { controller: 'dashboard/GetInformacionController', action:'usersByRoom' },
+  'GET /levelAnduser/:idLevelidUser':   { controller: 'dashboard/GetInformacionController', action:'leveluserByLevelUser' },
 
 
   //'GET /forms':            { action: 'dashboard/view-forms' },

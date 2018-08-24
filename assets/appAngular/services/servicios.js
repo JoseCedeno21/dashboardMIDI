@@ -108,6 +108,15 @@ app.service('TodoService', function($http, $q) {
       });
       return defer.promise;
     },
+    'getRoomsByLevel': function(idlevel) {
+      var defer = $q.defer();
+      $http.get('/roomsByLevel/' + idlevel).success(function(resp){
+        defer.resolve(resp);
+      }).error( function(err) {
+        defer.reject(err);
+      });
+      return defer.promise;
+    },
     'getLevelUserByLevel': function(id) {
       var defer = $q.defer();
       $http.get('/leveluser/'+id).success(function(resp){
@@ -135,18 +144,27 @@ app.service('TodoService', function($http, $q) {
       });
       return defer.promise;
     },
-    'getRoomsByLevel': function(idlevel) {
+    'getLevelUserByLevelUser': function(idLevel_idUser) {
       var defer = $q.defer();
-      $http.get('/roomsByLevel/' + idlevel).success(function(resp){
+      $http.get('/leveluserByUser/' + idLevel_idUser).success(function(resp){
         defer.resolve(resp);
       }).error( function(err) {
         defer.reject(err);
       });
       return defer.promise;
     },
-    'getLevelUserByLevelUser': function(idLevel_idUser) {
+    'getUsersByRoom': function(idRoom) {
       var defer = $q.defer();
-      $http.get('/leveluserByUser/' + idLevel_idUser).success(function(resp){
+      $http.get('/usersByRoom/' + idRoom).success(function(resp){
+        defer.resolve(resp);
+      }).error( function(err) {
+        defer.reject(err);
+      });
+      return defer.promise;
+    },
+    'getLevelUser': function() {
+      var defer = $q.defer();
+      $http.get('/getLevelUser').success(function(resp){
         defer.resolve(resp);
       }).error( function(err) {
         defer.reject(err);

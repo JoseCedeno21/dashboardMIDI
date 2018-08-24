@@ -101,6 +101,15 @@ module.exports = {
   	res.json(niveles);
   },
 
+  roomsByLevel: async function(req, res){
+    var nivel = await Nivel.findOne({id:req.params.idlevel});
+    var chapter = await Chapter.findOne({id:nivel.id_chapter});
+    var game = await Game.findOne({id:chapter.id_game});
+    var rooms = await Room.find({id_juego:game.id});
+
+    res.json(rooms);
+  },
+
   leveluserBylevel: async function(req, res){
     var level = await Nivel_usuario.find({id_nivel:req.params.idLevel});
     res.json(level);
@@ -179,13 +188,10 @@ module.exports = {
   	res.json(games);
   },
 
-  roomsByLevel: async function(req, res){
-    var nivel = await Nivel.findOne({id:req.params.idlevel});
-    var chapter = await Chapter.findOne({id:nivel.id_chapter});
-    var game = await Game.findOne({id:chapter.id_game});
-    var rooms = await Room.find({id_juego:game.id});
+  usersByRoom: async function(req, res){
+    var jugadores = await Jugador.find({id_room:req.params.idRoom});
 
-    res.json(rooms);
+    res.json(jugadores);
   },
 
   leveluserByLevelUser: async function(req, res){
@@ -198,7 +204,12 @@ module.exports = {
     var level_user = await Nivel_usuario.find({id_usuario:idUser, id_nivel:idLevel});
 
     res.json(level_user);
-  }
+  },
+
+  levelusers: async function(req, res){
+    var level_user = await Nivel_usuario.find();
+    res.json(level_user);
+  },
 
 };
 
