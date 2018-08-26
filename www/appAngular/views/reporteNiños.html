@@ -1,0 +1,77 @@
+<div class="breadcrumb-holder" style="line-height: 50px">
+  <div class="row" style="padding-top: 5px; padding-right: 30px">
+    <div class="form-group col-md-2 col-ls-6" style="text-align: right; padding-top: 5px">
+          <div class="name" id="tituloSelect"><strong class="text-uppercase">Elegir Aula:</strong></div>
+      </div>
+      <div class="form-group col-md-2 col-ls-6">
+          <select class="form-control" id="game" name="game" ng-model="select.roomId" style="margin-top: 10px" ng-change="jugadoresRoom()">
+            <option ng-value="room.id" value="room.id" ng-repeat="room in rooms">{{room.nombre.trim()}}</option>
+          </select>
+      </div>
+      <div class="form-group col-md-2 col-ls-6" style="text-align: right; padding-top: 5px">
+          <div class="name" id="tituloSelect"><strong class="text-uppercase">Elegir Niño:</strong></div>
+      </div>
+      <div class="form-group col-md-2 col-ls-6">
+          <select class="form-control" id="jugador" name="jugador" ng-model="select.jugadorId" style="margin-top: 10px" ng-change="datosJugadorFunc()">
+            <option ng-value="jugador.id" value="jugador.id" ng-repeat="jugador in jugadores">{{jugador.nombre.trim()}}</option>
+          </select>
+      </div>
+      <div class="form-group col-md-2 col-ls-6" style="text-align: right; padding-top: 5px">
+          <div class="name" id="tituloSelect"><strong class="text-uppercase">Elegir Juego:</strong></div>
+      </div>
+      <div class="form-group col-md-2 col-ls-6">
+          <select class="form-control" id="game" name="game" ng-model="select.gameId" style="margin-top: 10px" ng-change="mostrarReporte()">
+            <option ng-value="game.id" value="game.id" ng-repeat="game in games">{{game.nombre.trim()}}</option>
+          </select>
+      </div>
+
+  </div>
+</div>
+
+<div id="noDatos" class="titulosPadding">
+    <div class="noDatos1">NO HAY DATOS PARA MOSTRAR</div>
+    <div class="noDatos2">Por Favor Seleccione un Juego y un Niño para presentar el reporte</div>
+</div>
+
+<div id="reporte" style="padding: 40px">
+	<section>
+		<div class="row">
+			<div class="col-12 text-center">
+				<h1>REPORTE DE JUEGO {{(datos.nombre).toUpperCase()}}</h1>
+			</div>
+			<div class="col-12" ng-repeat="(index1, capitulo) in datos.chapters">
+				<div class="row" style="margin-top: 25px">
+					<div class="col-12">
+						<h2>Capitulo {{index1}}: {{capitulo.nombre}}</h2>
+						<hr>
+					</div>
+					<div class="col-12">
+						<h4>> Modo Historia</h4>
+					</div>
+					<div class="col-12" style="margin-left: 15px">
+						<p>La fecha de inicio fue {{fechaInicio[index1].fecha}}, la fecha de finalización fue {{fechaFin[index1].fecha}}</p>
+						<p>El tiempo de duración de la historia en este capitulo es de: {{capitulo.learning[0].duracion}} segundos.</p>
+						<p>El tiempo que ha demorado el niño en visualizar esta historia es de {{promTiempo[index1].conclusion}}.</p>
+						<p>La cantidad  de veces que el niño ha visualizado esta historia es de {{promIntentos[index1].cantidad}}.</p>
+						<p>El niño <strong>{{completadoHistoria[index1].completado}}</strong> ha completado la historia.</p>
+					</div>	
+					<div class="col-12">
+						<h4>> Modo Juegos</h4>
+					</div>
+					<div class="col-12" ng-repeat="(index2,nivel) in datos.chapters[index1].niveles[0]">
+						<p style="text-decoration: underline;">Nivel {{index2}}: {{nivel.nombre}}</p>
+						<div class="row" style="margin-left: 25px">
+							<div class="col-12" >
+								<p>La cantidad de posibles preguntas a responder en este nivel es de {{datosJuego[index1].correctas[index2].conclusion}}.</p>
+								<p>El tiempo que demoró el niño en completar este nivel es de {{datosJuego[index1].tiempo[index2].cantidad}} segundos.</p>
+								<p>El niño <strong>{{datosJuego[index1].completado[index2].completado}}</strong> ha completado el juego.</p>
+							</div>
+						</div>
+					</div>					
+				</div>
+			</div>
+
+
+		</div>
+	</section>
+</div>

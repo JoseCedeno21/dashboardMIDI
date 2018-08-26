@@ -14,9 +14,14 @@
           <div class="name" id="tituloSelect"><strong class="text-uppercase">Elegir Nivel:</strong></div>
       </div>
       <div class="form-group col-md-2 col-ls-6">
-          <select class="form-control" id="level" name="level" ng-model="select.levelId" style="margin-top: 10px" ng-change="funcionLevel()">
+          <select class="form-control" id="level" name="level" ng-model="select.levelId" style="margin-top: 10px">
             <option ng-value="level.id" value="level.id" ng-repeat="level in levels_room">{{level.nombre.trim()}}</option>
           </select>
+      </div>
+
+      <div class="col-md-1"></div>
+      <div class="form-group col-md-2 col-ls-6 text-center" >
+        <button class="btn btn-primary" ng-click="funcionLevel()" style="width: -webkit-fill-available">Mostrar</button>
       </div>
 
   </div>
@@ -26,7 +31,7 @@
   <div class="container-fluid">
     <div class="card" style="padding: 0 3rem">
       <div class="tituloTabla">
-        Evaluaciones del Nivel
+        Evaluaciones del Room: {{room_actual.nombre}}
       </div>
       <hr>
       <table datatable="ng" class="table table-bordered text-center" id="mytable">

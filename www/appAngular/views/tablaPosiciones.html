@@ -1,0 +1,48 @@
+<div class="breadcrumb-holder" style="line-height: 50px">
+	<div class="row" style="padding-top: 5px">
+		<div class="form-group col-md-2 col-ls-6" style="text-align: right; padding-top: 5px">
+	        <div class="name" id="tituloSelect"><strong class="text-uppercase">Elegir Juego:</strong></div>
+	    </div>
+	    <div class="form-group col-md-3 col-ls-6">
+	        <select class="form-control" id="select" name="game" ng-model="select.gameId" style="margin-top: 10px" ng-change="datosGame()">
+	            <option ng-value="game.id" value="game.id" ng-repeat="game in games">{{game.nombre.trim()}}</option>
+	        </select>
+	    </div>
+	    <div class="col-md-7 col-ls-12">
+		    <div class="container-fluid" style="text-align: right;">
+		        Guayaqui, 19 de julio del 2018
+		    </div>
+		</div>
+	</div>
+</div>
+
+<div style="padding: 20px">
+	<div class="container-fluid">
+		<div class="card" style="padding: 0 3rem">
+			<div class="tituloTabla">
+				Tabla de posiciones
+			</div>
+			<hr>
+			<table datatable="ng" class="table table-bordered text-center" id="mytable">
+			  <thead>
+			    <tr>
+			      <th scope="col">#</th>
+			      <th scope="col">Nombre</th> 
+			      <th scope="col">Niveles Jugados</th>
+			      <th scope="col">Puntuación</th>
+			      <th scope="col" ng-if="temp">Tiempo(s)</th>
+			    </tr>
+			  </thead>
+			  <tbody>
+			    <tr ng-repeat="jugador in jugadores | orderBy: '-puntos'">
+			      <th>{{$index+1}}</th>
+			      <td>{{jugador.nombre}}</td>
+			      <td>{{jugador.cantidad}}</td>
+			      <td>{{jugador.puntos}}</td>
+			      <td ng-if="temp">{{jugador.tiempo}}</td>
+			    </tr>
+			  </tbody>
+			</table>
+		</div>
+	</div> 
+</div>

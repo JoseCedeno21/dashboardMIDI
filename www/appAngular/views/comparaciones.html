@@ -1,0 +1,92 @@
+<div class="breadcrumb-holder" style="line-height: 50px">
+	<div class="row" style="padding-top: 5px">
+		<div class="form-group col-md-2 col-ls-6" style="text-align: right; padding-top: 5px">
+	        <div class="name" id="tituloSelect"><strong class="text-uppercase">Elegir Juego:</strong></div>
+	    </div>
+	    <div class="form-group col-md-2 col-ls-6">
+	        <select class="form-control" id="select" name="game1" ng-model="select1.gameId" style="margin-top: 10px">
+	            <option ng-value="game.id" value="game.id" ng-repeat="game in games">{{game.nombre.trim()}}</option>
+	        </select>
+	    </div>
+	    <div class="form-group col-md-2 col-ls-6" style="text-align: right; padding-top: 5px">
+	        <div class="name" id="tituloSelect"><strong class="text-uppercase">Elegir Juego:</strong></div>
+	    </div>
+	    <div class="form-group col-md-2 col-ls-6">
+	        <select class="form-control" id="select2" name="game2" ng-model="select2.gameId" style="margin-top: 10px">
+	            <option ng-value="game.id" value="game.id" ng-repeat="game in games">{{game.nombre.trim()}}</option>
+	        </select>
+	    </div>
+	    <div class="col-md-1"></div>
+	    <div class="form-group col-md-2 col-ls-6 text-center" >
+	    	<button class="btn btn-primary" ng-click="datosFunction()" style="width: -webkit-fill-available">Comparar</button>
+	    </div>
+	</div>
+</div>
+
+<div id="noDatos" class="titulosPadding">
+    <div class="noDatos1">NO HAY DATOS PARA MOSTRAR</div>
+    <div class="noDatos2">Por Favor Seleccione los juegos y presione el botón para comparar</div>
+</div>
+
+<section style="padding: 30px" id="comparacion">
+	<div class="row">
+		<div class="col-3 text-center">
+			<h2> Juego: {{datos1.nombre}}</h2>
+			<hr>
+			<div class="card project-progress">                    
+                <div class="pie-chart">
+                    <canvas id="incorrectas0" width="300" height="300"> </canvas>
+                </div>
+            </div>
+		</div>
+		<div class="col-3 " style="padding-top: 55px">
+			<p>Numero de historias:</p>
+			<p>- Completadas: {{historiaCompletas[0]}}</p>
+			<p>- Abandonadas: {{historiaAbandono[0]}}</p>
+			<hr>
+			<p>Tiempo aproximado en terminar el juego:</p>
+			<p>- {{juegoTiempo[0]}} segundos ({{juegoTiempoMinutos[0]}} minutos)</p>
+		</div>
+		<div class="col-3 text-center">
+			<h2> Juego: {{datos2.nombre}}</h2>
+			<hr>
+			<div class="card project-progress">    
+                <div class="pie-chart">
+                    <canvas id="incorrectas1" width="300" height="300"> </canvas>
+                </div>
+            </div>
+		</div>
+		<div class="col-3" style="padding-top: 55px">
+			<p>Numero de historias:</p>
+			<p>- Completadas: {{historiaCompletas[1]}}</p>
+			<p>- Abandonadas: {{historiaAbandono[1]}}</p>
+			<hr>
+			<p>Tiempo aproximado en terminar el juego:</p>
+			<p>- {{juegoTiempo[1]}} segundos ({{juegoTiempoMinutos[1]}} minutos)</p>
+		</div>
+		<div class="col-3">
+			<div class="card project-progress">    
+                <div class="pie-chart">
+                    <canvas id="completas0" width="300" height="300"> </canvas>
+                </div>
+            </div>
+		</div>
+		<div class="col-3" style="padding-top: 25px">
+			<p>Cantidad de niveles:</p>
+			<p>- completados: {{juegoCompletas[0]}}</p>
+			<p>- abandonados: {{juegoAbandono[0]}}</p>
+		</div>
+		<div class="col-3">
+			<div class="card project-progress">    
+                <div class="pie-chart">
+                    <canvas id="completas1" width="300" height="300"> </canvas>
+                </div>
+            </div>
+		</div>
+		<div class="col-3" style="padding-top: 25px">
+			<p>Cantidad de niveles:</p>
+			<p>- completados: {{juegoCompletas[1]}}</p>
+			<p>- abandonados: {{juegoAbandono[1]}}</p>
+		</div>
+	</div>
+</section>

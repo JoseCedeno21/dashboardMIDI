@@ -110,6 +110,11 @@ module.exports = {
     res.json(rooms);
   },
 
+  roomById: async function(req, res){
+    var room = await Room.findOne({id:req.params.id});
+    res.json(room);
+  },
+
   leveluserBylevel: async function(req, res){
     var level = await Nivel_usuario.find({id_nivel:req.params.idLevel});
     res.json(level);
