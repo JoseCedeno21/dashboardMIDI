@@ -171,4 +171,22 @@ app.service('TodoService', function($http, $q) {
       });
       return defer.promise;
     },
+    'getLevelsByRoom': function(idRoom) {
+      var defer = $q.defer();
+      $http.get('/levelsByRoom/' + idRoom).success(function(resp){
+        defer.resolve(resp);
+      }).error( function(err) {
+        defer.reject(err);
+      });
+      return defer.promise;
+    },
+    'getLevelUserByRoom': function(idRoom) {
+      var defer = $q.defer();
+      $http.get('/leveluserByRoom/' + idRoom).success(function(resp){
+        defer.resolve(resp);
+      }).error( function(err) {
+        defer.reject(err);
+      });
+      return defer.promise;
+    },
 }});

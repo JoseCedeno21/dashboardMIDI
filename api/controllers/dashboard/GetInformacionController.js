@@ -211,5 +211,52 @@ module.exports = {
     res.json(level_user);
   },
 
+  levelsByRoom: async function(req, res){
+    var level_room = [], level_room_tmp = [];
+    var level_users = [];
+    var nivel = null;
+
+    var jugadores = await Jugador.find({id_room:req.params.idRoom});
+
+    for(var i = 0; i < jugadores.length; i++){
+      level_users = await Nivel_usuario.find({id_usuario:jugadores[i].id});
+      for(var j = 0; j < level_users.length; j++){
+        nivel = await Nivel.findOne({id:level_users[j].id_nivel});
+        
+        if (nivel != null) {
+          level_room_tmp = level_room.filter(function(level_tmp) {
+            return level_tmp.id === nivel.id;
+          });
+          
+        }
+
+        if (level_room_tmp.length == 0) level_room.push(nivel);
+
+        nivel = null;
+        level_room_tmp = [];
+      }
+    }
+
+    
+
+    res.json(level_room);
+  },
+
+  leveluserByRoom: async function(req, res){
+    var jugadores = await Jugador.find({id_room:req.params.idRoom});
+    var level_user_tmp = await Nivel_usuario.find();
+    var level_user = [];
+
+    for(var i = 0; i < level_user_tmp.length; i++){
+      for(var j = 0; j < jugadores.length; j++){
+        if (level_user_tmp[i].id_usuario == jugadores[j].id) {
+          level_user.push(level_user_tmp[i]);
+        }
+      }
+    }
+    
+    res.json(level_user);
+  },
+
 };
 

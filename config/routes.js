@@ -36,6 +36,8 @@ module.exports.routes = {
   'GET /getLevelUser':                  { controller: 'dashboard/GetInformacionController', action:'levelusers' },
   'GET /usersByRoom/:idRoom':           { controller: 'dashboard/GetInformacionController', action:'usersByRoom' },
   'GET /levelAnduser/:idLevelidUser':   { controller: 'dashboard/GetInformacionController', action:'leveluserByLevelUser' },
+  'GET /levelsByRoom/:idRoom':          { controller: 'dashboard/GetInformacionController', action:'levelsByRoom' },
+  'GET /leveluserByRoom/:idRoom':       { controller: 'dashboard/GetInformacionController', action:'leveluserByRoom' },
 
 
   //'GET /forms':            { action: 'dashboard/view-forms' },
