@@ -109,7 +109,7 @@ module.exports = {
 
 
 		if(datos.tipo == "historia"){
-			var jugador = await Jugador.findOne({id_registro:datos.jugador_idregistro});
+			var jugador = await Jugador.find({id_registro:datos.jugador_idregistro});
 			var juego = await Game.findOne({nombre:datos.nombre_juego});
 			if(!juego){
 				await Game.create({
@@ -125,6 +125,7 @@ module.exports = {
 			}
 			var capitulo = await Chapter.findOne({nombre:datos.nombre_capitulo,id_game:juego.id});
 			if(!capitulo){
+
 				var capitulo = await Chapter.create({
 					nombre: datos.nombre_capitulo,
 					descripcion: datos.descripcion_juego,
@@ -152,10 +153,10 @@ module.exports = {
 				console.log("historia ya registrado")
 				console.log(learning)
 			}
-			var learn_jugador = await Learn_jugador.findOne({id_jugador:jugador.id,id_learning:learning.id});
+			var learn_jugador = await Learn_jugador.findOne({id_jugador:jugador[0].id,id_learning:learning.id});
 			if(!learn_jugador){
 				var learn_jugador = await Learn_jugador.create({
-					id_jugador: jugador.id,
+					id_jugador: jugador[0].id,
 					id_learning: learning.id,
 					fecha_inicio: datos.fecha_inicio,
 					fecha_fin: datos.fecha_fin,
@@ -165,11 +166,11 @@ module.exports = {
 				})	
 				console.log("historia de jugador guardada")		
 			} else {
-				await Learn_jugador.update({id_jugador:jugador.id,id_learning:learning.id}).set({
+				await Learn_jugador.update({id_jugador:jugador[0].id,id_learning:learning.id}).set({
 					fecha_fin: datos.fecha_fin,
 					tiempo_juego: datos.tiempo_juego,
 					estado: datos.estado,
-					num_play: learn_jugador.intentos + 1
+					num_play: learn_jugador.num_play + 1
 				})
 				console.log("historia de jugador actualizada")	
 			}
