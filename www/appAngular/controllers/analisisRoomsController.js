@@ -6,6 +6,9 @@ app.controller('analisisRoomsController', ['$scope', '$rootScope', 'TodoService'
     $scope.jugadores = [];  
     $scope.rooms = [];
 
+    $scope.room_actual = {};
+    $scope.nivel_actual = {};
+
     var efectividad_default = 0;
     var niveles = [], level_users = [];
 
@@ -20,6 +23,9 @@ app.controller('analisisRoomsController', ['$scope', '$rootScope', 'TodoService'
         idRoomActual = $scope.select.roomId;
         TodoService.getLevelsByRoom(idRoomActual).then(function(response) {
             $scope.levels_room = response;
+            TodoService.getRoomById(idRoomActual).then(function(response) {
+                $scope.room_actual = response;
+            });
         });
     }
 
@@ -77,9 +83,13 @@ app.controller('analisisRoomsController', ['$scope', '$rootScope', 'TodoService'
         var rooms_rest = [];
         var jugadores_room_default = [], jugadores_room_rest = [];
 
-        
+                
         TodoService.getLearnUserByLevel($scope.select.levelId).then(function(response) {
             $scope.learning = response;
+        });
+
+        TodoService.getNivelById($scope.select.levelId).then(function(response) {
+            $scope.nivel_actual = response;
         });
 
         
@@ -107,11 +117,12 @@ app.controller('analisisRoomsController', ['$scope', '$rootScope', 'TodoService'
         }
         TodoService.getLevelUserByRoom(idRoomActual).then(function(response) {
             $scope.resultados = [];
+            $scope.level = [];
             //$scope.level = response;
 
             for(var i = 0; i < response.length; i++){
-                if (response[i].id_nivel == $scope.select.levelId) {}
-                $scope.level.push(response[i]);
+                if (response[i].id_nivel == $scope.select.levelId) 
+                    $scope.level.push(response[i]);
             }
             
 

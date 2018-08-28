@@ -229,7 +229,7 @@ app.controller('interpretacionController', ['$scope', '$rootScope', 'TodoService
 						//Satisfaccion
 						case 11:
 							resultado = PreferenciaUso(n_user_complete, $scope.level, niveles, level_users).toFixed(3);
-							$scope.resultados[i].resultado = resultado;
+							$scope.resultados[i].resultado = resultado / 100;
 							break;
 		        		default:
 		        			break;

@@ -36,6 +36,15 @@ app.service('TodoService', function($http, $q) {
       });
       return defer.promise;
     },
+    'getRoomById': function(id) {
+      var defer = $q.defer();
+      $http.get('/room/' + id).success(function(resp){
+        defer.resolve(resp);
+      }).error( function(err) {
+        defer.reject(err);
+      });
+      return defer.promise;
+    },
     'getJugadores': function() {
       var defer = $q.defer();
       $http.get('/jugadores').success(function(resp){
