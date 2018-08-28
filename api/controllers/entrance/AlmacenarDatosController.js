@@ -110,7 +110,7 @@ module.exports = {
 
 		if(datos.tipo == "historia"){
 			var jugador = await Jugador.findOne({id_registro:datos.jugador_idregistro});
-			var juego = await Game.find({nombre:datos.nombre_juego});
+			var juego = await Game.findOne({nombre:datos.nombre_juego});
 			if(!juego){
 				await Game.create({
 					nombre: datos.nombre_juego,

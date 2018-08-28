@@ -24,6 +24,10 @@ module.exports = {
     puntos:{
         type: 'number',
         required: true
+    },
+    id_registro:{
+        type: 'number',
+        required: true
     }
 
     //  ╔═╗╦═╗╦╔╦╗╦╔╦╗╦╦  ╦╔═╗╔═╗
