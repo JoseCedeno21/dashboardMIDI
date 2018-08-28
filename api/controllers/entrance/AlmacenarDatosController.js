@@ -10,7 +10,8 @@ module.exports = {
 	guardar: async function(req, res){
 		var datos = req.body;
 		var jugador;
-
+		console.log("datos:");
+		console.log(datos);
 		if(datos.tipo == "jugador"){
 			var jugador = await Jugador.findOne({nombre:datos.nombre_jugador});
 			if(!jugador){
