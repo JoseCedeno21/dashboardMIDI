@@ -60,11 +60,19 @@ module.exports = {
 				console.log(capitulo)
 			}
 			var nivel = await Nivel.findOne({nombre:datos.nombre_nivel,id_chapter:capitulo.id});
+			var learning_tmp = await Learning.findOne({id:datos.nombre_historia});			
+			console.log("historia");
+			console.log(learning_tmp);
+			if (!learning_tmp) {
+				console.log('No existe esa historia');
+				return res.status(400).send('No existe esa historia');
+			}
 			if(!nivel){
 				var nivel = await Nivel.create({
 					nombre: datos.nombre_nivel,
 					descripcion: datos.descripcion_nivel,
-					id_chapter: capitulo.id
+					id_chapter: capitulo.id,
+					id_learning: learning_tmp.id
 				})
 				var nivel = await Nivel.findOne({nombre:datos.nombre_nivel,id_chapter:capitulo.id});
 				console.log("nivel nuevo guardado")
