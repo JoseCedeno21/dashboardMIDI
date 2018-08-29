@@ -15,12 +15,12 @@ module.exports = {
 		if(datos.tipo == "jugador"){
 			var jugador = await Jugador.findOne({nombre:datos.nombre_jugador});
 			if(!jugador){
-				var jugador = await Jugador.create({
+				await Jugador.create({
 					avatar: datos.avatar,
-					id_registro: datos.id_registro,
 					nombre: datos.nombre_jugador,
 					id_room: datos.id_room,
-					puntos: 0
+					puntos: 0,
+					id_registro: datos.id_registro
 				})
 				console.log("jugador guardado")
 				console.log(jugador)
