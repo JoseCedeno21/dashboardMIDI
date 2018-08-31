@@ -26,11 +26,11 @@ app.controller('setRoomController', ['$scope', '$rootScope', 'TodoService', func
             if(element.id == idRoomActual) estado = "Activo";
             else estado = "Inactivo";
             //await Room.update({id:room.id}).set({estado:Inactivo});
-            var arr = { idRoom: element.id, estado: estado };
+            var arr = { idRoom: element.id, estado: estado, tipo:"room" };
             $.ajax({
                 async: true,
-                //url: 'http://localhost:1337/api/v1/entrance/AlmacenarDatosController',
-                url: 'http://hidden-wildwood-12729.herokuapp.com/api/v1/entrance/AlmacenarDatosController',
+                url: 'http://localhost:1337/api/v1/entrance/AlmacenarDatosController',
+                //url: 'http://hidden-wildwood-12729.herokuapp.com/api/v1/entrance/AlmacenarDatosController',
                 type: 'POST',
                 data: JSON.stringify(arr),
                 contentType: 'application/json; charset=utf-8',

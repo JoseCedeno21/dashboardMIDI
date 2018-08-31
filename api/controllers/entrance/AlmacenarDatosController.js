@@ -14,11 +14,12 @@ module.exports = {
 		console.log(datos);
 		if(datos.tipo == "jugador"){
 			var jugador = await Jugador.findOne({nombre:datos.nombre_jugador});
+			var room_tmp = await Room.findOne({estado:"Activo"});
 			if(!jugador){
 				await Jugador.create({
 					avatar: datos.avatar,
 					nombre: datos.nombre_jugador,
-					id_room: datos.id_room,
+					id_room: room_tmp.id,
 					puntos: 0,
 					id_registro: datos.id_registro
 				})
@@ -187,15 +188,9 @@ module.exports = {
 				console.log("historia de jugador actualizada")	
 			}
 		}
-
-		return res.status(200).send('ok');
-	},
-
-	estadoroom: async function(req, res){
-		var datos = req.body;
-		console.log(datos);
-
-		await Room.update({id:datos.idRoom}).set({estado:datos.estado});
+		if(datos.tipo == "room"){
+			await Room.update({id:datos.idRoom}).set({estado:datos.estado});
+		}
 
 		return res.status(200).send('ok');
 	}
