@@ -92,6 +92,7 @@ var jsFilesToInject = [
 
   //appAngular
   'appAngular/routes/*js',
+  'appAngular/controllers/*.js',
   'appAngular/**/*.js',
 
   // All of the rest of your custom client-side js files will be injected here,

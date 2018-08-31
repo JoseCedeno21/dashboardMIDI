@@ -22,7 +22,7 @@
   <div class="container-fluid">
     <div class="card" style="padding: 0 3rem">
       <div class="tituloTabla">
-        Rooms
+        Rooms: {{room_actual.nombre}}
       </div>
       <hr>
       <table datatable="ng" class="table table-bordered text-center" id="mytable">
@@ -37,13 +37,13 @@
           </tr>
         </thead>
         <tbody>
-          <tr ng-repeat="resultado in resultados | orderBy: 'id'">
+          <tr ng-repeat="room in rooms | orderBy: 'id'">
             <th>{{$index+1}}</th>
-            <td>{{resultado.nombre}}</td>
-            <td>{{resultado.descripcion}}</td>
-            <td>{{resultado.tipo}}</td>
-            <td>{{resultado.edad}}</td>
-            <td>{{resultado.estado}}</td>
+            <td>{{room.nombre}}</td>
+            <td>{{room.descripcion}}</td>
+            <td>{{room.tipo}}</td>
+            <td>{{room.edad}}</td>
+            <td>{{room.estado}}</td>
           </tr>
         </tbody>
       </table>

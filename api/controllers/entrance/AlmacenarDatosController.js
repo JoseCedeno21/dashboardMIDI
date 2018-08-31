@@ -189,6 +189,15 @@ module.exports = {
 		}
 
 		return res.status(200).send('ok');
+	},
+
+	estadoroom: async function(req, res){
+		var datos = req.body;
+		console.log(datos);
+
+		await Room.update({id:datos.idRoom}).set({estado:datos.estado});
+
+		return res.status(200).send('ok');
 	}
 };
 
