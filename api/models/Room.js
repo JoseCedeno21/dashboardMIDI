@@ -22,6 +22,9 @@ module.exports = {
     edad: {
         type: 'number'
     },
+    estado: {
+        type: 'string'
+    },
     id_juego:{
         type: 'number',
         required: true

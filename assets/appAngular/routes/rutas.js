@@ -40,6 +40,10 @@ app.config(['$routeProvider',
       templateUrl: '/appAngular/views/analisisNivel.html',
       controller: 'analisisNivelController'
     }).
+    when('/setRoom', {
+      templateUrl: '/appAngular/views/setRoom.html',
+      controller: 'setRoomController'
+    }).
     otherwise({
       redirectTo: '/',
       caseInsensitiveMatch: true
