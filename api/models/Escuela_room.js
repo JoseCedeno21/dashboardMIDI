@@ -1,5 +1,5 @@
 /**
- * Room.js
+ * Escruela_room.js
  *
  * @description :: A model definition.  Represents a database table/collection/etc.
  * @docs        :: https://sailsjs.com/docs/concepts/models-and-orm/models
@@ -9,21 +9,16 @@ module.exports = {
 
   attributes: {
 
-    nombre: {
-        type: 'string',
+    id_escuela: {
+        type: 'number',
+        required: true
+    },
+    id_room: {
+        type: 'number',
         required: true
     },
     descripcion: {
-        type: 'string'
-    },
-    tipo: {
-        type: 'string'
-    },
-    edad: {
-        type: 'number'
-    },
-    id_juego:{
-        type: 'number',
+        type: 'string',
         required: true
     }
 
@@ -44,4 +39,3 @@ module.exports = {
   },
 
 };
-

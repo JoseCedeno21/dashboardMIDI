@@ -28,6 +28,10 @@ module.exports = {
     id_registro:{
         type: 'number',
         required: true
+    },
+    id_escuela:{
+        type: 'number',
+        required: true
     }
 
     //  ╔═╗╦═╗╦╔╦╗╦╔╦╗╦╦  ╦╔═╗╔═╗

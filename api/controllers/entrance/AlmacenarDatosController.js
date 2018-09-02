@@ -13,16 +13,48 @@ module.exports = {
 		console.log("datos:");
 		console.log(datos);
 		if(datos.tipo == "jugador"){
-			var jugador = await Jugador.findOne({nombre:datos.nombre_jugador});
-			var room_tmp = await Room.findOne({estado:"Activo"});
+			var cadena_jugador = datos.nombre_jugador;
+		    var cadena_escuela = "No definida";
+		    var cadena_room = "No definida";
+		    var cadena_nombre = "No definida";
+
+		    var arrayDeCadena = cadena_jugador.split("-", 3);
+		    if (arrayDeCadena.length >= 3) {
+			    cadena_escuela = arrayDeCadena[0];
+			    cadena_room = arrayDeCadena[1];
+			    cadena_nombre = arrayDeCadena[2];
+			}
+			var room = await Room.findOne({nombre:cadena_room});
+			var escuela = await Escuela.findOne({nombre:cadena_escuela});
+
+			console.log("escuela: " + cadena_escuela);
+			console.log("room: " + cadena_room);
+			console.log("nombre: " + cadena_nombre);
+			if (!room || !escuela){
+				console.log("Room o Escuela no existen");
+				return res.status(400).send('room or school not exist');
+			}
+
+			var escuela_room = await Escuela_room.find({id_escuela:escuela.id, id_room:room.id});
+
+			if (escuela_room.length <= 0) {
+				console.log("Escuala no tiene permiso para ingresar al room " + room.nombre);
+				return res.status(400).send('relation not exist');
+			}
+
+			jugador = await Jugador.findOne({nombre:cadena_nombre,id_escuela:escuela.id, id_room:room.id});
+
 			if(!jugador){
 				await Jugador.create({
 					avatar: datos.avatar,
-					nombre: datos.nombre_jugador,
-					id_room: room_tmp.id,
+					nombre: cadena_nombre,
+					id_room: room.id,
+					id_escuela: escuela.id,
 					puntos: 0,
-					id_registro: datos.id_registro
+					id_registro: 0
 				})
+				var jugador_actual = await Jugador.findOne({nombre:cadena_nombre,id_escuela:escuela.id, id_room:room.id});
+				await Jugador.update({id:jugador_actual.id}).set({id_registro:jugador_actual.id});
 				console.log("jugador guardado")
 				console.log(jugador)
 			} else {
