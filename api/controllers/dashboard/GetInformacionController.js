@@ -67,9 +67,15 @@ module.exports = {
   },
 
   rooms: async function(req, res){
-  	var room = await Room.find();
-  	res.json(room);
+    var room = await Room.find();
+    res.json(room);
   },
+
+  escuelas: async function(req, res){
+    var escuelas = await Escuela.find();
+    res.json(escuelas);
+  },
+
 
   jugadores: async function(req, res){
     var jugadores = await Jugador.find();
@@ -279,6 +285,29 @@ module.exports = {
     }
     
     res.json(level_user);
+  },
+
+  roomByEscuela: async function(req, res){
+    var room, rooms = [];
+    var escuela_room = await Escuela_room.find({id_escuela:req.params.idEscuela});
+    var room_tmp = await Room.find();
+
+    for(var i = 0; i < escuela_room.length; i++){
+      for(var j = 0; j < room_tmp.length; j++){
+        //room = await Room.find({id:escuela_room.id_room});
+        if (room_tmp[j].id == escuela_room[i].id_room) {
+          rooms.push(room_tmp[j]);
+        }
+      }
+    }
+    
+    res.json(rooms);
+  },
+
+  escuelaRoom: async function(req, res){
+    var escuela_room = await Escuela_room.find();
+    
+    res.json(escuela_room);
   },
 
 };

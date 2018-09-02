@@ -21,6 +21,7 @@ module.exports.routes = {
   'GET /cantidades':                    { controller: 'dashboard/GetInformacionController', action:'cantidades' },
   'GET /games':                         { controller: 'dashboard/GetInformacionController', action:'games' },
   'GET /niveles':                       { controller: 'dashboard/GetInformacionController', action:'niveles' },
+  'GET /escuelas':                      { controller: 'dashboard/GetInformacionController', action:'escuelas' },
   'GET /nivel/:id':                     { controller: 'dashboard/GetInformacionController', action:'nivel' },
   'GET /roomsByLevel/:idlevel':         { controller: 'dashboard/GetInformacionController', action:'roomsByLevel' },
   'GET /leveluser/:idLevel':            { controller: 'dashboard/GetInformacionController', action:'leveluserBylevel' },
@@ -40,6 +41,8 @@ module.exports.routes = {
   'GET /leveluserByRoom/:idRoom':       { controller: 'dashboard/GetInformacionController', action:'leveluserByRoom' },
   'GET /levelsByGame/:idGame':          { controller: 'dashboard/GetInformacionController', action:'levelsByGame' },
   'GET /room/:id':                      { controller: 'dashboard/GetInformacionController', action:'roomById' },
+  'GET /roomByEscuela/:idEscuela':      { controller: 'dashboard/GetInformacionController', action:'roomByEscuela' },
+  'GET /escuelaRoom':                   { controller: 'dashboard/GetInformacionController', action:'escuelaRoom' },
 
 
   //'GET /forms':            { action: 'dashboard/view-forms' },

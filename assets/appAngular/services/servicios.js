@@ -36,6 +36,15 @@ app.service('TodoService', function($http, $q) {
       });
       return defer.promise;
     },
+    'getEscuelas': function() {
+      var defer = $q.defer();
+      $http.get('/escuelas').success(function(resp){
+        defer.resolve(resp);
+      }).error( function(err) {
+        defer.reject(err);
+      });
+      return defer.promise;
+    },
     'getRoomById': function(id) {
       var defer = $q.defer();
       $http.get('/room/' + id).success(function(resp){
@@ -201,6 +210,24 @@ app.service('TodoService', function($http, $q) {
     'getLevelUserByRoom': function(idRoom) {
       var defer = $q.defer();
       $http.get('/leveluserByRoom/' + idRoom).success(function(resp){
+        defer.resolve(resp);
+      }).error( function(err) {
+        defer.reject(err);
+      });
+      return defer.promise;
+    },
+    'getRoomByEscuela': function(idEscuela) {
+      var defer = $q.defer();
+      $http.get('/roomByEscuela/' + idEscuela).success(function(resp){
+        defer.resolve(resp);
+      }).error( function(err) {
+        defer.reject(err);
+      });
+      return defer.promise;
+    },
+    getEscuelaRoom: function() {
+      var defer = $q.defer();
+      $http.get('/escuelaRoom').success(function(resp){
         defer.resolve(resp);
       }).error( function(err) {
         defer.reject(err);

@@ -2,6 +2,15 @@
   <div class="row" style="padding-top: 5px; padding-right: 30px">
 
       <div class="form-group col-md-2 col-ls-6" style="text-align: right; padding-top: 5px">
+          <div class="name" id="tituloSelect"><strong class="text-uppercase">Elegir Institución:</strong></div>
+      </div>
+      <div class="form-group col-md-2 col-ls-6">
+          <select class="form-control" id="escuela" name="escuela" ng-model="select.escId" style="margin-top: 10px" ng-change="escuelaRoom()">
+            <option ng-value="escuela.id" value="escuela.id" ng-repeat="escuela in escuelas">{{escuela.nombre.trim()}}</option>
+          </select>
+      </div>
+
+      <div class="form-group col-md-2 col-ls-6" style="text-align: right; padding-top: 5px">
           <div class="name" id="tituloSelect"><strong class="text-uppercase">Elegir Room:</strong></div>
       </div>
       <div class="form-group col-md-2 col-ls-6">
@@ -10,9 +19,14 @@
           </select>
       </div>
 
-      <div class="col-md-1"></div>
+      <div class="col-md-2"></div>
       <div class="form-group col-md-2 col-ls-6 text-center" >
-        <button class="btn btn-primary" ng-click="activateRoom()" style="width: -webkit-fill-available">Activar Room</button>
+        <button class="btn btn-primary" ng-click="activateRoom()" style="width: -webkit-fill-available">Activar/Desactivar</button>
+      </div>
+
+      <div class="col-md-2"></div>
+      <div class="form-group col-md-2 col-ls-6 text-center" >
+        <button class="btn btn-primary" ng-click="actualizarTabla()" style="width: -webkit-fill-available">Actualizar tabla</button>
       </div>
 
   </div>
@@ -22,28 +36,26 @@
   <div class="container-fluid">
     <div class="card" style="padding: 0 3rem">
       <div class="tituloTabla">
-        Rooms: {{room_actual.nombre}}
+        Escuelas con Salas activas
       </div>
       <hr>
       <table datatable="ng" class="table table-bordered text-center" id="mytable">
         <thead>
           <tr>
             <th scope="col">#</th>
-            <th scope="col">Nombre</th>
-            <th scope="col">Descripción</th>
-            <th scope="col">Tipo</th>
-            <th scope="col">Edad</th>
-            <th scope="col">Estado</th>
+            <th scope="col">Código de Escuela</th>
+            <th scope="col">Nombre de Escuela</th>
+            <th scope="col">Código de Sala</th>
+            <th scope="col">Nombre de Sala</th>
           </tr>
         </thead>
         <tbody>
-          <tr ng-repeat="room in rooms | orderBy: 'id'">
+          <tr ng-repeat="r in response | orderBy: 'id'">
             <th>{{$index+1}}</th>
-            <td>{{room.nombre}}</td>
-            <td>{{room.descripcion}}</td>
-            <td>{{room.tipo}}</td>
-            <td>{{room.edad}}</td>
-            <td>{{room.estado}}</td>
+            <td>{{r.escuela_code}}</td>
+            <td>{{r.escuela_nombre}}</td>
+            <td>{{r.room_code}}</td>
+            <td>{{r.room_nombre}}</td>
           </tr>
         </tbody>
       </table>

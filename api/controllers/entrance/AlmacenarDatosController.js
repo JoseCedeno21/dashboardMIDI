@@ -220,8 +220,32 @@ module.exports = {
 				console.log("historia de jugador actualizada")	
 			}
 		}
-		if(datos.tipo == "room"){
-			await Room.update({id:datos.idRoom}).set({estado:datos.estado});
+		if(datos.tipo == "activar_room"){
+			var escuela_room = await Escuela_room.findOne({id_escuela:datos.idEscuela,id_room:datos.idRoom});
+			if (!escuela_room) {
+				await Escuela_room.create({
+					id_escuela: datos.idEscuela,
+					id_room: datos.idRoom,
+					descripcion: "No definida",
+				});
+				console.log("Permiso de Escuela a Room creado");
+			} else{
+				console.log("Permiso ya registrado");
+				console.log(escuela_room);
+			}
+			//await Room.update({id:datos.idRoom}).set({estado:datos.estado});
+		}
+
+		if(datos.tipo == "desactivar_room"){
+			var escuela_room = await Escuela_room.findOne({id_escuela:datos.idEscuela,id_room:datos.idRoom});
+			if (!escuela_room) {
+				console.log("No existe la relacion");
+				console.log(escuela_room);
+			} else{
+				await Escuela_room.destroy({id_escuela:datos.idEscuela,id_room:datos.idRoom});
+				console.log("Relacion eliminada");
+			}
+			//await Room.update({id:datos.idRoom}).set({estado:datos.estado});
 		}
 
 		return res.status(200).send('ok');
