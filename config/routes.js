@@ -38,6 +38,7 @@ module.exports.routes = {
   'GET /levelAnduser/:idLevelidUser':   { controller: 'dashboard/GetInformacionController', action:'leveluserByLevelUser' },
   'GET /levelsByRoom/:idRoom':          { controller: 'dashboard/GetInformacionController', action:'levelsByRoom' },
   'GET /leveluserByRoom/:idRoom':       { controller: 'dashboard/GetInformacionController', action:'leveluserByRoom' },
+  'GET /levelsByGame/:idGame':          { controller: 'dashboard/GetInformacionController', action:'levelsByGame' },
   'GET /room/:id':                      { controller: 'dashboard/GetInformacionController', action:'roomById' },
 
 

@@ -6,9 +6,11 @@ app.controller('interpretacionController', ['$scope', '$rootScope', 'TodoService
 	$scope.learning = [];
 	$scope.rooms_level = [];
 	$scope.jugadores = [];	
+	$scope.games = [];
 
 	var efectividad_default = 0;
 	var niveles = [], level_users = [];
+	var idGameActual;
 
 	//se obtiene todos los niveles
 	TodoService.getLevels().then(function(response) {
@@ -30,6 +32,12 @@ app.controller('interpretacionController', ['$scope', '$rootScope', 'TodoService
 	    //$scope.temporal = response;
 	});
 
+	//se obtiene todos los niveles
+	TodoService.getGames().then(function(response) {
+	    $scope.games = response;
+	    //$scope.temporal = response;
+	});
+
 	TodoService.getLevels().then(function(response) {
 		niveles = response;
 	});
@@ -37,6 +45,12 @@ app.controller('interpretacionController', ['$scope', '$rootScope', 'TodoService
 		level_users = response;
 	});
 
+	$scope.nivelesGame = function(){
+        idGameActual = $scope.select.gameId;
+        TodoService.getLevelsByGame(idGameActual).then(function(response) {
+            $scope.levels = response;
+        });
+    }
 
 	$scope.funcionLevel = function(){
 		var resultado = 0;

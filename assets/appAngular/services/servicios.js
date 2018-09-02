@@ -189,6 +189,15 @@ app.service('TodoService', function($http, $q) {
       });
       return defer.promise;
     },
+    'getLevelsByGame': function(idGame) {
+      var defer = $q.defer();
+      $http.get('/levelsByGame/' + idGame).success(function(resp){
+        defer.resolve(resp);
+      }).error( function(err) {
+        defer.reject(err);
+      });
+      return defer.promise;
+    },
     'getLevelUserByRoom': function(idRoom) {
       var defer = $q.defer();
       $http.get('/leveluserByRoom/' + idRoom).success(function(resp){

@@ -223,12 +223,13 @@ module.exports = {
 
     var jugadores = await Jugador.find({id_room:req.params.idRoom});
 
+
     for(var i = 0; i < jugadores.length; i++){
       level_users = await Nivel_usuario.find({id_usuario:jugadores[i].id});
       for(var j = 0; j < level_users.length; j++){
         nivel = await Nivel.findOne({id:level_users[j].id_nivel});
-        
-        if (nivel != null) {
+        console.log(nivel);
+        if (!nivel != null) {
           level_room_tmp = level_room.filter(function(level_tmp) {
             return level_tmp.id === nivel.id;
           });
@@ -245,6 +246,23 @@ module.exports = {
     
 
     res.json(level_room);
+  },
+
+  levelsByGame: async function(req, res){
+    var chapters = await Chapter.find({id_game:req.params.idGame});
+    var levels_tmp, levels = [];
+
+    for(var i = 0; i < chapters.length; i++){
+      levels_tmp = await Nivel.find({id_chapter:chapters[i].id});
+      for(var j = 0; j < levels_tmp.length; j++){
+        if (chapters[i].id == levels_tmp[j].id_chapter) {
+          levels.push(levels_tmp[j]);
+        }
+      }
+    }
+    
+
+    res.json(levels);
   },
 
   leveluserByRoom: async function(req, res){

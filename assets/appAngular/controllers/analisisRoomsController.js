@@ -23,6 +23,7 @@ app.controller('analisisRoomsController', ['$scope', '$rootScope', 'TodoService'
         idRoomActual = $scope.select.roomId;
         TodoService.getLevelsByRoom(idRoomActual).then(function(response) {
             $scope.levels_room = response;
+            console.log($scope.levels_room);
             TodoService.getRoomById(idRoomActual).then(function(response) {
                 $scope.room_actual = response;
             });
