@@ -64,7 +64,17 @@ module.exports = {
 		}
 
 		if(datos.tipo == "juego"){
-			var jugador = await Jugador.findOne({id_registro:datos.jugador_idregistro});
+			var cadena_jugador = datos.id_registro;
+			var arrayDeCadena = cadena_jugador.split("-", 3);
+		    if (arrayDeCadena.length >= 3) {
+			    cadena_escuela = arrayDeCadena[0];
+			    cadena_room = arrayDeCadena[1];
+			    cadena_nombre = arrayDeCadena[2];
+			}
+			var room = await Room.findOne({nombre:cadena_room});
+			var escuela = await Escuela.findOne({nombre:cadena_escuela});
+
+			var jugador = await Jugador.findOne({id_escuela:escuela.id,id_room:room.id,nombre:cadena_nombre});
 			var juego = await Game.findOne({nombre:datos.nombre_juego});
 			if(!juego){
 				await Game.create({
@@ -154,7 +164,17 @@ module.exports = {
 
 
 		if(datos.tipo == "historia"){
-			var jugador = await Jugador.find({id_registro:datos.jugador_idregistro});
+			var cadena_jugador = datos.id_registro;
+			var arrayDeCadena = cadena_jugador.split("-", 3);
+		    if (arrayDeCadena.length >= 3) {
+			    cadena_escuela = arrayDeCadena[0];
+			    cadena_room = arrayDeCadena[1];
+			    cadena_nombre = arrayDeCadena[2];
+			}
+			var room = await Room.findOne({nombre:cadena_room});
+			var escuela = await Escuela.findOne({nombre:cadena_escuela});
+
+			var jugador = await Jugador.findOne({id_escuela:escuela.id,id_room:room.id,nombre:cadena_nombre});
 			var juego = await Game.findOne({nombre:datos.nombre_juego});
 			if(!juego){
 				await Game.create({
@@ -198,10 +218,10 @@ module.exports = {
 				console.log("historia ya registrado")
 				console.log(learning)
 			}
-			var learn_jugador = await Learn_jugador.findOne({id_jugador:jugador[0].id,id_learning:learning.id});
+			var learn_jugador = await Learn_jugador.findOne({id_jugador:jugador.id,id_learning:learning.id});
 			if(!learn_jugador){
 				var learn_jugador = await Learn_jugador.create({
-					id_jugador: jugador[0].id,
+					id_jugador: jugador.id,
 					id_learning: learning.id,
 					fecha_inicio: datos.fecha_inicio,
 					fecha_fin: datos.fecha_fin,
@@ -211,7 +231,7 @@ module.exports = {
 				})	
 				console.log("historia de jugador guardada")		
 			} else {
-				await Learn_jugador.update({id_jugador:jugador[0].id,id_learning:learning.id}).set({
+				await Learn_jugador.update({id_jugador:jugador.id,id_learning:learning.id}).set({
 					fecha_fin: datos.fecha_fin,
 					tiempo_juego: datos.tiempo_juego,
 					estado: datos.estado,

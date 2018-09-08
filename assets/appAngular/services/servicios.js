@@ -18,6 +18,15 @@ app.service('TodoService', function($http, $q) {
       });
       return defer.promise;
     },
+    'getDatosEscuela': function(juego,room,escuela) {
+      var defer = $q.defer();
+      $http.get('/datosGameEscuela/'+juego+'/'+room+'/'+escuela).success(function(resp){
+        defer.resolve(resp);
+      }).error( function(err) {
+        defer.reject(err);
+      });
+      return defer.promise;
+    },
     'getCantidades': function() {
       var defer = $q.defer();
       $http.get('/cantidades').success(function(resp){
@@ -66,6 +75,15 @@ app.service('TodoService', function($http, $q) {
     'getJugadoresByRoom': function(idRoom) {
       var defer = $q.defer();
       $http.get('/jugadoresByRoom/'+idRoom).success(function(resp){
+        defer.resolve(resp);
+      }).error( function(err) {
+        defer.reject(err);
+      });
+      return defer.promise;
+    },
+    'getJugadoresByRoomEscuela': function(idRoom,idEscuela) {
+      var defer = $q.defer();
+      $http.get('/jugadoresByRoomEscuela/'+idRoom+"/"+idEscuela).success(function(resp){
         defer.resolve(resp);
       }).error( function(err) {
         defer.reject(err);

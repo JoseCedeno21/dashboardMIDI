@@ -10,25 +10,15 @@ app.controller('TodoCtrl', ['$scope', '$rootScope', 'TodoService', function($sco
     return this.replace(/^\s+|\s+$/g, ""); 
   };
 
-  //$('#titulo_juego').hide();
-
   //se obtiene todos los juegos
   TodoService.getGames().then(function(response) {
     $scope.games = response;
     console.log("EN EL CONTROLADOR");
     console.log(response);
-    //document.getElementById("game").options[0].selected = true;
-    //$('select[name="game"]').selectedIndex = 1;
-    //console.log('el sel')
-    //console.log(sel)
-    //sel.selectedIndex = "1";
     $scope.select.gameId = response[0].id;
-    //$scope.select.gameId = 1;
     $scope.datosFunction();
 
   });
-
-
 
   //se obtiene todas las cantidades para la pagina principal
   TodoService.getCantidades().then(function(response){
@@ -46,14 +36,10 @@ app.controller('TodoCtrl', ['$scope', '$rootScope', 'TodoService', function($sco
         var nombre_juego = $scope.datos.nombre;
         console.log(nombre_juego)
         $scope.añadirHtml();
-        //if($('select[name="game"] options:selected').text() == ""){
-        //    document.getElementById("game").selectedIndex = 1;
-        //}
       });
 
   }
-  //console.log($scope.select.gameId);
-  
+
 
   //funcion para añadir los graficos a la pagina principal por medio de codigo html 
   $scope.añadirHtml = function(){
@@ -67,14 +53,8 @@ app.controller('TodoCtrl', ['$scope', '$rootScope', 'TodoService', function($sco
         '</div>'+
       '</section>'
       $('#titulo2').html(titulo);
-      //document.getElementById('titulo_juego').setAttribute("hidden",false)
-      //$('#titulo_juego').show();
-      //$("#titulo_juego").append('<div style="text-align:center"><h1 class="">Juego: '+$scope.datos.nombre+'</h1></div>');
       $('#grafico').html('<div id="graficos"></div>')
-      //var div = document.getElementById("graf_3");
-      //if(div != null){
-      //div.parentElement.removeChild(div);
-      //}
+  
       var nombre_capitulos = [];
       var promedio_tiempo_learn = [];
       var promedio_intentos_learn = [];
@@ -127,9 +107,7 @@ app.controller('TodoCtrl', ['$scope', '$rootScope', 'TodoService', function($sco
         var promedio_incorrectas = [];
         var promedio_tiempo = [];
         var cantidad_completados = [];
-        var cantidad_abandonado = [];
-
-        
+        var cantidad_abandonado = [];    
 
         var chapters = $scope.datos.chapters[i];
         for (var j=0; j< chapters.niveles[0].length; j++){
@@ -160,7 +138,7 @@ app.controller('TodoCtrl', ['$scope', '$rootScope', 'TodoService', function($sco
         var suma_intentos_learn = 0;
         info_learn.push(chapters.learning[0].duracion);
         for (var m=0; m<chapters.learning[0].datos[0].length; m++){
-            if(chapters.learning[0].datos[0][m].estado == "completado"){
+            if(chapters.learning[0].datos[0][m].estado == "Completado"){
                 cantidad_learn++;
                 suma_tiempo_learn = suma_tiempo_learn + chapters.learning[0].datos[0][m].tiempo_juego;
                 suma_intentos_learn = suma_intentos_learn + chapters.learning[0].datos[0][m].num_play;
@@ -240,12 +218,12 @@ app.controller('TodoCtrl', ['$scope', '$rootScope', 'TodoService', function($sco
                             '<div class="col-lg-12 col-md-12">'+
                                 '<h2 class="display h4"> </h2>'+
                             '</div>'+
-                            '<div class="col-lg-2 col-md-6">'+
+                            '<div class="col-lg-4 col-md-6">'+
                                 '<div class="card project-progress" id="tablaTiempos">'+
                                     '<p> Tabla de duraciones de animaciones por capitulo.</p>'+
                                 '</div>'+
                             '</div>'+
-                            '<div class="col-lg-5 col-md-6">'+
+                            '<div class="col-lg-4 col-md-6">'+
                                 '<div class="card project-progress">'+    
                                     '<p> Tiempo promedio en que se ha visualizado la historia.</p>'+
                                     '<div class="pie-chart2">'+
@@ -253,7 +231,7 @@ app.controller('TodoCtrl', ['$scope', '$rootScope', 'TodoService', function($sco
                                     '</div>'+
                                 '</div>'+
                             '</div>'+
-                            '<div class="col-lg-5 col-md-6">'+
+                            '<div class="col-lg-4 col-md-6">'+
                                 '<div class="card project-progress">'+
                                     '<p> Cantidad promedio de historia visualizada completamente.</p>'+
                                     '<div class="pie-chart2">'+
@@ -422,98 +400,4 @@ app.controller('TodoCtrl', ['$scope', '$rootScope', 'TodoService', function($sco
   var brandPrimary = '#33b35a';
 
 }]);
-    /*
-    // ------------------------------------------------------- //
-    // Line Chart
-    // ------------------------------------------------------ //
-    var LINECHART = $('#lineCahrt');
-    var myLineChart = new Chart(LINECHART, {
-        type: 'line',
-        options: {
-            legend: {
-                display: false
-            }
-        },
-        data: {
-            labels: ["Jan", "Feb", "Mar", "Apr", "May", "June", "July"],
-            datasets: [
-                {
-                    label: "My First dataset",
-                    fill: true,
-                    lineTension: 0.3,
-                    backgroundColor: "rgba(77, 193, 75, 0.4)",
-                    borderColor: brandPrimary,
-                    borderCapStyle: 'butt',
-                    borderDash: [],
-                    borderDashOffset: 0.0,
-                    borderJoinStyle: 'miter',
-                    borderWidth: 1,
-                    pointBorderColor: brandPrimary,
-                    pointBackgroundColor: "#fff",
-                    pointBorderWidth: 1,
-                    pointHoverRadius: 5,
-                    pointHoverBackgroundColor: brandPrimary,
-                    pointHoverBorderColor: "rgba(220,220,220,1)",
-                    pointHoverBorderWidth: 2,
-                    pointRadius: 1,
-                    pointHitRadius: 0,
-                    data: [50, 20, 60, 31, 52, 22, 40],
-                    spanGaps: false
-                },
-                {
-                    label: "My First dataset",
-                    fill: true,
-                    lineTension: 0.3,
-                    backgroundColor: "rgba(75,192,192,0.4)",
-                    borderColor: "rgba(75,192,192,1)",
-                    borderCapStyle: 'butt',
-                    borderDash: [],
-                    borderDashOffset: 0.0,
-                    borderJoinStyle: 'miter',
-                    borderWidth: 1,
-                    pointBorderColor: "rgba(75,192,192,1)",
-                    pointBackgroundColor: "#fff",
-                    pointBorderWidth: 1,
-                    pointHoverRadius: 5,
-                    pointHoverBackgroundColor: "rgba(75,192,192,1)",
-                    pointHoverBorderColor: "rgba(220,220,220,1)",
-                    pointHoverBorderWidth: 2,
-                    pointRadius: 1,
-                    pointHitRadius: 10,
-                    data: [65, 59, 30, 81, 46, 55, 30],
-                    spanGaps: false
-                }
-            ]
-        }
-    });
-
-
-    // ------------------------------------------------------- //
-    // Pie Chart
-    // ------------------------------------------------------ //
-    var PIECHART = $('#pieChart');
-    var myPieChart = new Chart(PIECHART, {
-        type: 'doughnut',
-        data: {
-            labels: [
-                "First",
-                "Second",
-                "Third"
-            ],
-            datasets: [
-                {
-                    data: [300, 50, 100],
-                    borderWidth: [1, 1, 1],
-                    backgroundColor: [
-                        brandPrimary,
-                        "rgba(75,192,192,1)",
-                        "#FFCE56"
-                    ],
-                    hoverBackgroundColor: [
-                        brandPrimary,
-                        "rgba(75,192,192,1)",
-                        "#FFCE56"
-                    ]
-                }]
-        }
-    });*/
+ 

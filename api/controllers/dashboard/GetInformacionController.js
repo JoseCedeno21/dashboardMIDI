@@ -19,20 +19,82 @@ module.exports = {
   		game.chapters[j].niveles.push(niveles);
   		for(var i=0; i<niveles.length; i++){		
   			var nivel_usuario = await Nivel_usuario.find({id_nivel:niveles[i].id})
-  			game.chapters[j].niveles[0][i].datos = [];
-  			game.chapters[j].niveles[0][i].datos.push(nivel_usuario);
+        if(nivel_usuario){
+  			 game.chapters[j].niveles[0][i].datos = [];
+  			 game.chapters[j].niveles[0][i].datos.push(nivel_usuario);
+        }
   		}
   		var learning = await Learning.findOne({id_chapter:chapters[j].id});
-  		game.chapters[j].learning = [];
-  		game.chapters[j].learning.push(learning);
-  		var learn_jugador = await Learn_jugador.find({id_learning:learning.id});
-  		//console.log("ahora el learn")
-  		//console.log(learn_jugador)
-  		game.chapters[j].learning[0].datos = [];
-  		game.chapters[j].learning[0].datos.push(learn_jugador);
-
+      if(learning){
+    		game.chapters[j].learning = [];
+    		game.chapters[j].learning.push(learning);
+    		var learn_jugador = await Learn_jugador.find({id_learning:learning.id});
+    		//console.log("ahora el learn")
+    		//console.log(learn_jugador)
+        if(learn_jugador){
+      		game.chapters[j].learning[0].datos = [];
+      		game.chapters[j].learning[0].datos.push(learn_jugador);
+        }
+      }
   	}
   	res.json(game);
+  },
+
+  datosEscuela: async function(req, res){
+    var game = {};
+    game = await Game.findOne({id:req.params.id});
+    var usuarios = await Jugador.find({id_room:req.params.room,id_escuela:req.params.escuela})
+    var chapters = await Chapter.find({id_game:game.id});
+    game.chapters = [];
+    for(var j=0; j<chapters.length; j++){     
+      game.chapters.push(chapters[j]);
+      var niveles = await Nivel.find({id_chapter:chapters[j].id});
+      game.chapters[j].niveles = [];
+      game.chapters[j].niveles.push(niveles);
+      for(var i=0; i<niveles.length; i++){ 
+        var temp = [];
+        for(var k=0; k<usuarios.length; k++){ 
+          var nivel_usuario = await Nivel_usuario.findOne({id_nivel:niveles[i].id,id_usuario:usuarios[k].id})
+          if(!nivel_usuario){
+            console.log("no hay nivel usuario")
+          } else {
+            temp.push(nivel_usuario)
+          }
+        }
+        game.chapters[j].niveles[0][i].datos = [];
+        game.chapters[j].niveles[0][i].datos.push(temp);
+
+        
+      }
+      var learning = await Learning.findOne({id_chapter:chapters[j].id});
+      if(learning){
+        game.chapters[j].learning = [];
+        game.chapters[j].learning.push(learning);
+        var temp2 = [];
+          for(var l=0; l<usuarios.length; l++){ 
+            var learn_jugador = await Learn_jugador.findOne({id_learning:learning.id,id_jugador:usuarios[l].id});
+            if(!learn_jugador){
+              console.log("no hay learn usuario")
+            } else {
+              temp2.push(learn_jugador)
+            }
+          }
+        //var learn_jugador = await Learn_jugador.find({id_learning:learning.id,id_jugador:usuarios[k].id});
+        
+      } else {
+        var temp2 = [];
+        temp2.push({
+          fecha_inicio: "sin visualizar",
+          fehca_fin: "sin visualizar",
+          tiempo_juego: "sin visualizar",
+          estado: "sin visualizar",
+          num_play: "sin visualizar"
+        })
+      }
+      game.chapters[j].learning[0].datos = [];
+      game.chapters[j].learning[0].datos.push(temp2);
+    }
+    res.json(game);
   },
 
   cantidades: async function(req, res){
@@ -90,6 +152,11 @@ module.exports = {
   jugadoresByRoom: async function(req, res){
   	var jugadores = await Jugador.find({id_room:req.params.idRoom});
   	res.json(jugadores);
+  },
+
+  jugadoresByRoomEscuela: async function(req, res){
+    var jugadores = await Jugador.find({id_room:req.params.idRoom,id_escuela:req.params.idEscuela});
+    res.json(jugadores);
   },
 
   gameByRoom: async function(req, res){
@@ -189,8 +256,20 @@ module.exports = {
 	  		console.log("learning: " + learning);
 	  		var learn_jugador = await Learn_jugador.find({id_learning:learning.id,id_jugador:req.params.idJugador});
 	  		console.log("learn_jugador: " + learn_jugador);
-	  		game[k].chapters[j].learning[0].datos = [];
-	  		game[k].chapters[j].learning[0].datos.push(learn_jugador);
+        if(!learn_jugador){
+            game[k].chapters[j].learning[0].datos = [];
+            game[k].chapters[j].learning[0].datos.push({
+              fecha_inicio: "sin visualizar",
+              fehca_fin: "sin visualizar",
+              tiempo_juego: "sin visualizar",
+              estado: "sin visualizar",
+              num_play: "sin visualizar"
+            })
+        } else {
+          game[k].chapters[j].learning[0].datos = [];
+          game[k].chapters[j].learning[0].datos.push(learn_jugador);
+        }
+	  		
 	  	}
 	  	if(countDatosNivel > 0){
 	  		games.push(game[k]);	

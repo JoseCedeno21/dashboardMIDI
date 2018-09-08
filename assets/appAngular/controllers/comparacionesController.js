@@ -108,7 +108,7 @@ app.controller('comparacionesController', ['$scope', '$rootScope', 'TodoService'
 		        var suma_intentos_learn = 0;
 		        info_learn.push(chapters[z].learning[0].duracion);
 		        for (var m=0; m<chapters[z].learning[0].datos[0].length; m++){
-		            if(chapters[z].learning[0].datos[0][m].estado == "completado"){
+		            if(chapters[z].learning[0].datos[0][m].estado == "Completado"){
 		                cantidad_learn++;
 		                suma_tiempo_learn = suma_tiempo_learn + chapters[z].learning[0].datos[0][m].tiempo_juego;
 		                suma_intentos_learn = suma_intentos_learn + chapters[z].learning[0].datos[0][m].num_play;
