@@ -67,14 +67,14 @@ app.controller('reporteGameController', ['$scope', '$rootScope', 'TodoService', 
             for (var k=0; k<chapters.niveles[0][j].datos[0].length; k++){
                 if(chapters.niveles[0][j].datos[0][k].estado == "completado"){
                     cantidad++;
-                    suma_correctas = suma_correctas + chapters.niveles[0][j].datos[0][k].correctas;
-                    suma_incorrectas = suma_incorrectas + chapters.niveles[0][j].datos[0][k].incorrectas;
-                    suma_tiempo = suma_tiempo + chapters.niveles[0][j].datos[0][k].tiempo_juego;
                 }  
+                suma_correctas = suma_correctas + chapters.niveles[0][j].datos[0][k].correctas;
+                suma_incorrectas = suma_incorrectas + chapters.niveles[0][j].datos[0][k].incorrectas;
+                suma_tiempo = suma_tiempo + chapters.niveles[0][j].datos[0][k].tiempo_juego;
             }
             //conclusion para respuestas correctass e incorrectas
-            var sc = suma_correctas / cantidad;
-            var si = suma_incorrectas / cantidad;
+            var sc = (suma_correctas / cantidad).toFixed(2);
+            var si = (suma_incorrectas / cantidad).toFixed(2);
             var porcentaje = Math.round((si*100)/sc);
             if(porcentaje <= 25){
               var conclusion = sc+", la cantidad promedio de respuesta incorrectas es "+si+" lo cual equivale a un porcentaje del "+porcentaje+"%, por lo tanto a la mayoria de los niños no se les dificulta concluir el nivel";
@@ -86,7 +86,7 @@ app.controller('reporteGameController', ['$scope', '$rootScope', 'TodoService', 
             promedio_correctas.push({conclusion: conclusion});
 
             //conlusion para tiempo jugado
-            promedio_tiempo.push({cantidad:suma_tiempo / cantidad});
+            promedio_tiempo.push({cantidad:Math.round(suma_tiempo / cantidad)});
 
             //conclusion para completados y abandonos
             var cc = cantidad;
@@ -117,12 +117,12 @@ app.controller('reporteGameController', ['$scope', '$rootScope', 'TodoService', 
         for (var m=0; m<chapters.learning[0].datos[0].length; m++){
             if(chapters.learning[0].datos[0][m].estado == "completado"){
                 cantidad_learn++;
-                suma_tiempo_learn = suma_tiempo_learn + chapters.learning[0].datos[0][m].tiempo_juego;
-                suma_intentos_learn = suma_intentos_learn + chapters.learning[0].datos[0][m].num_play;
             }
+            suma_tiempo_learn = suma_tiempo_learn + chapters.learning[0].datos[0][m].tiempo_juego;
+            suma_intentos_learn = suma_intentos_learn + chapters.learning[0].datos[0][m].num_play;
         }
         //conclusiones para el tiempo de visualizacion de la historia
-        var ptl = suma_tiempo_learn / cantidad_learn;
+        var ptl = Math.round(suma_tiempo_learn / cantidad_learn);
         if(ptl > chapters.learning[0].duracion+5){
           var conclusion = ptl+" segundos, el cual es mayor al de la duración real, lo que quiere decir que a los niños les cuesta un poco mas su entendimiento";
         } else if(ptl < chapters.learning[0].duracion+5){
@@ -133,7 +133,7 @@ app.controller('reporteGameController', ['$scope', '$rootScope', 'TodoService', 
         promedio_tiempo_learn.push({conclusion:conclusion});
 
         //conclusiones para la cantidad de intentos 
-        var pil = suma_intentos_learn / cantidad_learn;
+        var pil = (suma_intentos_learn / cantidad_learn).toFixed(2);
         if(pil > 1.5){
           var conclusion = pil+" por lo tanto los niños generalmente repiten la historia para poder entenderla";
         } else {

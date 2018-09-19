@@ -2,6 +2,7 @@ app.controller('reporteNiñoController', ['$scope', '$rootScope', 'TodoService',
 
   $scope.rooms = {};
   $scope.games = {};
+  $scope.escuelas = {};
   $scope.jugadores = {};
   $scope.datos = {};
   $scope.datosJuego = {};
@@ -29,22 +30,36 @@ app.controller('reporteNiñoController', ['$scope', '$rootScope', 'TodoService',
 
   $scope.datosJugador = {};
 
-    //se obtiene todos los room
-  TodoService.getRoom().then(function(response) {
-      $scope.rooms = response;
-      console.log("EN EL CONTROLADOR");
-      console.log(response);
-  });
 
-  //se obtiene todos los jugadores por room
-  $scope.jugadoresRoom = function(){
-    var idRoom = $scope.select.roomId;
-    TodoService.getJugadoresByRoom(idRoom).then(function(response) {
-        $scope.jugadores = response;
+    //se obtiene todos los room
+    TodoService.getRoom().then(function(response) {
+        $scope.rooms = response;
         console.log("EN EL CONTROLADOR");
         console.log(response);
     });
-  }
+
+    TodoService.getEscuelas().then(function(response) {
+        $scope.escuelas = response;
+        console.log("EN EL CONTROLADOR");
+        console.log(response);
+    });
+
+    TodoService.getGames().then(function(response) {
+        $scope.games = response;
+        console.log("EN EL CONTROLADOR");
+        console.log(response);
+    });
+
+  //se obtiene todos los jugadores por room
+  $scope.jugadoresRoomEscuela = function(){
+        var idRoom = $scope.select.roomId;
+        var idEscuela = $scope.select.escuelaId;
+        TodoService.getJugadoresByRoomEscuela(idRoom,idEscuela).then(function(response) {
+            $scope.jugadores = response;
+            console.log("EN EL CONTROLADOR");
+            console.log(response);
+        });
+    }
 
   //se obtiene todos los datos del jugador
   $scope.datosJugadorFunc = function(){
@@ -56,6 +71,7 @@ app.controller('reporteNiñoController', ['$scope', '$rootScope', 'TodoService',
         console.log("EN EL CONTROLADOR TODOS DATOS");
         console.log(response);
         $scope.games = response;
+        $scope.mostrarReporte();
     });
   }
 
@@ -110,27 +126,29 @@ app.controller('reporteNiñoController', ['$scope', '$rootScope', 'TodoService',
             var suma_incorrectas = 0;
             var suma_tiempo = 0;
             var cantidad = 0;
-            for (var k=0; k<chapters.niveles[0][j].datos[0].length; k++){
+            if(chapters.niveles[0][j].datos){
+              for (var k=0; k<chapters.niveles[0][j].datos[0].length; k++){
 
-                var fi = $scope.fechaString(chapters.niveles[0][j].datos[0][k].fecha_inicio);
-                fecha_inicio.push(fi);
-                var ff = $scope.fechaString(chapters.niveles[0][j].datos[0][k].fecha_fin);
-                fecha_fin.push(ff);
+                  var fi = $scope.fechaString(chapters.niveles[0][j].datos[0][k].fecha_inicio);
+                  fecha_inicio.push(fi);
+                  var ff = $scope.fechaString(chapters.niveles[0][j].datos[0][k].fecha_fin);
+                  fecha_fin.push(ff);
+                  
+                  intentos.push(chapters.niveles[0][j].datos[0][k].intentos);
+               
+                  var complete = "No";
+                  if(chapters.niveles[0][j].datos[0][k].estado == "completado"){
+                      cantidad++;    
+                      complete = "Sí";
                 
-                intentos.push(chapters.niveles[0][j].datos[0][k].intentos);
-             
-                var complete = "No";
-                if(chapters.niveles[0][j].datos[0][k].estado == "completado"){
-                    cantidad++;    
-                    complete = "Sí";
-              
-                } 
-                completado.push(complete)
-                suma_correctas = suma_correctas + chapters.niveles[0][j].datos[0][k].correctas;
-                suma_incorrectas = suma_incorrectas + chapters.niveles[0][j].datos[0][k].incorrectas;
-                suma_tiempo = suma_tiempo + chapters.niveles[0][j].datos[0][k].tiempo_juego; 
- 
-            }
+                  } 
+                  completado.push(complete)
+                  suma_correctas = suma_correctas + chapters.niveles[0][j].datos[0][k].correctas;
+                  suma_incorrectas = suma_incorrectas + chapters.niveles[0][j].datos[0][k].incorrectas;
+                  suma_tiempo = suma_tiempo + chapters.niveles[0][j].datos[0][k].tiempo_juego; 
+   
+              }
+            }  
 
             //conclusion para respuestas correctass e incorrectas
             var sc = suma_correctas;
@@ -164,17 +182,19 @@ app.controller('reporteNiñoController', ['$scope', '$rootScope', 'TodoService',
         })
 
         var info_learn = [];
-        var fi = $scope.fechaString(chapters.learning[0].datos[0][0].fecha_inicio);
-        info_learn[0] = fi;
-        var ff = $scope.fechaString(chapters.learning[0].datos[0][0].fecha_fin);
-        info_learn[1] = ff;
-        info_learn[2] = chapters.learning[0].datos[0][0].tiempo_juego;
-        info_learn[3] = "No";
-        if(chapters.learning[0].datos[0][0].estado == "completado"){
-          info_learn[3] = "Sí";
+        if(chapters.learning[0].datos[0][0]){
+          var fi = $scope.fechaString(chapters.learning[0].datos[0][0].fecha_inicio);
+          info_learn[0] = fi;
+          var ff = $scope.fechaString(chapters.learning[0].datos[0][0].fecha_fin);
+          info_learn[1] = ff;
+          info_learn[2] = chapters.learning[0].datos[0][0].tiempo_juego;
+          info_learn[3] = "No";
+          if(chapters.learning[0].datos[0][0].estado == "completado"){
+            info_learn[3] = "Sí";
+          }
+          
+          info_learn[4] = chapters.learning[0].datos[0][0].num_play;
         }
-        
-        info_learn[4] = chapters.learning[0].datos[0][0].num_play;
 
         //conclusiones para el tiempo de visualizacion de la historia
         var ptl = info_learn[2];

@@ -68,6 +68,9 @@ the account verification message.)`,
 
     // Build up data for the new user record and save it to the database.
     // (Also use `fetch` to retrieve the new ID so that we can use it below.)
+    //isSuper = document.getElementById("isSuper").checked;
+    //document.getElementById("terms-agreement").checked = true;
+    //$("#terms-agreement").prop("checked", true);
 
     console.log("new e-mail: " + newEmailAddress);
     console.log("password: " + inputs.password);
@@ -78,6 +81,7 @@ the account verification message.)`,
       correo: newEmailAddress,
       password: await sails.helpers.passwords.hashPassword(inputs.password),
       nombre: inputs.fullName,
+      //isSuperAdmin: isSuper
       //tosAcceptedByIp: this.req.ip
     }, sails.config.custom.verifyEmailAddresses? {
       emailProofToken: await sails.helpers.strings.random('url-friendly'),
@@ -90,7 +94,7 @@ the account verification message.)`,
 
     // If billing feaures are enabled, save a new customer entry in the Stripe API.
     // Then persist the Stripe customer id in the database.
-    if (sails.config.custom.enableBillingFeatures) {
+    /*if (sails.config.custom.enableBillingFeatures) {
       let stripeCustomerId = await sails.helpers.stripe.saveBillingInfo.with({
         emailAddress: newEmailAddress
       });
@@ -100,7 +104,7 @@ the account verification message.)`,
     }
 
     // Store the user's new id in their session.
-    this.req.session.userId = newUserRecord.id;
+    this.req.session.userId = newUserRecord.id;*/
 
     if (sails.config.custom.verifyEmailAddresses) {
       // Send "confirm account" email
@@ -118,6 +122,10 @@ the account verification message.)`,
     }
 
     // Since everything went ok, send our 200 response.
+
+    //if (this.req.me.isSuperAdmin) {
+    //  throw {redirect: '/'};
+    //}
     return exits.success();
 
   }

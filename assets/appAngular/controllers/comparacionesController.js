@@ -83,11 +83,11 @@ app.controller('comparacionesController', ['$scope', '$rootScope', 'TodoService'
 		            var cantidad = 0;            
 		            for (var k=0; k<chapters[z].niveles[0][j].datos[0].length; k++){
 		                if(chapters[z].niveles[0][j].datos[0][k].estado == "completado"){
-		                    cantidad++;
-		                    suma_correctas = suma_correctas + chapters[z].niveles[0][j].datos[0][k].correctas;
-		                    suma_incorrectas = suma_incorrectas + chapters[z].niveles[0][j].datos[0][k].incorrectas;
-		                    suma_tiempo = suma_tiempo + chapters[z].niveles[0][j].datos[0][k].tiempo_juego;
+		                    cantidad++;   
 		                }  
+		                suma_correctas = suma_correctas + chapters[z].niveles[0][j].datos[0][k].correctas;
+		                suma_incorrectas = suma_incorrectas + chapters[z].niveles[0][j].datos[0][k].incorrectas;
+		                suma_tiempo = suma_tiempo + chapters[z].niveles[0][j].datos[0][k].tiempo_juego;
 		            }
 		            suma_total_preguntas = suma_total_preguntas + (suma_correctas/cantidad);
 		            suma_total_incorrectas = suma_total_incorrectas + (suma_incorrectas/cantidad);
@@ -110,22 +110,22 @@ app.controller('comparacionesController', ['$scope', '$rootScope', 'TodoService'
 		        for (var m=0; m<chapters[z].learning[0].datos[0].length; m++){
 		            if(chapters[z].learning[0].datos[0][m].estado == "Completado"){
 		                cantidad_learn++;
-		                suma_tiempo_learn = suma_tiempo_learn + chapters[z].learning[0].datos[0][m].tiempo_juego;
-		                suma_intentos_learn = suma_intentos_learn + chapters[z].learning[0].datos[0][m].num_play;
 		            }
+		            suma_tiempo_learn = suma_tiempo_learn + chapters[z].learning[0].datos[0][m].tiempo_juego;
+		            suma_intentos_learn = suma_intentos_learn + chapters[z].learning[0].datos[0][m].num_play;
 		        }
-		        suma_total_completados_learn = suma_total_completados_learn + cantidad;
+		        suma_total_completados_learn = suma_total_completados_learn + cantidad_learn;
 		        suma_total_abandonos_learn = suma_total_abandonos_learn + (chapters[z].learning[0].datos[0].length - cantidad_learn);
 
-		        promedio_tiempo_learn[i] = suma_tiempo_learn / cantidad_learn;
-		        promedio_intentos_learn[i] = suma_intentos_learn / cantidad_learn;
+		        promedio_tiempo_learn[i] = Math.round(suma_tiempo_learn / cantidad_learn);
+		        promedio_intentos_learn[i] = (suma_intentos_learn / cantidad_learn).toFixed(2);
 		        cantidad_completados_learn[i] = cantidad_learn;
 		        cantidad_abandonado_learn[i] = chapters[z].learning[0].datos[0].length - cantidad_learn;
 
 		    }
 
-		    $scope.juegoCompletas[n] = suma_total_completados_juego;
-        	$scope.juegoAbandono[n] = suma_total_abandonos_juego;
+		    $scope.juegoCompletas[n] = (suma_total_completados_juego).toFixed(2);
+        	$scope.juegoAbandono[n] = (suma_total_abandonos_juego).toFixed(2);
 
 		    $scope.historiaCompletas[n] = suma_total_completados_learn;
 		    $scope.historiaAbandono[n] = suma_total_abandonos_learn;

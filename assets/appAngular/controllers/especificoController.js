@@ -564,9 +564,9 @@ app.controller('EspecificoController', ['$scope', '$rootScope', 'TodoService', f
                 suma_tiempo = suma_tiempo + chapters.niveles[0][j].datos[0][k].tiempo_juego;
                 
             }
-            promedio_correctas[j] = suma_correctas / cantidad;
-            promedio_incorrectas[j] = suma_incorrectas / cantidad;
-            promedio_tiempo[j] = suma_tiempo / cantidad;
+            promedio_correctas[j] = (suma_correctas / cantidad).toFixed(2);
+            promedio_incorrectas[j] = (suma_incorrectas / cantidad).toFixed(2);
+            promedio_tiempo[j] = Math.round(suma_tiempo / cantidad);
             cantidad_completados[j] = cantidad;
             cantidad_abandonado[j] = cantidadAban;
 
@@ -587,8 +587,8 @@ app.controller('EspecificoController', ['$scope', '$rootScope', 'TodoService', f
             suma_intentos_learn = suma_intentos_learn + chapters.learning[0].datos[0][m].num_play;
             
         }
-        promedio_tiempo_learn[i] = suma_tiempo_learn / cantidad_learn;
-        promedio_intentos_learn[i] = suma_intentos_learn / cantidad_learn;
+        promedio_tiempo_learn[i] = Math.round(suma_tiempo_learn / cantidad_learn);
+        promedio_intentos_learn[i] = (suma_intentos_learn / cantidad_learn).toFixed(2);
         cantidad_completados_learn[i] = cantidad_learn;
         cantidad_abandonado_learn[i] = cantidad_learn_aban;
         console.log(promedio_tiempo_learn);

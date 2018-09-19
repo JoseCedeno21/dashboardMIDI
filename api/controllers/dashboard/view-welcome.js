@@ -19,6 +19,9 @@ module.exports = {
 
   fn: async function (inputs, exits) {
     //window.location.href = '/';
+    if(this.req.me.isSuperAdmin == true){
+      var tipo = "admin";
+    }
     return exits.success();
 
   }
