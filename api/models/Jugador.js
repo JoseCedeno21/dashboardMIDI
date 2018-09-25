@@ -17,10 +17,6 @@ module.exports = {
         type: 'string',
         required: true
     },
-    id_room: {
-        type: 'number',
-        required: true
-    },
     puntos:{
         type: 'number',
         required: true
@@ -29,10 +25,6 @@ module.exports = {
         type: 'number',
         required: true
     },
-    id_escuela:{
-        type: 'number',
-        required: true
-    }
 
     //  ╔═╗╦═╗╦╔╦╗╦╔╦╗╦╦  ╦╔═╗╔═╗
     //  ╠═╝╠╦╝║║║║║ ║ ║╚╗╔╝║╣ ╚═╗
@@ -48,6 +40,14 @@ module.exports = {
     //  ╠═╣╚═╗╚═╗║ ║║  ║╠═╣ ║ ║║ ║║║║╚═╗
     //  ╩ ╩╚═╝╚═╝╚═╝╚═╝╩╩ ╩ ╩ ╩╚═╝╝╚╝╚═╝
 
+    id_room: {
+        model: 'room',
+        required: true
+    },
+    id_escuela:{
+        model: 'escuela',
+        required: true
+    }
   },
 
 };

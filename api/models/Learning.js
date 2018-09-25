@@ -16,14 +16,10 @@ module.exports = {
     descripcion: {
         type: 'string'
     },
-    id_chapter: {
-        type: 'number',
-        required: true
-    },
     duracion: {
         type: 'number',
         required: true
-    }
+    },
 
     //  ╔═╗╦═╗╦╔╦╗╦╔╦╗╦╦  ╦╔═╗╔═╗
     //  ╠═╝╠╦╝║║║║║ ║ ║╚╗╔╝║╣ ╚═╗
@@ -39,6 +35,10 @@ module.exports = {
     //  ╠═╣╚═╗╚═╗║ ║║  ║╠═╣ ║ ║║ ║║║║╚═╗
     //  ╩ ╩╚═╝╚═╝╚═╝╚═╝╩╩ ╩ ╩ ╩╚═╝╝╚╝╚═╝
 
+    id_chapter: {
+        model: 'chapter',
+        required: true
+    }
   },
 
 };

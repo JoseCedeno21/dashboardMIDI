@@ -25,7 +25,7 @@ module.exports = {
 			    cadena_nombre = arrayDeCadena[2];
 			}
 			var room = await Room.findOne({nombre:cadena_room});
-			var escuela = await Escuela.findOne({nombre:cadena_escuela});
+			var escuela = await Escuela.findOne({codigo:cadena_escuela});
 
 			console.log("escuela: " + cadena_escuela);
 			console.log("room: " + cadena_room);

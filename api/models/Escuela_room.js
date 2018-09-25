@@ -9,18 +9,10 @@ module.exports = {
 
   attributes: {
 
-    id_escuela: {
-        type: 'number',
-        required: true
-    },
-    id_room: {
-        type: 'number',
-        required: true
-    },
     descripcion: {
         type: 'string',
         required: true
-    }
+    },
 
     //  ╔═╗╦═╗╦╔╦╗╦╔╦╗╦╦  ╦╔═╗╔═╗
     //  ╠═╝╠╦╝║║║║║ ║ ║╚╗╔╝║╣ ╚═╗
@@ -36,6 +28,14 @@ module.exports = {
     //  ╠═╣╚═╗╚═╗║ ║║  ║╠═╣ ║ ║║ ║║║║╚═╗
     //  ╩ ╩╚═╝╚═╝╚═╝╚═╝╩╩ ╩ ╩ ╩╚═╝╝╚╝╚═╝
 
-  },
+    id_escuela: {
+        model: 'escuela',
+        required: true
+    },
+    id_room: {
+        model: 'room',
+        required: true
+    },
+  }
 
 };

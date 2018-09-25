@@ -19,8 +19,8 @@ module.exports = {
     edad: {
         type: 'number'
     },
-    id_juego:{
-        type: 'number',
+    fk_juego:{
+        model: 'game',
         required: true
     },
 

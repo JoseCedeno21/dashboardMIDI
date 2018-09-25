@@ -9,9 +9,13 @@ module.exports = {
 
   attributes: {
 
-    nombre: {
+    codigo: {
         type: 'string',
-        required: true
+        required: true,
+        unique: true
+    },
+    nombre: {
+        type: 'string'
     },
     descripcion: {
         type: 'string'

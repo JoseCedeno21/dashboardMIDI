@@ -178,7 +178,7 @@ module.exports = {
     var nivel = await Nivel.findOne({id:req.params.idlevel});
     var chapter = await Chapter.findOne({id:nivel.id_chapter});
     var game = await Game.findOne({id:chapter.id_game});
-    var rooms = await Room.find({id_juego:game.id});
+    var rooms = await Room.find({fk_juego:game.id});
 
     res.json(rooms);
   },
@@ -211,7 +211,7 @@ module.exports = {
     var caracteristica;
     var metrica = [];
     for(var i=0; i<metrica_tmp.length; i++){
-      caracteristica = await Caracteristica.findOne({id:metrica_tmp[i].id_metrica});
+      caracteristica = await Caracteristica.findOne({id:metrica_tmp[i].id_caracteristica});
       metrica.push({
         id: metrica_tmp[i].id,
         nombre: metrica_tmp[i].nombre,
@@ -313,9 +313,9 @@ module.exports = {
       level_users = await Nivel_usuario.find({id_usuario:jugadores[i].id});
       for(var j = 0; j < level_users.length; j++){
         nivel = await Nivel.findOne({id:level_users[j].id_nivel});
-        console.log(nivel);
         if (!nivel != null) {
           level_room_tmp = level_room.filter(function(level_tmp) {
+            if (level_tmp.id) return level_tmp.id === nivel.id;
             return level_tmp.id === nivel.id;
           });
           

@@ -10,11 +10,11 @@ module.exports = {
   attributes: {
 
     id_jugador: {
-        type: 'number',
+        model: 'jugador',
         required: true
     },
     id_learning: {
-        type: 'number',
+        model: 'learning',
         required: true
     },
     fecha_inicio: {

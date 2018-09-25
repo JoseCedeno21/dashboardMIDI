@@ -5,7 +5,7 @@
 -- Dumped from database version 9.5.14
 -- Dumped by pg_dump version 10.4
 
--- Started on 2018-09-19 10:40:17
+-- Started on 2018-09-25 02:49:41
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -17,6 +17,23 @@ SET check_function_bodies = false;
 SET client_min_messages = warning;
 SET row_security = off;
 
+--
+-- TOC entry 1 (class 3079 OID 17158)
+-- Name: plpgsql; Type: EXTENSION; Schema: -; Owner: 
+--
+
+CREATE EXTENSION IF NOT EXISTS plpgsql WITH SCHEMA pg_catalog;
+
+
+--
+-- TOC entry 2310 (class 0 OID 0)
+-- Dependencies: 1
+-- Name: EXTENSION plpgsql; Type: COMMENT; Schema: -; Owner: 
+--
+
+COMMENT ON EXTENSION plpgsql IS 'PL/pgSQL procedural language';
+
+
 SET default_tablespace = '';
 
 SET default_with_oids = false;
@@ -27,8 +44,6 @@ SET default_with_oids = false;
 --
 
 CREATE TABLE public.caracteristica (
-    "createdAt" bigint,
-    "updatedAt" bigint,
     id integer NOT NULL,
     nombre text,
     descripcion text
@@ -53,7 +68,7 @@ CREATE SEQUENCE public.caracteristica_id_seq
 ALTER TABLE public.caracteristica_id_seq OWNER TO postgres;
 
 --
--- TOC entry 2267 (class 0 OID 0)
+-- TOC entry 2311 (class 0 OID 0)
 -- Dependencies: 182
 -- Name: caracteristica_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -67,13 +82,10 @@ ALTER SEQUENCE public.caracteristica_id_seq OWNED BY public.caracteristica.id;
 --
 
 CREATE TABLE public.chapter (
-    "createdAt" bigint,
-    "updatedAt" bigint,
     id integer NOT NULL,
     nombre text,
     descripcion text,
-    id_chapter real,
-    id_game real
+    id_game integer
 );
 
 
@@ -95,7 +107,7 @@ CREATE SEQUENCE public.chapter_id_seq
 ALTER TABLE public.chapter_id_seq OWNER TO postgres;
 
 --
--- TOC entry 2268 (class 0 OID 0)
+-- TOC entry 2312 (class 0 OID 0)
 -- Dependencies: 184
 -- Name: chapter_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -125,8 +137,9 @@ ALTER TABLE public.escuela_id_seq OWNER TO postgres;
 
 CREATE TABLE public.escuela (
     id integer DEFAULT nextval('public.escuela_id_seq'::regclass) NOT NULL,
-    nombre text,
-    descripcion text
+    codigo text,
+    descripcion text,
+    nombre text
 );
 
 
@@ -154,8 +167,8 @@ ALTER TABLE public.escuela_room_id_seq OWNER TO postgres;
 
 CREATE TABLE public.escuela_room (
     id integer DEFAULT nextval('public.escuela_room_id_seq'::regclass) NOT NULL,
-    id_escuela real,
-    id_room real,
+    id_escuela integer,
+    id_room integer,
     descripcion text
 );
 
@@ -168,8 +181,6 @@ ALTER TABLE public.escuela_room OWNER TO postgres;
 --
 
 CREATE TABLE public.game (
-    "createdAt" bigint,
-    "updatedAt" bigint,
     id integer NOT NULL,
     nombre text,
     descripcion text
@@ -194,7 +205,7 @@ CREATE SEQUENCE public.game_id_seq
 ALTER TABLE public.game_id_seq OWNER TO postgres;
 
 --
--- TOC entry 2269 (class 0 OID 0)
+-- TOC entry 2313 (class 0 OID 0)
 -- Dependencies: 190
 -- Name: game_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -226,10 +237,10 @@ CREATE TABLE public.jugador (
     id integer DEFAULT nextval('public.jugador_id_seq'::regclass) NOT NULL,
     avatar text,
     nombre text,
-    id_room real,
+    id_room integer,
     puntos real,
     id_registro real,
-    id_escuela real
+    id_escuela integer
 );
 
 
@@ -241,11 +252,9 @@ ALTER TABLE public.jugador OWNER TO postgres;
 --
 
 CREATE TABLE public.learn_jugador (
-    "createdAt" bigint,
-    "updatedAt" bigint,
     id integer NOT NULL,
-    id_jugador real,
-    id_learning real,
+    id_jugador integer,
+    id_learning integer,
     fecha_inicio date,
     fecha_fin date,
     tiempo_juego real,
@@ -272,7 +281,7 @@ CREATE SEQUENCE public.learn_jugador_id_seq
 ALTER TABLE public.learn_jugador_id_seq OWNER TO postgres;
 
 --
--- TOC entry 2270 (class 0 OID 0)
+-- TOC entry 2314 (class 0 OID 0)
 -- Dependencies: 194
 -- Name: learn_jugador_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -286,12 +295,10 @@ ALTER SEQUENCE public.learn_jugador_id_seq OWNED BY public.learn_jugador.id;
 --
 
 CREATE TABLE public.learning (
-    "createdAt" bigint,
-    "updatedAt" bigint,
     id integer NOT NULL,
     nombre text,
     descripcion text,
-    id_chapter real,
+    id_chapter integer,
     duracion real
 );
 
@@ -314,7 +321,7 @@ CREATE SEQUENCE public.learning_id_seq
 ALTER TABLE public.learning_id_seq OWNER TO postgres;
 
 --
--- TOC entry 2271 (class 0 OID 0)
+-- TOC entry 2315 (class 0 OID 0)
 -- Dependencies: 196
 -- Name: learning_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -328,14 +335,12 @@ ALTER SEQUENCE public.learning_id_seq OWNED BY public.learning.id;
 --
 
 CREATE TABLE public.metrica (
-    "createdAt" bigint,
-    "updatedAt" bigint,
     id integer NOT NULL,
     nombre text,
     proposito text,
     formula text,
     interpretacion text,
-    id_metrica real
+    id_caracteristica integer
 );
 
 
@@ -357,7 +362,7 @@ CREATE SEQUENCE public.metrica_id_seq
 ALTER TABLE public.metrica_id_seq OWNER TO postgres;
 
 --
--- TOC entry 2272 (class 0 OID 0)
+-- TOC entry 2316 (class 0 OID 0)
 -- Dependencies: 198
 -- Name: metrica_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -371,13 +376,11 @@ ALTER SEQUENCE public.metrica_id_seq OWNED BY public.metrica.id;
 --
 
 CREATE TABLE public.nivel (
-    "createdAt" bigint,
-    "updatedAt" bigint,
     id integer NOT NULL,
     nombre text,
     descripcion text,
-    id_chapter real,
-    id_learning real
+    id_chapter integer,
+    id_learning integer
 );
 
 
@@ -399,7 +402,7 @@ CREATE SEQUENCE public.nivel_id_seq
 ALTER TABLE public.nivel_id_seq OWNER TO postgres;
 
 --
--- TOC entry 2273 (class 0 OID 0)
+-- TOC entry 2317 (class 0 OID 0)
 -- Dependencies: 200
 -- Name: nivel_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -416,8 +419,8 @@ CREATE TABLE public.nivel_usuario (
     "createdAt" bigint,
     "updatedAt" bigint,
     id integer NOT NULL,
-    id_usuario real,
-    id_nivel real,
+    id_usuario integer,
+    id_nivel integer,
     fecha_inicio date,
     fecha_fin date,
     tiempo_juego real,
@@ -446,7 +449,7 @@ CREATE SEQUENCE public.nivel_usuario_id_seq
 ALTER TABLE public.nivel_usuario_id_seq OWNER TO postgres;
 
 --
--- TOC entry 2274 (class 0 OID 0)
+-- TOC entry 2318 (class 0 OID 0)
 -- Dependencies: 202
 -- Name: nivel_usuario_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -463,9 +466,9 @@ CREATE TABLE public.room (
     id integer NOT NULL,
     nombre text,
     descripcion text,
-    tipo text,
     edad real,
-    id_juego real
+    fk_juego integer,
+    fk_tipo integer
 );
 
 
@@ -487,13 +490,42 @@ CREATE SEQUENCE public.room_id_seq
 ALTER TABLE public.room_id_seq OWNER TO postgres;
 
 --
--- TOC entry 2275 (class 0 OID 0)
+-- TOC entry 2319 (class 0 OID 0)
 -- Dependencies: 204
 -- Name: room_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
 
 ALTER SEQUENCE public.room_id_seq OWNED BY public.room.id;
 
+
+--
+-- TOC entry 210 (class 1259 OID 17330)
+-- Name: type_room_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.type_room_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.type_room_id_seq OWNER TO postgres;
+
+--
+-- TOC entry 209 (class 1259 OID 17322)
+-- Name: type_room; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.type_room (
+    id integer DEFAULT nextval('public.type_room_id_seq'::regclass) NOT NULL,
+    nombre text,
+    descripcion text
+);
+
+
+ALTER TABLE public.type_room OWNER TO postgres;
 
 --
 -- TOC entry 205 (class 1259 OID 17262)
@@ -543,7 +575,7 @@ CREATE SEQUENCE public.user_id_seq
 ALTER TABLE public.user_id_seq OWNER TO postgres;
 
 --
--- TOC entry 2276 (class 0 OID 0)
+-- TOC entry 2320 (class 0 OID 0)
 -- Dependencies: 206
 -- Name: user_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -592,7 +624,7 @@ CREATE SEQUENCE public.usuarios_id_seq
 ALTER TABLE public.usuarios_id_seq OWNER TO postgres;
 
 --
--- TOC entry 2277 (class 0 OID 0)
+-- TOC entry 2321 (class 0 OID 0)
 -- Dependencies: 208
 -- Name: usuarios_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -601,7 +633,7 @@ ALTER SEQUENCE public.usuarios_id_seq OWNED BY public.usuarios.id;
 
 
 --
--- TOC entry 2073 (class 2604 OID 17278)
+-- TOC entry 2080 (class 2604 OID 17278)
 -- Name: caracteristica id; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
@@ -609,7 +641,7 @@ ALTER TABLE ONLY public.caracteristica ALTER COLUMN id SET DEFAULT nextval('publ
 
 
 --
--- TOC entry 2074 (class 2604 OID 17279)
+-- TOC entry 2081 (class 2604 OID 17279)
 -- Name: chapter id; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
@@ -617,7 +649,7 @@ ALTER TABLE ONLY public.chapter ALTER COLUMN id SET DEFAULT nextval('public.chap
 
 
 --
--- TOC entry 2077 (class 2604 OID 17280)
+-- TOC entry 2084 (class 2604 OID 17280)
 -- Name: game id; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
@@ -625,7 +657,7 @@ ALTER TABLE ONLY public.game ALTER COLUMN id SET DEFAULT nextval('public.game_id
 
 
 --
--- TOC entry 2079 (class 2604 OID 17281)
+-- TOC entry 2086 (class 2604 OID 17281)
 -- Name: learn_jugador id; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
@@ -633,7 +665,7 @@ ALTER TABLE ONLY public.learn_jugador ALTER COLUMN id SET DEFAULT nextval('publi
 
 
 --
--- TOC entry 2080 (class 2604 OID 17282)
+-- TOC entry 2087 (class 2604 OID 17282)
 -- Name: learning id; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
@@ -641,7 +673,7 @@ ALTER TABLE ONLY public.learning ALTER COLUMN id SET DEFAULT nextval('public.lea
 
 
 --
--- TOC entry 2081 (class 2604 OID 17283)
+-- TOC entry 2088 (class 2604 OID 17283)
 -- Name: metrica id; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
@@ -649,7 +681,7 @@ ALTER TABLE ONLY public.metrica ALTER COLUMN id SET DEFAULT nextval('public.metr
 
 
 --
--- TOC entry 2082 (class 2604 OID 17284)
+-- TOC entry 2089 (class 2604 OID 17284)
 -- Name: nivel id; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
@@ -657,7 +689,7 @@ ALTER TABLE ONLY public.nivel ALTER COLUMN id SET DEFAULT nextval('public.nivel_
 
 
 --
--- TOC entry 2083 (class 2604 OID 17285)
+-- TOC entry 2090 (class 2604 OID 17285)
 -- Name: nivel_usuario id; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
@@ -665,7 +697,7 @@ ALTER TABLE ONLY public.nivel_usuario ALTER COLUMN id SET DEFAULT nextval('publi
 
 
 --
--- TOC entry 2084 (class 2604 OID 17286)
+-- TOC entry 2091 (class 2604 OID 17286)
 -- Name: room id; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
@@ -673,7 +705,7 @@ ALTER TABLE ONLY public.room ALTER COLUMN id SET DEFAULT nextval('public.room_id
 
 
 --
--- TOC entry 2085 (class 2604 OID 17287)
+-- TOC entry 2092 (class 2604 OID 17287)
 -- Name: user id; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
@@ -681,7 +713,7 @@ ALTER TABLE ONLY public."user" ALTER COLUMN id SET DEFAULT nextval('public.user_
 
 
 --
--- TOC entry 2086 (class 2604 OID 17288)
+-- TOC entry 2093 (class 2604 OID 17288)
 -- Name: usuarios id; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
@@ -689,77 +721,77 @@ ALTER TABLE ONLY public.usuarios ALTER COLUMN id SET DEFAULT nextval('public.usu
 
 
 --
--- TOC entry 2233 (class 0 OID 17163)
+-- TOC entry 2273 (class 0 OID 17163)
 -- Dependencies: 181
 -- Data for Name: caracteristica; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-COPY public.caracteristica ("createdAt", "updatedAt", id, nombre, descripcion) FROM stdin;
-1534726928373	1534726928373	1	Eficiencia	Grado con el que pueden lograr las metas propuestas invirtiendo una cantidad apropiada de recursos en relación a la efectividad lograda.
-1534726928373	1534726928373	2	Efectividad	Grado en el que pueden lograr las metas propuestas con precisión \ny completitud.
-1534726928373	1534726928373	3	Flexibilidad	Grado con el que se pueden variar las condiciones por prueba.
-1534726928373	1534726928373	4	Satisfacción	Grado con el que los jugadores se sienten bien al terminar una meta.
-1534726928373	1534726928373	5	Learning	Grado con el que a los jugadores les fue útil la parte de la enseñanza previa.
+COPY public.caracteristica (id, nombre, descripcion) FROM stdin;
+1	Eficiencia	Grado con el que pueden lograr las metas propuestas invirtiendo una cantidad apropiada de recursos en relación a la efectividad lograda.
+2	Efectividad	Grado en el que pueden lograr las metas propuestas con precisión \ny completitud.
+3	Flexibilidad	Grado con el que se pueden variar las condiciones por prueba.
+4	Satisfacción	Grado con el que los jugadores se sienten bien al terminar una meta.
+5	Learning	Grado con el que a los jugadores les fue útil la parte de la enseñanza previa.
 \.
 
 
 --
--- TOC entry 2235 (class 0 OID 17171)
+-- TOC entry 2275 (class 0 OID 17171)
 -- Dependencies: 183
 -- Data for Name: chapter; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-COPY public.chapter ("createdAt", "updatedAt", id, nombre, descripcion, id_chapter, id_game) FROM stdin;
-\N	\N	18	MiPais	prueba1	0	10
-\N	\N	19	DeberesYDerechos	prueba	0	10
-\N	\N	21	Armandomochila	armamochila	0	10
-\N	\N	26	Los Seres	bla bla BLA	0	14
-\N	\N	27	MiEscuela	desc1	0	10
-\N	\N	28	ArmandoBotiquin	desc1	0	15
+COPY public.chapter (id, nombre, descripcion, id_game) FROM stdin;
+18	MiPais	prueba1	10
+19	DeberesYDerechos	prueba	10
+21	Armandomochila	armamochila	10
+26	Los Seres	bla bla BLA	14
+27	MiEscuela	desc1	10
+28	ArmandoBotiquin	desc1	10
 \.
 
 
 --
--- TOC entry 2238 (class 0 OID 17181)
+-- TOC entry 2278 (class 0 OID 17181)
 -- Dependencies: 186
 -- Data for Name: escuela; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-COPY public.escuela (id, nombre, descripcion) FROM stdin;
-1	ES001	Escuela 1
-2	ES002	Escuela 2
+COPY public.escuela (id, codigo, descripcion, nombre) FROM stdin;
+1	ES001	Escuela en la ciudad de Guayaquil	Escuela 1
+2	ES002	Escuela en la ciudad de Guayaquil	Escuela 2
 \.
 
 
 --
--- TOC entry 2240 (class 0 OID 17190)
+-- TOC entry 2280 (class 0 OID 17190)
 -- Dependencies: 188
 -- Data for Name: escuela_room; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
 COPY public.escuela_room (id, id_escuela, id_room, descripcion) FROM stdin;
 1	1	4	\N
-2	1	5	\N
 3	2	4	\N
 4	1	6	\N
 5	1	7	\N
+7	1	5	No definida
 \.
 
 
 --
--- TOC entry 2241 (class 0 OID 17197)
+-- TOC entry 2281 (class 0 OID 17197)
 -- Dependencies: 189
 -- Data for Name: game; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-COPY public.game ("createdAt", "updatedAt", id, nombre, descripcion) FROM stdin;
-\N	\N	10	EntornoSocialEscuela	prueba1
-\N	\N	14	En mi Entorno Natural	bla bla
+COPY public.game (id, nombre, descripcion) FROM stdin;
+10	EntornoSocialEscuela	prueba1
+14	En mi Entorno Natural	bla bla
 \.
 
 
 --
--- TOC entry 2244 (class 0 OID 17207)
+-- TOC entry 2284 (class 0 OID 17207)
 -- Dependencies: 192
 -- Data for Name: jugador; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -859,141 +891,141 @@ COPY public.jugador (id, avatar, nombre, id_room, puntos, id_registro, id_escuel
 
 
 --
--- TOC entry 2245 (class 0 OID 17214)
+-- TOC entry 2285 (class 0 OID 17214)
 -- Dependencies: 193
 -- Data for Name: learn_jugador; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-COPY public.learn_jugador ("createdAt", "updatedAt", id, id_jugador, id_learning, fecha_inicio, fecha_fin, tiempo_juego, estado, num_play) FROM stdin;
-\N	\N	86	123	18	2018-09-13	2018-09-13	17	abandonado	1
-\N	\N	87	124	18	2018-09-13	2018-09-13	20	abandonado	1
-\N	\N	88	125	18	2018-09-13	2018-09-13	25	abandonado	1
-\N	\N	89	126	14	2018-08-13	2018-08-13	1	Completado	2
-\N	\N	90	127	14	2018-08-13	2018-08-13	4	Completado	1
-\N	\N	91	127	19	2018-08-13	2018-08-13	1	Completado	1
-\N	\N	92	127	20	2018-08-13	2018-08-13	0	Completado	1
-\N	\N	93	127	15	2018-08-13	2018-08-13	4	abandonado	1
-\N	\N	94	128	14	2018-08-13	2018-08-13	0	Completado	1
-\N	\N	95	128	19	2018-08-13	2018-08-13	0	Completado	1
-\N	\N	96	128	20	2018-08-13	2018-08-13	0	Completado	1
-\N	\N	97	128	15	2018-08-13	2018-08-13	0	abandonado	1
-\N	\N	98	129	14	2018-08-13	2018-08-13	8	Completado	2
-\N	\N	99	129	20	2018-08-13	2018-08-13	1	Completado	1
-\N	\N	100	129	19	2018-08-13	2018-08-13	2	Completado	1
-\N	\N	101	130	14	2018-08-13	2018-08-13	1	Completado	1
-\N	\N	102	130	20	2018-08-13	2018-08-13	2	Completado	3
-\N	\N	103	130	19	2018-08-13	2018-08-13	0	Completado	1
-\N	\N	104	132	18	2018-09-15	2018-09-15	13	abandonado	1
-\N	\N	105	136	18	2018-09-15	2018-09-15	2	abandonado	1
-\N	\N	106	137	18	2018-09-15	2018-09-15	17	abandonado	1
-\N	\N	107	140	18	2018-09-17	2018-09-17	207	completado	1
-\N	\N	108	141	18	2018-09-17	2018-09-17	2	abandonado	2
-\N	\N	109	142	18	2018-09-17	2018-09-17	5	abandonado	2
-\N	\N	110	143	18	2018-09-17	2018-09-17	2	abandonado	1
-\N	\N	41	78	13	2018-08-04	2018-08-04	1	Completado	1
-\N	\N	42	80	14	2018-08-04	2018-08-04	1	Completado	1
-\N	\N	43	80	15	2018-08-04	2018-08-04	2	Completado	2
-\N	\N	44	80	13	2018-08-04	2018-08-04	5	Completado	1
-\N	\N	45	79	14	2018-08-04	2018-08-04	17	Completado	1
-\N	\N	46	82	14	2018-08-05	2018-08-05	5	Completado	3
-\N	\N	47	82	15	2018-08-05	2018-08-05	9	Completado	1
-\N	\N	50	94	18	2018-09-07	2018-09-07	21	abandonado	3
-\N	\N	51	95	18	2018-09-07	2018-09-07	3	abandonado	1
-\N	\N	52	96	18	2018-09-07	2018-09-07	2	abandonado	1
-\N	\N	53	97	18	2018-09-07	2018-09-07	7	abandonado	2
-\N	\N	54	98	18	2018-09-07	2018-09-07	21	abandonado	1
-\N	\N	55	99	18	2018-09-07	2018-09-07	59	abandonado	1
-\N	\N	56	100	18	2018-09-07	2018-09-07	50	abandonado	1
-\N	\N	57	101	18	2018-09-07	2018-09-07	207	completado	1
-\N	\N	58	102	18	2018-09-08	2018-09-08	200	completado	1
-\N	\N	59	103	18	2018-09-09	2018-09-09	3	abandonado	2
-\N	\N	60	104	18	2018-09-09	2018-09-09	15	abandonado	1
-\N	\N	61	106	18	2018-09-11	2018-09-11	203	completado	1
-\N	\N	62	107	15	2018-08-11	2018-08-11	13	Completado	1
-\N	\N	63	109	14	2018-08-11	2018-08-11	0	Completado	1
-\N	\N	64	109	15	2018-08-11	2018-08-11	1	Completado	1
-\N	\N	65	110	19	2018-08-11	2018-08-11	1	Completado	1
-\N	\N	66	111	20	2018-08-11	2018-08-11	2	Completado	1
-\N	\N	67	112	14	2018-08-11	2018-08-11	2	Completado	1
-\N	\N	68	112	15	2018-08-11	2018-08-11	2	Completado	1
-\N	\N	69	112	19	2018-08-11	2018-08-11	3	Completado	1
-\N	\N	70	112	20	2018-08-11	2018-08-11	1	Completado	1
-\N	\N	71	113	20	2018-08-11	2018-08-11	0	Completado	1
-\N	\N	72	113	19	2018-08-11	2018-08-11	0	Completado	1
-\N	\N	73	113	14	2018-08-11	2018-08-11	1	Completado	1
-\N	\N	74	114	14	2018-08-11	2018-08-11	2	Completado	1
-\N	\N	75	114	15	2018-08-11	2018-08-11	1	Completado	1
-\N	\N	76	114	19	2018-08-11	2018-08-11	1	Completado	1
-\N	\N	77	114	20	2018-08-11	2018-08-11	1	Completado	1
-\N	\N	78	115	14	2018-08-12	2018-08-12	0	Completado	4
-\N	\N	79	115	15	2018-08-12	2018-08-12	1	Completado	3
-\N	\N	81	115	20	2018-08-12	2018-08-12	0	Completado	4
-\N	\N	80	115	19	2018-08-12	2018-08-12	98	Completado	9
-\N	\N	82	116	15	2018-08-12	2018-08-12	12	Completado	2
-\N	\N	83	119	18	2018-09-13	2018-09-13	18	abandonado	1
-\N	\N	84	120	18	2018-09-13	2018-09-13	7	abandonado	1
-\N	\N	85	122	18	2018-09-13	2018-09-13	10	abandonado	2
+COPY public.learn_jugador (id, id_jugador, id_learning, fecha_inicio, fecha_fin, tiempo_juego, estado, num_play) FROM stdin;
+86	123	18	2018-09-13	2018-09-13	17	abandonado	1
+87	124	18	2018-09-13	2018-09-13	20	abandonado	1
+88	125	18	2018-09-13	2018-09-13	25	abandonado	1
+89	126	14	2018-08-13	2018-08-13	1	Completado	2
+90	127	14	2018-08-13	2018-08-13	4	Completado	1
+91	127	19	2018-08-13	2018-08-13	1	Completado	1
+92	127	20	2018-08-13	2018-08-13	0	Completado	1
+93	127	15	2018-08-13	2018-08-13	4	abandonado	1
+94	128	14	2018-08-13	2018-08-13	0	Completado	1
+95	128	19	2018-08-13	2018-08-13	0	Completado	1
+96	128	20	2018-08-13	2018-08-13	0	Completado	1
+97	128	15	2018-08-13	2018-08-13	0	abandonado	1
+98	129	14	2018-08-13	2018-08-13	8	Completado	2
+99	129	20	2018-08-13	2018-08-13	1	Completado	1
+100	129	19	2018-08-13	2018-08-13	2	Completado	1
+101	130	14	2018-08-13	2018-08-13	1	Completado	1
+102	130	20	2018-08-13	2018-08-13	2	Completado	3
+103	130	19	2018-08-13	2018-08-13	0	Completado	1
+104	132	18	2018-09-15	2018-09-15	13	abandonado	1
+105	136	18	2018-09-15	2018-09-15	2	abandonado	1
+106	137	18	2018-09-15	2018-09-15	17	abandonado	1
+107	140	18	2018-09-17	2018-09-17	207	completado	1
+108	141	18	2018-09-17	2018-09-17	2	abandonado	2
+109	142	18	2018-09-17	2018-09-17	5	abandonado	2
+110	143	18	2018-09-17	2018-09-17	2	abandonado	1
+41	78	13	2018-08-04	2018-08-04	1	Completado	1
+42	80	14	2018-08-04	2018-08-04	1	Completado	1
+43	80	15	2018-08-04	2018-08-04	2	Completado	2
+44	80	13	2018-08-04	2018-08-04	5	Completado	1
+45	79	14	2018-08-04	2018-08-04	17	Completado	1
+46	82	14	2018-08-05	2018-08-05	5	Completado	3
+47	82	15	2018-08-05	2018-08-05	9	Completado	1
+50	94	18	2018-09-07	2018-09-07	21	abandonado	3
+51	95	18	2018-09-07	2018-09-07	3	abandonado	1
+52	96	18	2018-09-07	2018-09-07	2	abandonado	1
+53	97	18	2018-09-07	2018-09-07	7	abandonado	2
+54	98	18	2018-09-07	2018-09-07	21	abandonado	1
+55	99	18	2018-09-07	2018-09-07	59	abandonado	1
+56	100	18	2018-09-07	2018-09-07	50	abandonado	1
+57	101	18	2018-09-07	2018-09-07	207	completado	1
+58	102	18	2018-09-08	2018-09-08	200	completado	1
+59	103	18	2018-09-09	2018-09-09	3	abandonado	2
+60	104	18	2018-09-09	2018-09-09	15	abandonado	1
+61	106	18	2018-09-11	2018-09-11	203	completado	1
+62	107	15	2018-08-11	2018-08-11	13	Completado	1
+63	109	14	2018-08-11	2018-08-11	0	Completado	1
+64	109	15	2018-08-11	2018-08-11	1	Completado	1
+65	110	19	2018-08-11	2018-08-11	1	Completado	1
+66	111	20	2018-08-11	2018-08-11	2	Completado	1
+67	112	14	2018-08-11	2018-08-11	2	Completado	1
+68	112	15	2018-08-11	2018-08-11	2	Completado	1
+69	112	19	2018-08-11	2018-08-11	3	Completado	1
+70	112	20	2018-08-11	2018-08-11	1	Completado	1
+71	113	20	2018-08-11	2018-08-11	0	Completado	1
+72	113	19	2018-08-11	2018-08-11	0	Completado	1
+73	113	14	2018-08-11	2018-08-11	1	Completado	1
+74	114	14	2018-08-11	2018-08-11	2	Completado	1
+75	114	15	2018-08-11	2018-08-11	1	Completado	1
+76	114	19	2018-08-11	2018-08-11	1	Completado	1
+77	114	20	2018-08-11	2018-08-11	1	Completado	1
+78	115	14	2018-08-12	2018-08-12	0	Completado	4
+79	115	15	2018-08-12	2018-08-12	1	Completado	3
+81	115	20	2018-08-12	2018-08-12	0	Completado	4
+80	115	19	2018-08-12	2018-08-12	98	Completado	9
+82	116	15	2018-08-12	2018-08-12	12	Completado	2
+83	119	18	2018-09-13	2018-09-13	18	abandonado	1
+84	120	18	2018-09-13	2018-09-13	7	abandonado	1
+85	122	18	2018-09-13	2018-09-13	10	abandonado	2
 \.
 
 
 --
--- TOC entry 2247 (class 0 OID 17222)
+-- TOC entry 2287 (class 0 OID 17222)
 -- Dependencies: 195
 -- Data for Name: learning; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-COPY public.learning ("createdAt", "updatedAt", id, nombre, descripcion, id_chapter, duracion) FROM stdin;
-\N	\N	14	MiPais	desc3	18	205
-\N	\N	15	Deberes	desc	19	121
-\N	\N	13	Escuela	desc3	21	245
-\N	\N	18	Historia-Seres	Oscar le explica a los niños la diferencia entre seres vivos y no vivos	26	207
-\N	\N	19	PartedelaEscuela	desc3	27	245
-\N	\N	20	Botiquin	desc3	28	245
+COPY public.learning (id, nombre, descripcion, id_chapter, duracion) FROM stdin;
+14	MiPais	desc3	18	205
+15	Deberes	desc	19	121
+13	Escuela	desc3	21	245
+18	Historia-Seres	Oscar le explica a los niños la diferencia entre seres vivos y no vivos	26	207
+19	PartedelaEscuela	desc3	27	245
+20	Botiquin	desc3	28	245
 \.
 
 
 --
--- TOC entry 2249 (class 0 OID 17230)
+-- TOC entry 2289 (class 0 OID 17230)
 -- Dependencies: 197
 -- Data for Name: metrica; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-COPY public.metrica ("createdAt", "updatedAt", id, nombre, proposito, formula, interpretacion, id_metrica) FROM stdin;
-1534726928373	1534726928373	1	Tiempo de meta	¿Cuánto tiempo requiere el jugador para lograr la meta?	tiempo_juego_ok	Tiempo de juego en el nivel completado	1
-1534726928373	1534726928373	2	Eficiencia de meta por respuestas correctas	¿Cómo de eficientes son los usuarios en el nivel?	correctas_ok / tiempo_juego	Respuestas correctas en un nivel completado vs tiempo que tomó completarlo	1
-1534726928373	1534726928373	3	Eficiencia de meta por respuestas incorrectas	¿Qué tan poco eficientes son los usuarios en el nivel?	incorrectas_ok / tiempo_juego	Respuestas incorrectas en un nivel completado vs tiempo que tomó completarlo	1
-1534726928373	1534726928373	4	Eficiencia relativa a los mejores resultados de jugadores	¿Qué porcentaje de jugadores lo hicieron bastante rápido?	jugadores_OK / total_jugadores	Número de mejores jugadores vs total de jugadores	1
-1534726928373	1534726928373	5	Eficiencia relativa a los jugadores con dificultades en el nivel	¿Qué porcentaje de jugadores tuvieron dificultades?	jugadores_BAD / total_jugadores	Número de jugadores que tuvieron dificultades vs total de jugadores	1
-1534726928373	1534726928373	6	Efectividad de la meta	¿Qué porcentaje de metas y retos se han alcanzado correctamente?	correctas / (correctas + incorrectas)	Relacion del total de respuestas correctas vs el total de intentos	2
-1534726928373	1534726928373	7	Completitud de la meta	¿Qué porcentaje de metas y retos se han completado?	n_completos / n_user	Numero de usuarios que completaron vs numero de usuarios totales	2
-1534726928373	1534726928373	8	Frecuencia de intentos para llegar a la meta	¿Cuál ha sido la frecuencia de intentos?	intentos_ok / correctas_ok	Numero de intentos en niveles completados vs numero de r. correctas en niveles completados	2
-1534726928373	1534726928373	9	Flexibilidad por metas	¿Qué porcentaje de metas se logran utilizando distintas formas de interacción diferentes a las usadas por defecto?	correctas / (correctas + incorrectas)	Número r. correctas en rooms por defecto menos el total de r. correctas por el resto de rooms	3
-1534726928373	1534726928373	10	Flexibilidad por tiempo	¿Qué porcentaje de tiempo se logra utilizando distintas formas de interacción diferentes a las usadas por defecto?	t_rooms / t_total	Tiempo en rooms por defecto menos el tiempo total del resto de rooms	3
-1534726928373	1534726928373	11	Preferencias de uso con respecto del nivel vs el resto de niveles	¿Qué porcentaje de usuarios prefieren el nivel frente a otro?	n_completos, n_usuarios, id_nivel, niveles	Tiempo en el nivel actual menos el total de tiempo del resto de niveles	4
+COPY public.metrica (id, nombre, proposito, formula, interpretacion, id_caracteristica) FROM stdin;
+1	Tiempo de meta	¿Cuánto tiempo requiere el jugador para lograr la meta?	tiempo_juego_ok	Tiempo de juego en el nivel completado	1
+2	Eficiencia de meta por respuestas correctas	¿Cómo de eficientes son los usuarios en el nivel?	correctas_ok / tiempo_juego	Respuestas correctas en un nivel completado vs tiempo que tomó completarlo	1
+3	Eficiencia de meta por respuestas incorrectas	¿Qué tan poco eficientes son los usuarios en el nivel?	incorrectas_ok / tiempo_juego	Respuestas incorrectas en un nivel completado vs tiempo que tomó completarlo	1
+4	Eficiencia relativa a los mejores resultados de jugadores	¿Qué porcentaje de jugadores lo hicieron bastante rápido?	jugadores_OK / total_jugadores	Número de mejores jugadores vs total de jugadores	1
+5	Eficiencia relativa a los jugadores con dificultades en el nivel	¿Qué porcentaje de jugadores tuvieron dificultades?	jugadores_BAD / total_jugadores	Número de jugadores que tuvieron dificultades vs total de jugadores	1
+6	Efectividad de la meta	¿Qué porcentaje de metas y retos se han alcanzado correctamente?	correctas / (correctas + incorrectas)	Relacion del total de respuestas correctas vs el total de intentos	2
+7	Completitud de la meta	¿Qué porcentaje de metas y retos se han completado?	n_completos / n_user	Numero de usuarios que completaron vs numero de usuarios totales	2
+8	Frecuencia de intentos para llegar a la meta	¿Cuál ha sido la frecuencia de intentos?	intentos_ok / correctas_ok	Numero de intentos en niveles completados vs numero de r. correctas en niveles completados	2
+9	Flexibilidad por metas	¿Qué porcentaje de metas se logran utilizando distintas formas de interacción diferentes a las usadas por defecto?	correctas / (correctas + incorrectas)	Número r. correctas en rooms por defecto menos el total de r. correctas por el resto de rooms	3
+10	Flexibilidad por tiempo	¿Qué porcentaje de tiempo se logra utilizando distintas formas de interacción diferentes a las usadas por defecto?	t_rooms / t_total	Tiempo en rooms por defecto menos el tiempo total del resto de rooms	3
+11	Preferencias de uso con respecto del nivel vs el resto de niveles	¿Qué porcentaje de usuarios prefieren el nivel frente a otro?	n_completos, n_usuarios, id_nivel, niveles	Tiempo en el nivel actual menos el total de tiempo del resto de niveles	4
 \.
 
 
 --
--- TOC entry 2251 (class 0 OID 17238)
+-- TOC entry 2291 (class 0 OID 17238)
 -- Dependencies: 199
 -- Data for Name: nivel; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-COPY public.nivel ("createdAt", "updatedAt", id, nombre, descripcion, id_chapter, id_learning) FROM stdin;
-\N	\N	23	PintalaBandera	prueba3	18	0
-\N	\N	24	DeberesyDerechos	prueba	19	0
-\N	\N	25	Armandolamochila	prueba2	21	0
-\N	\N	28	SeresActivity1	Sigue las instrucciones que te da Loly	26	18
-\N	\N	29	SeresActivity2	Sigue las instrucciones que te da Loly	26	18
-\N	\N	30	SeresActivity4	Sigue las instrucciones que te da Loly	26	18
-\N	\N	31	SeresActivity3	Sigue las instrucciones que te da Loly	26	18
-\N	\N	32	mochila1	prueba2	21	0
-\N	\N	33	PolitoEnfermo	prueba2	29	0
+COPY public.nivel (id, nombre, descripcion, id_chapter, id_learning) FROM stdin;
+28	SeresActivity1	Sigue las instrucciones que te da Loly	26	18
+29	SeresActivity2	Sigue las instrucciones que te da Loly	26	18
+30	SeresActivity4	Sigue las instrucciones que te da Loly	26	18
+31	SeresActivity3	Sigue las instrucciones que te da Loly	26	18
+23	PintalaBandera	prueba3	18	14
+24	DeberesyDerechos	prueba	19	15
+25	Armandolamochila	prueba2	21	19
+32	mochila1	prueba2	21	19
+33	PolitoEnfermo	prueba2	28	19
 \.
 
 
 --
--- TOC entry 2253 (class 0 OID 17246)
+-- TOC entry 2293 (class 0 OID 17246)
 -- Dependencies: 201
 -- Data for Name: nivel_usuario; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -1058,9 +1090,7 @@ COPY public.nivel_usuario ("createdAt", "updatedAt", id, id_usuario, id_nivel, f
 \N	\N	82	78	25	2018-08-04	2018-08-04	77	completado	17	10	1
 \N	\N	114	106	28	2018-09-11	2018-09-11	53	completado	5	18	1
 \N	\N	115	106	29	2018-09-11	2018-09-11	30	abandonado	0	1	1
-\N	\N	86	82	26	2018-08-05	2018-08-05	4	Completado	0	0	3
 \N	\N	87	82	23	2018-08-05	2018-08-05	4	Completado	0	0	3
-\N	\N	88	86	27	2018-08-05	2018-08-05	4	abandonado	1	0	1
 \N	\N	116	109	23	2018-08-11	2018-08-11	1	abandonado	0	0	1
 \N	\N	117	110	32	2018-08-11	2018-08-11	1	abandonado	0	0	1
 \N	\N	118	111	33	2018-08-11	2018-08-11	3	abandonado	0	1	2
@@ -1108,25 +1138,40 @@ COPY public.nivel_usuario ("createdAt", "updatedAt", id, id_usuario, id_nivel, f
 \N	\N	146	129	23	2018-08-13	2018-08-13	1	abandonado	0	0	3
 \N	\N	147	129	33	2018-08-13	2018-08-13	1	abandonado	0	0	3
 \N	\N	148	129	32	2018-08-13	2018-08-13	1	abandonado	0	0	3
+\N	\N	86	82	28	2018-08-05	2018-08-05	4	Completado	0	0	3
+\N	\N	88	86	28	2018-08-05	2018-08-05	4	abandonado	1	0	1
 \.
 
 
 --
--- TOC entry 2255 (class 0 OID 17254)
+-- TOC entry 2295 (class 0 OID 17254)
 -- Dependencies: 203
 -- Data for Name: room; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-COPY public.room (id, nombre, descripcion, tipo, edad, id_juego) FROM stdin;
-4	R1	Sala por Default	Default	8	10
-5	R2	Sin guía	Sin guía	6	10
-6	R3	Dra	Sin guia	6	10
-7	R4	R4	Guia	6	10
+COPY public.room (id, nombre, descripcion, edad, fk_juego, fk_tipo) FROM stdin;
+5	R2	Sin guía	6	10	2
+6	R3	Dra	6	10	2
+7	R4	R4	6	10	1
+8	R0	Aula virtual libre	0	10	1
+4	R1	Sala por Default	8	10	1
 \.
 
 
 --
--- TOC entry 2257 (class 0 OID 17262)
+-- TOC entry 2301 (class 0 OID 17322)
+-- Dependencies: 209
+-- Data for Name: type_room; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.type_room (id, nombre, descripcion) FROM stdin;
+1	Con Guía	Un tutor guiará a los estudiantes
+2	Sin Guía	Los estudiantes jugarán sin un tutor quien les guíe
+\.
+
+
+--
+-- TOC entry 2297 (class 0 OID 17262)
 -- Dependencies: 205
 -- Data for Name: user; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -1136,7 +1181,7 @@ COPY public."user" ("createdAt", "updatedAt", id, "emailAddress", password, "ful
 
 
 --
--- TOC entry 2259 (class 0 OID 17270)
+-- TOC entry 2299 (class 0 OID 17270)
 -- Dependencies: 207
 -- Data for Name: usuarios; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -1151,7 +1196,7 @@ COPY public.usuarios ("createdAt", "updatedAt", id, correo, password, nombre, "p
 
 
 --
--- TOC entry 2278 (class 0 OID 0)
+-- TOC entry 2322 (class 0 OID 0)
 -- Dependencies: 182
 -- Name: caracteristica_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -1160,7 +1205,7 @@ SELECT pg_catalog.setval('public.caracteristica_id_seq', 5, true);
 
 
 --
--- TOC entry 2279 (class 0 OID 0)
+-- TOC entry 2323 (class 0 OID 0)
 -- Dependencies: 184
 -- Name: chapter_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -1169,7 +1214,7 @@ SELECT pg_catalog.setval('public.chapter_id_seq', 29, true);
 
 
 --
--- TOC entry 2280 (class 0 OID 0)
+-- TOC entry 2324 (class 0 OID 0)
 -- Dependencies: 185
 -- Name: escuela_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -1178,16 +1223,16 @@ SELECT pg_catalog.setval('public.escuela_id_seq', 2, true);
 
 
 --
--- TOC entry 2281 (class 0 OID 0)
+-- TOC entry 2325 (class 0 OID 0)
 -- Dependencies: 187
 -- Name: escuela_room_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.escuela_room_id_seq', 5, true);
+SELECT pg_catalog.setval('public.escuela_room_id_seq', 7, true);
 
 
 --
--- TOC entry 2282 (class 0 OID 0)
+-- TOC entry 2326 (class 0 OID 0)
 -- Dependencies: 190
 -- Name: game_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -1196,7 +1241,7 @@ SELECT pg_catalog.setval('public.game_id_seq', 15, true);
 
 
 --
--- TOC entry 2283 (class 0 OID 0)
+-- TOC entry 2327 (class 0 OID 0)
 -- Dependencies: 191
 -- Name: jugador_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -1205,7 +1250,7 @@ SELECT pg_catalog.setval('public.jugador_id_seq', 144, true);
 
 
 --
--- TOC entry 2284 (class 0 OID 0)
+-- TOC entry 2328 (class 0 OID 0)
 -- Dependencies: 194
 -- Name: learn_jugador_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -1214,7 +1259,7 @@ SELECT pg_catalog.setval('public.learn_jugador_id_seq', 110, true);
 
 
 --
--- TOC entry 2285 (class 0 OID 0)
+-- TOC entry 2329 (class 0 OID 0)
 -- Dependencies: 196
 -- Name: learning_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -1223,7 +1268,7 @@ SELECT pg_catalog.setval('public.learning_id_seq', 20, true);
 
 
 --
--- TOC entry 2286 (class 0 OID 0)
+-- TOC entry 2330 (class 0 OID 0)
 -- Dependencies: 198
 -- Name: metrica_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -1232,7 +1277,7 @@ SELECT pg_catalog.setval('public.metrica_id_seq', 13, true);
 
 
 --
--- TOC entry 2287 (class 0 OID 0)
+-- TOC entry 2331 (class 0 OID 0)
 -- Dependencies: 200
 -- Name: nivel_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -1241,7 +1286,7 @@ SELECT pg_catalog.setval('public.nivel_id_seq', 33, true);
 
 
 --
--- TOC entry 2288 (class 0 OID 0)
+-- TOC entry 2332 (class 0 OID 0)
 -- Dependencies: 202
 -- Name: nivel_usuario_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -1250,16 +1295,25 @@ SELECT pg_catalog.setval('public.nivel_usuario_id_seq', 158, true);
 
 
 --
--- TOC entry 2289 (class 0 OID 0)
+-- TOC entry 2333 (class 0 OID 0)
 -- Dependencies: 204
 -- Name: room_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.room_id_seq', 7, true);
+SELECT pg_catalog.setval('public.room_id_seq', 12, true);
 
 
 --
--- TOC entry 2290 (class 0 OID 0)
+-- TOC entry 2334 (class 0 OID 0)
+-- Dependencies: 210
+-- Name: type_room_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.type_room_id_seq', 3, true);
+
+
+--
+-- TOC entry 2335 (class 0 OID 0)
 -- Dependencies: 206
 -- Name: user_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -1268,7 +1322,7 @@ SELECT pg_catalog.setval('public.user_id_seq', 1, false);
 
 
 --
--- TOC entry 2291 (class 0 OID 0)
+-- TOC entry 2336 (class 0 OID 0)
 -- Dependencies: 208
 -- Name: usuarios_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -1277,7 +1331,16 @@ SELECT pg_catalog.setval('public.usuarios_id_seq', 9, true);
 
 
 --
--- TOC entry 2088 (class 2606 OID 17290)
+-- TOC entry 2143 (class 2606 OID 17329)
+-- Name: type_room Type_room_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.type_room
+    ADD CONSTRAINT "Type_room_pkey" PRIMARY KEY (id);
+
+
+--
+-- TOC entry 2096 (class 2606 OID 17290)
 -- Name: caracteristica caracteristica_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -1286,7 +1349,7 @@ ALTER TABLE ONLY public.caracteristica
 
 
 --
--- TOC entry 2090 (class 2606 OID 17292)
+-- TOC entry 2098 (class 2606 OID 17292)
 -- Name: chapter chapter_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -1295,7 +1358,7 @@ ALTER TABLE ONLY public.chapter
 
 
 --
--- TOC entry 2092 (class 2606 OID 17294)
+-- TOC entry 2101 (class 2606 OID 17294)
 -- Name: escuela escuela_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -1304,7 +1367,7 @@ ALTER TABLE ONLY public.escuela
 
 
 --
--- TOC entry 2094 (class 2606 OID 17296)
+-- TOC entry 2103 (class 2606 OID 17296)
 -- Name: escuela_room escuela_room_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -1313,7 +1376,7 @@ ALTER TABLE ONLY public.escuela_room
 
 
 --
--- TOC entry 2096 (class 2606 OID 17298)
+-- TOC entry 2107 (class 2606 OID 17298)
 -- Name: game game_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -1322,7 +1385,7 @@ ALTER TABLE ONLY public.game
 
 
 --
--- TOC entry 2098 (class 2606 OID 17300)
+-- TOC entry 2111 (class 2606 OID 17300)
 -- Name: jugador jugador_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -1331,7 +1394,7 @@ ALTER TABLE ONLY public.jugador
 
 
 --
--- TOC entry 2100 (class 2606 OID 17302)
+-- TOC entry 2115 (class 2606 OID 17302)
 -- Name: learn_jugador learn_jugador_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -1340,7 +1403,7 @@ ALTER TABLE ONLY public.learn_jugador
 
 
 --
--- TOC entry 2102 (class 2606 OID 17304)
+-- TOC entry 2118 (class 2606 OID 17304)
 -- Name: learning learning_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -1349,7 +1412,7 @@ ALTER TABLE ONLY public.learning
 
 
 --
--- TOC entry 2104 (class 2606 OID 17306)
+-- TOC entry 2121 (class 2606 OID 17306)
 -- Name: metrica metrica_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -1358,7 +1421,7 @@ ALTER TABLE ONLY public.metrica
 
 
 --
--- TOC entry 2106 (class 2606 OID 17308)
+-- TOC entry 2125 (class 2606 OID 17308)
 -- Name: nivel nivel_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -1367,7 +1430,7 @@ ALTER TABLE ONLY public.nivel
 
 
 --
--- TOC entry 2108 (class 2606 OID 17310)
+-- TOC entry 2129 (class 2606 OID 17310)
 -- Name: nivel_usuario nivel_usuario_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -1376,7 +1439,7 @@ ALTER TABLE ONLY public.nivel_usuario
 
 
 --
--- TOC entry 2110 (class 2606 OID 17312)
+-- TOC entry 2133 (class 2606 OID 17312)
 -- Name: room room_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -1385,7 +1448,7 @@ ALTER TABLE ONLY public.room
 
 
 --
--- TOC entry 2112 (class 2606 OID 17314)
+-- TOC entry 2135 (class 2606 OID 17314)
 -- Name: user user_emailAddress_key; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -1394,7 +1457,7 @@ ALTER TABLE ONLY public."user"
 
 
 --
--- TOC entry 2114 (class 2606 OID 17316)
+-- TOC entry 2137 (class 2606 OID 17316)
 -- Name: user user_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -1403,7 +1466,7 @@ ALTER TABLE ONLY public."user"
 
 
 --
--- TOC entry 2116 (class 2606 OID 17318)
+-- TOC entry 2139 (class 2606 OID 17318)
 -- Name: usuarios usuarios_correo_key; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -1412,7 +1475,7 @@ ALTER TABLE ONLY public.usuarios
 
 
 --
--- TOC entry 2118 (class 2606 OID 17320)
+-- TOC entry 2141 (class 2606 OID 17320)
 -- Name: usuarios usuarios_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -1420,7 +1483,262 @@ ALTER TABLE ONLY public.usuarios
     ADD CONSTRAINT usuarios_pkey PRIMARY KEY (id);
 
 
--- Completed on 2018-09-19 10:40:18
+--
+-- TOC entry 2099 (class 1259 OID 17524)
+-- Name: fki_chapter_game_fkey; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE INDEX fki_chapter_game_fkey ON public.chapter USING btree (id_game);
+
+
+--
+-- TOC entry 2104 (class 1259 OID 17392)
+-- Name: fki_escuela_fkey; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE INDEX fki_escuela_fkey ON public.escuela_room USING btree (id_escuela);
+
+
+--
+-- TOC entry 2108 (class 1259 OID 17550)
+-- Name: fki_jugador_escuela_fkey; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE INDEX fki_jugador_escuela_fkey ON public.jugador USING btree (id_escuela);
+
+
+--
+-- TOC entry 2112 (class 1259 OID 17583)
+-- Name: fki_jugador_fkey; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE INDEX fki_jugador_fkey ON public.learn_jugador USING btree (id_jugador);
+
+
+--
+-- TOC entry 2109 (class 1259 OID 17544)
+-- Name: fki_jugador_room_fkey; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE INDEX fki_jugador_room_fkey ON public.jugador USING btree (id_room);
+
+
+--
+-- TOC entry 2116 (class 1259 OID 17563)
+-- Name: fki_learning_chapter_fkey; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE INDEX fki_learning_chapter_fkey ON public.learning USING btree (id_chapter);
+
+
+--
+-- TOC entry 2113 (class 1259 OID 17589)
+-- Name: fki_learning_fkey; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE INDEX fki_learning_fkey ON public.learn_jugador USING btree (id_learning);
+
+
+--
+-- TOC entry 2119 (class 1259 OID 17603)
+-- Name: fki_metrica_caracteristica_fkey; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE INDEX fki_metrica_caracteristica_fkey ON public.metrica USING btree (id_caracteristica);
+
+
+--
+-- TOC entry 2122 (class 1259 OID 17485)
+-- Name: fki_nivel_chapter_fkey; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE INDEX fki_nivel_chapter_fkey ON public.nivel USING btree (id_chapter);
+
+
+--
+-- TOC entry 2126 (class 1259 OID 17459)
+-- Name: fki_nivel_fkey; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE INDEX fki_nivel_fkey ON public.nivel_usuario USING btree (id_nivel);
+
+
+--
+-- TOC entry 2123 (class 1259 OID 17501)
+-- Name: fki_nivel_learning_fkey; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE INDEX fki_nivel_learning_fkey ON public.nivel USING btree (id_learning);
+
+
+--
+-- TOC entry 2105 (class 1259 OID 17398)
+-- Name: fki_room_fkey; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE INDEX fki_room_fkey ON public.escuela_room USING btree (id_room);
+
+
+--
+-- TOC entry 2130 (class 1259 OID 17372)
+-- Name: fki_room_game_fkey; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE INDEX fki_room_game_fkey ON public.room USING btree (fk_juego);
+
+
+--
+-- TOC entry 2131 (class 1259 OID 17338)
+-- Name: fki_room_tipo_fkey; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE INDEX fki_room_tipo_fkey ON public.room USING btree (fk_tipo);
+
+
+--
+-- TOC entry 2127 (class 1259 OID 17443)
+-- Name: fki_usuario_fkey; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE INDEX fki_usuario_fkey ON public.nivel_usuario USING btree (id_usuario);
+
+
+--
+-- TOC entry 2144 (class 2606 OID 17519)
+-- Name: chapter chapter_game_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.chapter
+    ADD CONSTRAINT chapter_game_fkey FOREIGN KEY (id_game) REFERENCES public.game(id) ON UPDATE CASCADE;
+
+
+--
+-- TOC entry 2145 (class 2606 OID 17404)
+-- Name: escuela_room escuela_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.escuela_room
+    ADD CONSTRAINT escuela_fkey FOREIGN KEY (id_escuela) REFERENCES public.escuela(id) ON UPDATE CASCADE;
+
+
+--
+-- TOC entry 2148 (class 2606 OID 17545)
+-- Name: jugador jugador_escuela_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.jugador
+    ADD CONSTRAINT jugador_escuela_fkey FOREIGN KEY (id_escuela) REFERENCES public.escuela(id) ON UPDATE CASCADE;
+
+
+--
+-- TOC entry 2149 (class 2606 OID 17578)
+-- Name: learn_jugador jugador_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.learn_jugador
+    ADD CONSTRAINT jugador_fkey FOREIGN KEY (id_jugador) REFERENCES public.jugador(id) ON UPDATE CASCADE;
+
+
+--
+-- TOC entry 2147 (class 2606 OID 17539)
+-- Name: jugador jugador_room_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.jugador
+    ADD CONSTRAINT jugador_room_fkey FOREIGN KEY (id_room) REFERENCES public.room(id) ON UPDATE CASCADE;
+
+
+--
+-- TOC entry 2151 (class 2606 OID 17558)
+-- Name: learning learning_chapter_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.learning
+    ADD CONSTRAINT learning_chapter_fkey FOREIGN KEY (id_chapter) REFERENCES public.chapter(id) ON UPDATE CASCADE;
+
+
+--
+-- TOC entry 2150 (class 2606 OID 17584)
+-- Name: learn_jugador learning_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.learn_jugador
+    ADD CONSTRAINT learning_fkey FOREIGN KEY (id_learning) REFERENCES public.learning(id) ON UPDATE CASCADE;
+
+
+--
+-- TOC entry 2152 (class 2606 OID 17598)
+-- Name: metrica metrica_caracteristica_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.metrica
+    ADD CONSTRAINT metrica_caracteristica_fkey FOREIGN KEY (id_caracteristica) REFERENCES public.caracteristica(id) ON UPDATE CASCADE;
+
+
+--
+-- TOC entry 2153 (class 2606 OID 17480)
+-- Name: nivel nivel_chapter_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.nivel
+    ADD CONSTRAINT nivel_chapter_fkey FOREIGN KEY (id_chapter) REFERENCES public.chapter(id) ON UPDATE CASCADE;
+
+
+--
+-- TOC entry 2156 (class 2606 OID 17454)
+-- Name: nivel_usuario nivel_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.nivel_usuario
+    ADD CONSTRAINT nivel_fkey FOREIGN KEY (id_nivel) REFERENCES public.nivel(id) ON UPDATE CASCADE;
+
+
+--
+-- TOC entry 2154 (class 2606 OID 17496)
+-- Name: nivel nivel_learning_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.nivel
+    ADD CONSTRAINT nivel_learning_fkey FOREIGN KEY (id_learning) REFERENCES public.learning(id) ON UPDATE CASCADE;
+
+
+--
+-- TOC entry 2146 (class 2606 OID 17414)
+-- Name: escuela_room room_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.escuela_room
+    ADD CONSTRAINT room_fkey FOREIGN KEY (id_room) REFERENCES public.room(id) ON UPDATE CASCADE;
+
+
+--
+-- TOC entry 2157 (class 2606 OID 17399)
+-- Name: room room_game_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.room
+    ADD CONSTRAINT room_game_fkey FOREIGN KEY (fk_juego) REFERENCES public.game(id) ON UPDATE CASCADE;
+
+
+--
+-- TOC entry 2158 (class 2606 OID 17333)
+-- Name: room room_tipo_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.room
+    ADD CONSTRAINT room_tipo_fkey FOREIGN KEY (fk_tipo) REFERENCES public.type_room(id);
+
+
+--
+-- TOC entry 2155 (class 2606 OID 17438)
+-- Name: nivel_usuario usuario_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.nivel_usuario
+    ADD CONSTRAINT usuario_fkey FOREIGN KEY (id_usuario) REFERENCES public.jugador(id) ON UPDATE CASCADE;
+
+
+-- Completed on 2018-09-25 02:49:44
 
 --
 -- PostgreSQL database dump complete

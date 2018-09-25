@@ -17,11 +17,11 @@ module.exports = {
         type: 'string'
     },
     id_chapter: {
-        type: 'number',
+        model: 'chapter',
         required: true
     },
     id_learning: {
-        type: 'number',
+        model: 'learning',
         required: true
     }
 

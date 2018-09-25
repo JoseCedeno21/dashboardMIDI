@@ -16,13 +16,6 @@ module.exports = {
     descripcion: {
         type: 'string'
     },
-    id_chapter: {
-        type: 'number'
-    },
-    id_game: {
-        type: 'number',
-        required: true
-    }
 
     //  ╔═╗╦═╗╦╔╦╗╦╔╦╗╦╦  ╦╔═╗╔═╗
     //  ╠═╝╠╦╝║║║║║ ║ ║╚╗╔╝║╣ ╚═╗
@@ -38,6 +31,10 @@ module.exports = {
     //  ╠═╣╚═╗╚═╗║ ║║  ║╠═╣ ║ ║║ ║║║║╚═╗
     //  ╩ ╩╚═╝╚═╝╚═╝╚═╝╩╩ ╩ ╩ ╩╚═╝╝╚╝╚═╝
 
+    id_game: {
+        model: 'game',
+        required: true
+    }
   },
 
 };

@@ -22,8 +22,8 @@ module.exports = {
     interpretacion: {
         type: 'string'
     },
-    id_metrica: {
-        type: 'number',
+    id_caracteristica: {
+        model: 'caracteristica',
         required: true
     }
   },
