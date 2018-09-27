@@ -82,7 +82,7 @@ app.controller('comparacionesController', ['$scope', '$rootScope', 'TodoService'
 		            var suma_tiempo = 0;
 		            var cantidad = 0;            
 		            for (var k=0; k<chapters[z].niveles[0][j].datos[0].length; k++){
-		                if(chapters[z].niveles[0][j].datos[0][k].estado == "completado"){
+		                if((chapters[z].niveles[0][j].datos[0][k].estado).toLowerCase() == "completado"){
 		                    cantidad++;   
 		                }  
 		                suma_correctas = suma_correctas + chapters[z].niveles[0][j].datos[0][k].correctas;
@@ -108,7 +108,7 @@ app.controller('comparacionesController', ['$scope', '$rootScope', 'TodoService'
 		        var suma_intentos_learn = 0;
 		        info_learn.push(chapters[z].learning[0].duracion);
 		        for (var m=0; m<chapters[z].learning[0].datos[0].length; m++){
-		            if(chapters[z].learning[0].datos[0][m].estado == "Completado"){
+		            if((chapters[z].learning[0].datos[0][m].estado).toLowerCase() == "completado"){
 		                cantidad_learn++;
 		            }
 		            suma_tiempo_learn = suma_tiempo_learn + chapters[z].learning[0].datos[0][m].tiempo_juego;

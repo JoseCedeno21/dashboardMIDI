@@ -137,7 +137,7 @@ app.controller('reporteNiñoController', ['$scope', '$rootScope', 'TodoService',
                   intentos.push(chapters.niveles[0][j].datos[0][k].intentos);
                
                   var complete = "No";
-                  if(chapters.niveles[0][j].datos[0][k].estado == "completado"){
+                  if((chapters.niveles[0][j].datos[0][k].estado).toLowerCase() == "completado"){
                       cantidad++;    
                       complete = "Sí";
                 
@@ -189,7 +189,7 @@ app.controller('reporteNiñoController', ['$scope', '$rootScope', 'TodoService',
           info_learn[1] = ff;
           info_learn[2] = chapters.learning[0].datos[0][0].tiempo_juego;
           info_learn[3] = "No";
-          if(chapters.learning[0].datos[0][0].estado == "completado"){
+          if((chapters.learning[0].datos[0][0].estado).toLowerCase() == "completado"){
             info_learn[3] = "Sí";
           }
           

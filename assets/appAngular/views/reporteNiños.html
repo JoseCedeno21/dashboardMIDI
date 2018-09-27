@@ -5,7 +5,7 @@
       </div>
       <div class="form-group col-md-2 col-ls-6">
           <select class="form-control" id="escuela" name="escuela" ng-model="select.escuelaId" style="margin-top: 10px" ng-change="">
-            <option ng-value="escuela.id" value="escuela.id" ng-repeat="escuela in escuelas">{{escuela.nombre.trim()}}</option>
+            <option ng-value="escuela.id" value="escuela.id" ng-repeat="escuela in escuelas">{{escuela.descripcion.trim()}}</option>
           </select>
       </div>
 
@@ -14,7 +14,7 @@
       </div>
       <div class="form-group col-md-2 col-ls-6">
           <select class="form-control" id="game" name="game" ng-model="select.roomId" style="margin-top: 10px" ng-change="jugadoresRoomEscuela()">
-            <option ng-value="room.id" value="room.id" ng-repeat="room in rooms">{{room.nombre.trim()}}</option>
+            <option ng-value="room.id" value="room.id" ng-repeat="room in rooms">{{room.descripcion.trim()}}</option>
           </select>
       </div>
       

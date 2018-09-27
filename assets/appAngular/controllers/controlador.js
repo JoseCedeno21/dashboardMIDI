@@ -118,7 +118,7 @@ app.controller('TodoCtrl', ['$scope', '$rootScope', 'TodoService', function($sco
             var cantidad = 0;
             
             for (var k=0; k<chapters.niveles[0][j].datos[0].length; k++){
-                if(chapters.niveles[0][j].datos[0][k].estado == "completado"){
+                if((chapters.niveles[0][j].datos[0][k].estado).toLowerCase() == "completado"){
                     cantidad++;
                 }  
                 suma_correctas = suma_correctas + chapters.niveles[0][j].datos[0][k].correctas;
@@ -138,7 +138,7 @@ app.controller('TodoCtrl', ['$scope', '$rootScope', 'TodoService', function($sco
         var suma_intentos_learn = 0;
         info_learn.push(chapters.learning[0].duracion);
         for (var m=0; m<chapters.learning[0].datos[0].length; m++){
-            if(chapters.learning[0].datos[0][m].estado == "Completado"){
+            if((chapters.learning[0].datos[0][m].estado).toLowerCase() == "completado"){
                 cantidad_learn++;
             }
             suma_tiempo_learn = suma_tiempo_learn + chapters.learning[0].datos[0][m].tiempo_juego;

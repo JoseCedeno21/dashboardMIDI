@@ -15,7 +15,7 @@ app.controller('analisisNivelController', ['$scope', '$rootScope', 'TodoService'
             level_users = response;
             for(var i = 0; i < levels.length; i++){
                 for(var j = 0; j < level_users.length; j++){
-                    if (levels[i].id == level_users[j].id_nivel && level_users[j].estado == "completado") {
+                    if (levels[i].id == level_users[j].id_nivel && (level_users[j].estado).toLowerCase() == "completado") {
                         intentos_ok = intentos_ok + level_users[j].intentos;
                         correctas_ok = correctas_ok + level_users[j].correctas;
                         incorrectas_ok = incorrectas_ok + level_users[j].incorrectas;
