@@ -72,7 +72,7 @@ module.exports = {
 			    cadena_nombre = arrayDeCadena[2];
 			}
 			var room = await Room.findOne({nombre:cadena_room});
-			var escuela = await Escuela.findOne({nombre:cadena_escuela});
+			var escuela = await Escuela.findOne({codigo:cadena_escuela});
 
 			var jugador = await Jugador.findOne({id_escuela:escuela.id,id_room:room.id,nombre:cadena_nombre});
 			var juego = await Game.findOne({nombre:datos.nombre_juego});
@@ -172,9 +172,10 @@ module.exports = {
 			    cadena_nombre = arrayDeCadena[2];
 			}
 			var room = await Room.findOne({nombre:cadena_room});
-			var escuela = await Escuela.findOne({nombre:cadena_escuela});
-
+			var escuela = await Escuela.findOne({codigo:cadena_escuela});
 			var jugador = await Jugador.findOne({id_escuela:escuela.id,id_room:room.id,nombre:cadena_nombre});
+			console.log("Jugador");
+			console.log(jugador);
 			var juego = await Game.findOne({nombre:datos.nombre_juego});
 			if(!juego){
 				await Game.create({
