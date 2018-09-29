@@ -16,13 +16,6 @@ module.exports = {
     descripcion: {
         type: 'string'
     },
-    edad: {
-        type: 'number'
-    },
-    fk_juego:{
-        model: 'game',
-        required: true
-    },
 
     //  ╔═╗╦═╗╦╔╦╗╦╔╦╗╦╦  ╦╔═╗╔═╗
     //  ╠═╝╠╦╝║║║║║ ║ ║╚╗╔╝║╣ ╚═╗
@@ -39,8 +32,15 @@ module.exports = {
     //  ╩ ╩╚═╝╚═╝╚═╝╚═╝╩╩ ╩ ╩ ╩╚═╝╝╚╝╚═╝
 
     // Add a reference to Type
-    fk_tipo: {
-      model: 'type_room'
+    id_escenario: {
+      model: 'escenario'
+    },
+    id_escuela: {
+      model: 'escuela'
+    },
+    id_juego:{
+        model: 'game',
+        required: true
     }
   },
 

@@ -8,17 +8,20 @@
 module.exports = {
 
     attributes: {
-        nombre: {
+        codigo: {
             type: 'string'
         },
         descripcion: {
+            type: 'string'
+        },
+        nombre: {
             type: 'string'
         },
 
         // Add a reference to Rooms
         rooms: {
             collection: 'room',
-            via: 'fk_tipo' //puede ser cualquier nombre, mientras sea el mismo del objeto
+            via: 'id_escenario' //puede ser cualquier nombre, mientras sea el mismo del objeto
         }
     }
 

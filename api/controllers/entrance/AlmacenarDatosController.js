@@ -14,32 +14,72 @@ module.exports = {
 		console.log(datos);
 		if(datos.tipo == "jugador"){
 			var cadena_jugador = datos.nombre_jugador;
+			var escenario, escuela, room;
 		    var cadena_escuela = "No definida";
-		    var cadena_room = "No definida";
+		    var cadena_escenario = "No definida";
 		    var cadena_nombre = "No definida";
+
+			var juego = await Game.findOne({nombre:datos.nombre_juego});
+			var descripcion = "Agregar definicion";
 
 		    var arrayDeCadena = cadena_jugador.split("-", 3);
 		    if (arrayDeCadena.length >= 3) {
-			    cadena_escuela = arrayDeCadena[0];
-			    cadena_room = arrayDeCadena[1];
+			    cadena_escuela = arrayDeCadena[0].toUpperCase();
+			    cadena_escenario = arrayDeCadena[1].toUpperCase();
 			    cadena_nombre = arrayDeCadena[2];
+
+				console.log("escuela: " + cadena_escuela);
+				console.log("escenario: " + cadena_escenario);
+				console.log("nombre: " + cadena_nombre);
+				
+			} else {
+				cadena_escuela = "ES000";
+			    cadena_escenario = "R0";
+			    cadena_nombre = cadena_jugador;
 			}
-			var room = await Room.findOne({nombre:cadena_room});
-			var escuela = await Escuela.findOne({codigo:cadena_escuela});
 
-			console.log("escuela: " + cadena_escuela);
-			console.log("room: " + cadena_room);
-			console.log("nombre: " + cadena_nombre);
-			if (!room || !escuela){
-				console.log("Room o Escuela no existen");
-				return res.status(400).send('room or school not exist');
+			escenario = await Escenario.findOne({codigo:cadena_escenario});
+			escuela = await Escuela.findOne({codigo:cadena_escuela});
+
+			if (!escenario || !escuela){
+				cadena_escuela = "ES000";
+			    cadena_escenario = "R0";
+			    cadena_nombre = cadena_jugador;
+			    escenario = await Escenario.findOne({codigo:cadena_escenario});
+				escuela = await Escuela.findOne({codigo:cadena_escuela});
+			}
+			//hasta aqui ya se define el escenario y la escuela, ambos existen
+
+			if(!juego){
+				await Game.create({
+					nombre: datos.nombre_juego,
+					descripcion: descripcion
+				})
+				var juego = await Game.findOne({nombre:datos.nombre_juego}); 
+				console.log("juego nuevo guardado")
+				console.log(juego)
+			}else{
+				console.log("juego ya registrado")
+				console.log(juego)
 			}
 
-			var escuela_room = await Escuela_room.find({id_escuela:escuela.id, id_room:room.id});
+			room = await Room.findOne({id_escenario:escenario.id, id_escuela:escuela.id, id_juego:juego.id});
+			
 
-			if (escuela_room.length <= 0) {
-				console.log("Escuala no tiene permiso para ingresar al room " + room.nombre);
-				return res.status(400).send('relation not exist');
+			if (!room){
+				await Room.create({
+					nombre: datos.nombre_juego,
+					descripcion: descripcion,
+					id_escenario: escenario.id,
+					id_escuela: escuela.id,
+					id_juego: juego.id
+				})
+				room = await Room.findOne({id_escenario:escenario.id, id_escuela:escuela.id, id_juego:juego.id});
+				console.log("Room nuevo guardado")
+				console.log(room)
+			}else{
+				console.log("Room ya registrado")
+				console.log(room)
 			}
 
 			jugador = await Jugador.findOne({nombre:cadena_nombre,id_escuela:escuela.id, id_room:room.id});
@@ -68,10 +108,10 @@ module.exports = {
 			var arrayDeCadena = cadena_jugador.split("-", 3);
 		    if (arrayDeCadena.length >= 3) {
 			    cadena_escuela = arrayDeCadena[0];
-			    cadena_room = arrayDeCadena[1];
+			    cadena_escenario = arrayDeCadena[1];
 			    cadena_nombre = arrayDeCadena[2];
 			}
-			var room = await Room.findOne({nombre:cadena_room});
+			var escenario = await escenario.findOne({nombre:cadena_escenario});
 			var escuela = await Escuela.findOne({codigo:cadena_escuela});
 
 			var jugador = await Jugador.findOne({id_escuela:escuela.id,id_room:room.id,nombre:cadena_nombre});
@@ -168,10 +208,10 @@ module.exports = {
 			var arrayDeCadena = cadena_jugador.split("-", 3);
 		    if (arrayDeCadena.length >= 3) {
 			    cadena_escuela = arrayDeCadena[0];
-			    cadena_room = arrayDeCadena[1];
+			    cadena_escenario = arrayDeCadena[1];
 			    cadena_nombre = arrayDeCadena[2];
 			}
-			var room = await Room.findOne({nombre:cadena_room});
+			var escenario = await escenario.findOne({nombre:cadena_escenario});
 			var escuela = await Escuela.findOne({codigo:cadena_escuela});
 			var jugador = await Jugador.findOne({id_escuela:escuela.id,id_room:room.id,nombre:cadena_nombre});
 			console.log("Jugador");
@@ -241,34 +281,6 @@ module.exports = {
 				console.log("historia de jugador actualizada")	
 			}
 		}
-		if(datos.tipo == "activar_room"){
-			var escuela_room = await Escuela_room.findOne({id_escuela:datos.idEscuela,id_room:datos.idRoom});
-			if (!escuela_room) {
-				await Escuela_room.create({
-					id_escuela: datos.idEscuela,
-					id_room: datos.idRoom,
-					descripcion: "No definida",
-				});
-				console.log("Permiso de Escuela a Room creado");
-			} else{
-				console.log("Permiso ya registrado");
-				console.log(escuela_room);
-			}
-			//await Room.update({id:datos.idRoom}).set({estado:datos.estado});
-		}
-
-		if(datos.tipo == "desactivar_room"){
-			var escuela_room = await Escuela_room.findOne({id_escuela:datos.idEscuela,id_room:datos.idRoom});
-			if (!escuela_room) {
-				console.log("No existe la relacion");
-				console.log(escuela_room);
-			} else{
-				await Escuela_room.destroy({id_escuela:datos.idEscuela,id_room:datos.idRoom});
-				console.log("Relacion eliminada");
-			}
-			//await Room.update({id:datos.idRoom}).set({estado:datos.estado});
-		}
-
 		return res.status(200).send('ok');
 	}
 };

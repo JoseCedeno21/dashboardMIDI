@@ -382,12 +382,5 @@ module.exports = {
     
     res.json(rooms);
   },
-
-  escuelaRoom: async function(req, res){
-    var escuela_room = await Escuela_room.find();
-    
-    res.json(escuela_room);
-  },
-
 };
 
