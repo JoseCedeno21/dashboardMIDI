@@ -104,18 +104,39 @@ module.exports = {
 		}
 
 		if(datos.tipo == "juego"){
+			// BUSCAR AL JUGADOR
 			var cadena_jugador = datos.id_registro;
-			var arrayDeCadena = cadena_jugador.split("-", 3);
-		    if (arrayDeCadena.length >= 3) {
-			    cadena_escuela = arrayDeCadena[0];
-			    cadena_escenario = arrayDeCadena[1];
-			    cadena_nombre = arrayDeCadena[2];
-			}
-			var escenario = await escenario.findOne({nombre:cadena_escenario});
-			var escuela = await Escuela.findOne({codigo:cadena_escuela});
+			var escenario, escuela, room;
+		    var cadena_escuela = "No definida";
+		    var cadena_escenario = "No definida";
+		    var cadena_nombre = "No definida";
 
-			var jugador = await Jugador.findOne({id_escuela:escuela.id,id_room:room.id,nombre:cadena_nombre});
 			var juego = await Game.findOne({nombre:datos.nombre_juego});
+			var descripcion = "Agregar definicion";
+
+		    var arrayDeCadena = cadena_jugador.split("-", 3);
+		    if (arrayDeCadena.length >= 3) {
+			    cadena_escuela = arrayDeCadena[0].toUpperCase();
+			    cadena_escenario = arrayDeCadena[1].toUpperCase();
+			    cadena_nombre = arrayDeCadena[2];
+			} else {
+				cadena_escuela = "ES000";
+			    cadena_escenario = "R0";
+			    cadena_nombre = cadena_jugador;
+			}
+
+			escenario = await Escenario.findOne({codigo:cadena_escenario});
+			escuela = await Escuela.findOne({codigo:cadena_escuela});
+
+			if (!escenario || !escuela){
+				cadena_escuela = "ES000";
+			    cadena_escenario = "R0";
+			    cadena_nombre = cadena_jugador;
+			    escenario = await Escenario.findOne({codigo:cadena_escenario});
+				escuela = await Escuela.findOne({codigo:cadena_escuela});
+			}
+			//hasta aqui ya se define el escenario y la escuela, ambos existen
+
 			if(!juego){
 				await Game.create({
 					nombre: datos.nombre_juego,
@@ -128,6 +149,28 @@ module.exports = {
 				console.log("juego ya registrado")
 				console.log(juego)
 			}
+
+			room = await Room.findOne({id_escenario:escenario.id, id_escuela:escuela.id, id_juego:juego.id});
+			
+			if (!room){
+				await Room.create({
+					nombre: datos.nombre_juego,
+					descripcion: descripcion,
+					id_escenario: escenario.id,
+					id_escuela: escuela.id,
+					id_juego: juego.id
+				})
+				room = await Room.findOne({id_escenario:escenario.id, id_escuela:escuela.id, id_juego:juego.id});
+				console.log("Room nuevo guardado")
+				console.log(room)
+			}else{
+				console.log("Room ya registrado")
+				console.log(room)
+			}
+			//FIN DE BUSCAR AL JUGADOR
+
+			var jugador = await Jugador.findOne({id_room:room.id,nombre:cadena_nombre});
+
 			var capitulo = await Chapter.findOne({nombre:datos.nombre_capitulo,id_game:juego.id});
 			if(!capitulo){
 				var capitulo = await Chapter.create({
@@ -143,22 +186,32 @@ module.exports = {
 				console.log(capitulo)
 			}
 			var nivel = await Nivel.findOne({nombre:datos.nombre_nivel,id_chapter:capitulo.id});
-			var learning_tmp = await Learning.findOne({nombre:datos.nombre_historia});	
-			var id_learning_tmp = 0;		
+			var learning = await Learning.findOne({nombre:datos.nombre_historia});	
 			console.log("historia");
-			console.log(learning_tmp);
-			if (!learning_tmp) {
-				console.log('No existe esa historia');
-				
-				//return res.status(400).send('No existe esa historia');
-			} else id_learning_tmp = learning_tmp.id;;
+			console.log(learning);
+
+			if(!learning){
+				var learning = await Learning.create({
+					nombre: datos.nombre_historia,
+					descripcion: "Por actualizar",
+					id_chapter: capitulo.id,
+					duracion: 0
+				})
+				var learning = await Learning.findOne({nombre:datos.nombre_historia,id_chapter:capitulo.id});
+				console.log("historia nuevo guardado")
+				console.log(learning)
+			}else{
+				console.log("historia ya registrado")
+				console.log(learning)
+			}
+
 			console.log("nombre: " + datos.nombre_historia);
 			if(!nivel){
 				var nivel = await Nivel.create({
 					nombre: datos.nombre_nivel,
 					descripcion: datos.descripcion_nivel,
 					id_chapter: capitulo.id,
-					id_learning: id_learning_tmp
+					id_learning: learning.id
 				})
 				var nivel = await Nivel.findOne({nombre:datos.nombre_nivel,id_chapter:capitulo.id});
 				console.log("nivel nuevo guardado")
@@ -204,19 +257,39 @@ module.exports = {
 
 
 		if(datos.tipo == "historia"){
+			// BUSCAR AL JUGADOR
 			var cadena_jugador = datos.id_registro;
-			var arrayDeCadena = cadena_jugador.split("-", 3);
-		    if (arrayDeCadena.length >= 3) {
-			    cadena_escuela = arrayDeCadena[0];
-			    cadena_escenario = arrayDeCadena[1];
-			    cadena_nombre = arrayDeCadena[2];
-			}
-			var escenario = await escenario.findOne({nombre:cadena_escenario});
-			var escuela = await Escuela.findOne({codigo:cadena_escuela});
-			var jugador = await Jugador.findOne({id_escuela:escuela.id,id_room:room.id,nombre:cadena_nombre});
-			console.log("Jugador");
-			console.log(jugador);
+			var escenario, escuela, room;
+		    var cadena_escuela = "No definida";
+		    var cadena_escenario = "No definida";
+		    var cadena_nombre = "No definida";
+
 			var juego = await Game.findOne({nombre:datos.nombre_juego});
+			var descripcion = "Agregar definicion";
+
+		    var arrayDeCadena = cadena_jugador.split("-", 3);
+		    if (arrayDeCadena.length >= 3) {
+			    cadena_escuela = arrayDeCadena[0].toUpperCase();
+			    cadena_escenario = arrayDeCadena[1].toUpperCase();
+			    cadena_nombre = arrayDeCadena[2];
+			} else {
+				cadena_escuela = "ES000";
+			    cadena_escenario = "R0";
+			    cadena_nombre = cadena_jugador;
+			}
+
+			escenario = await Escenario.findOne({codigo:cadena_escenario});
+			escuela = await Escuela.findOne({codigo:cadena_escuela});
+
+			if (!escenario || !escuela){
+				cadena_escuela = "ES000";
+			    cadena_escenario = "R0";
+			    cadena_nombre = cadena_jugador;
+			    escenario = await Escenario.findOne({codigo:cadena_escenario});
+				escuela = await Escuela.findOne({codigo:cadena_escuela});
+			}
+			//hasta aqui ya se define el escenario y la escuela, ambos existen
+
 			if(!juego){
 				await Game.create({
 					nombre: datos.nombre_juego,
@@ -229,12 +302,36 @@ module.exports = {
 				console.log("juego ya registrado")
 				console.log(juego)
 			}
+
+			room = await Room.findOne({id_escenario:escenario.id, id_escuela:escuela.id, id_juego:juego.id});
+			
+			if (!room){
+				await Room.create({
+					nombre: datos.nombre_juego,
+					descripcion: descripcion,
+					id_escenario: escenario.id,
+					id_escuela: escuela.id,
+					id_juego: juego.id
+				})
+				room = await Room.findOne({id_escenario:escenario.id, id_escuela:escuela.id, id_juego:juego.id});
+				console.log("Room nuevo guardado")
+				console.log(room)
+			}else{
+				console.log("Room ya registrado")
+				console.log(room)
+			}
+			//FIN DE BUSCAR AL JUGADOR
+
+			var jugador = await Jugador.findOne({id_escuela:escuela.id,id_room:room.id,nombre:cadena_nombre});
+			console.log("Jugador");
+			console.log(jugador);
+
 			var capitulo = await Chapter.findOne({nombre:datos.nombre_capitulo,id_game:juego.id});
 			if(!capitulo){
 
 				var capitulo = await Chapter.create({
 					nombre: datos.nombre_capitulo,
-					descripcion: datos.descripcion_juego,
+					descripcion: datos.descripcion_capitulo,
 					id_game: juego.id
 				})
 				var capitulo = await Chapter.findOne({nombre:datos.nombre_capitulo,id_game:juego.id});
@@ -256,18 +353,26 @@ module.exports = {
 				console.log("historia nuevo guardado")
 				console.log(learning)
 			}else{
+				await Learning.update({id:learning.id}).set({
+					descripcion: datos.descripcion_historia,
+					duracion: datos.duracion
+				})
 				console.log("historia ya registrado")
 				console.log(learning)
 			}
+			console.log("pruebas");
+			console.log(jugador);
+			console.log(learning);
 			var learn_jugador = await Learn_jugador.findOne({id_jugador:jugador.id,id_learning:learning.id});
 			if(!learn_jugador){
+				var estado_tmp = datos.estado.toLowerCase();
 				var learn_jugador = await Learn_jugador.create({
 					id_jugador: jugador.id,
 					id_learning: learning.id,
 					fecha_inicio: datos.fecha_inicio,
 					fecha_fin: datos.fecha_fin,
 					tiempo_juego: datos.tiempo_juego,
-					estado: datos.estado,
+					estado: estado_tmp,
 					num_play: 1
 				})	
 				console.log("historia de jugador guardada")		
