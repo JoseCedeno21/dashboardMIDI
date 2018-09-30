@@ -5,7 +5,7 @@
 -- Dumped from database version 9.5.14
 -- Dumped by pg_dump version 10.4
 
--- Started on 2018-09-30 00:40:26
+-- Started on 2018-09-30 10:23:54
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -1387,7 +1387,7 @@ ALTER TABLE ONLY public.nivel_usuario
     ADD CONSTRAINT usuario_fkey FOREIGN KEY (id_usuario) REFERENCES public.jugador(id) ON UPDATE CASCADE ON DELETE CASCADE;
 
 
--- Completed on 2018-09-30 00:40:27
+-- Completed on 2018-09-30 10:23:55
 
 --
 -- PostgreSQL database dump complete
