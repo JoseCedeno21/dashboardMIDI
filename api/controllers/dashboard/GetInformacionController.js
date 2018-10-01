@@ -42,8 +42,10 @@ module.exports = {
 
   datosEscuela: async function(req, res){
     var game = {};
+    console.log(req.params)
     game = await Game.findOne({id:req.params.id});
-    var usuarios = await Jugador.find({id_room:req.params.room,id_escuela:req.params.escuela})
+    var room = await Room.findOne({id_escenario:req.params.room,id_escuela:req.params.escuela,id_juego:game.id})
+    var usuarios = await Jugador.find({id_room:room.id,id_escuela:req.params.escuela})
     var chapters = await Chapter.find({id_game:game.id});
     game.chapters = [];
     for(var j=0; j<chapters.length; j++){     
@@ -133,6 +135,11 @@ module.exports = {
     res.json(room);
   },
 
+  escenarios: async function(req, res){
+    var escenario = await Escenario.find();
+    res.json(escenario);
+  },
+
   escuelas: async function(req, res){
     var escuelas = await Escuela.find();
     res.json(escuelas);
@@ -155,7 +162,8 @@ module.exports = {
   },
 
   jugadoresByRoomEscuela: async function(req, res){
-    var jugadores = await Jugador.find({id_room:req.params.idRoom,id_escuela:req.params.idEscuela});
+    var room = await Room.findOne({id_escenario:req.params.idRoom,id_escuela:req.params.idEscuela,id_juego:req.params.idGame})
+    var jugadores = await Jugador.find({id_room:room.id,id_escuela:req.params.idEscuela});
     res.json(jugadores);
   },
 

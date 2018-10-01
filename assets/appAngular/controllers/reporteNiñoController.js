@@ -32,7 +32,7 @@ app.controller('reporteNiñoController', ['$scope', '$rootScope', 'TodoService',
 
 
     //se obtiene todos los room
-    TodoService.getRoom().then(function(response) {
+    TodoService.getEscenarios().then(function(response) {
         $scope.rooms = response;
         console.log("EN EL CONTROLADOR");
         console.log(response);
@@ -54,7 +54,7 @@ app.controller('reporteNiñoController', ['$scope', '$rootScope', 'TodoService',
   $scope.jugadoresRoomEscuela = function(){
         var idRoom = $scope.select.roomId;
         var idEscuela = $scope.select.escuelaId;
-        TodoService.getJugadoresByRoomEscuela(idRoom,idEscuela).then(function(response) {
+        TodoService.getJugadoresByRoomEscuela($scope.select.gameId, $scope.select.roomId, $scope.select.escuelaId).then(function(response) {
             $scope.jugadores = response;
             console.log("EN EL CONTROLADOR");
             console.log(response);

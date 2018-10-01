@@ -321,7 +321,9 @@ module.exports = {
 				console.log(room)
 			}
 			//FIN DE BUSCAR AL JUGADOR
-
+			console.log(escuela.id)
+			console.log(room.id)
+			console.log(cadena_nombre)
 			var jugador = await Jugador.findOne({id_escuela:escuela.id,id_room:room.id,nombre:cadena_nombre});
 			console.log("Jugador");
 			console.log(jugador);

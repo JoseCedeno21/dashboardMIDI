@@ -81,9 +81,9 @@ app.service('TodoService', function($http, $q) {
       });
       return defer.promise;
     },
-    'getJugadoresByRoomEscuela': function(idRoom,idEscuela) {
+    'getJugadoresByRoomEscuela': function(idGame,idRoom,idEscuela) {
       var defer = $q.defer();
-      $http.get('/jugadoresByRoomEscuela/'+idRoom+"/"+idEscuela).success(function(resp){
+      $http.get('/jugadoresByRoomEscuela/'+idGame+"/"+idRoom+"/"+idEscuela).success(function(resp){
         defer.resolve(resp);
       }).error( function(err) {
         defer.reject(err);
@@ -246,6 +246,15 @@ app.service('TodoService', function($http, $q) {
     getEscuelaRoom: function() {
       var defer = $q.defer();
       $http.get('/escuelaRoom').success(function(resp){
+        defer.resolve(resp);
+      }).error( function(err) {
+        defer.reject(err);
+      });
+      return defer.promise;
+    },
+    getEscenarios: function() {
+      var defer = $q.defer();
+      $http.get('/escenarios').success(function(resp){
         defer.resolve(resp);
       }).error( function(err) {
         defer.reject(err);
