@@ -5,6 +5,7 @@ app.controller('analisisRoomsController', ['$scope', '$rootScope', 'TodoService'
     $scope.learning = [];
     $scope.jugadores = [];  
     $scope.rooms = [];
+    $scope.escenarios = [];
 
     $scope.room_actual = {};
     $scope.nivel_actual = {};
@@ -19,9 +20,13 @@ app.controller('analisisRoomsController', ['$scope', '$rootScope', 'TodoService'
         $scope.rooms = response;
     });
 
+    TodoService.getEscenarios().then(function(response) {
+        $scope.escenarios = response;
+    });
+
     $scope.nivelesRoom = function(){
         idRoomActual = $scope.select.roomId;
-        TodoService.getLevelsByRoom(idRoomActual).then(function(response) {
+        TodoService.getNivelesByEscenario(idRoomActual).then(function(response) {
             $scope.levels_room = response;
             console.log($scope.levels_room);
             TodoService.getRoomById(idRoomActual).then(function(response) {

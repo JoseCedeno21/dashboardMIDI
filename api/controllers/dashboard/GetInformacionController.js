@@ -186,7 +186,7 @@ module.exports = {
     var nivel = await Nivel.findOne({id:req.params.idlevel});
     var chapter = await Chapter.findOne({id:nivel.id_chapter});
     var game = await Game.findOne({id:chapter.id_game});
-    var rooms = await Room.find({fk_juego:game.id});
+    var rooms = await Room.find({id_juego:game.id});
 
     res.json(rooms);
   },

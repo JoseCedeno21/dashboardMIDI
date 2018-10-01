@@ -2,11 +2,11 @@
   <div class="row" style="padding-top: 5px; padding-right: 30px">
 
       <div class="form-group col-md-2 col-ls-6" style="text-align: right; padding-top: 5px">
-          <div class="name" id="tituloSelect"><strong class="text-uppercase">Elegir Room:</strong></div>
+          <div class="name" id="tituloSelect"><strong class="text-uppercase">Elegir Escenario:</strong></div>
       </div>
       <div class="form-group col-md-2 col-ls-6">
           <select class="form-control" id="game" name="game" ng-model="select.roomId" style="margin-top: 10px" ng-change="nivelesRoom()">
-            <option ng-value="room.id" value="room.id" ng-repeat="room in rooms">{{escenario.nombre.trim()}}</option>
+            <option ng-value="room.id" value="room.id" ng-repeat="room in rooms">{{escenarios.nombre.trim()}}</option>
           </select>
       </div>
 

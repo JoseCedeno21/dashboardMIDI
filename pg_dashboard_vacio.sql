@@ -5,7 +5,7 @@
 -- Dumped from database version 9.5.14
 -- Dumped by pg_dump version 10.4
 
--- Started on 2018-09-30 10:23:54
+-- Started on 2018-10-01 12:04:16
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -727,8 +727,6 @@ COPY public.caracteristica (id, nombre, descripcion) FROM stdin;
 --
 
 COPY public.chapter (id, nombre, descripcion, id_game) FROM stdin;
-32	A Link to the Past	Mi saga favorita	18
-33	Mi País	desc2	19
 \.
 
 
@@ -739,8 +737,6 @@ COPY public.chapter (id, nombre, descripcion, id_game) FROM stdin;
 --
 
 COPY public.escenario (id, codigo, descripcion, nombre) FROM stdin;
-1	R1	Un tutor guiará a los estudiantes	Con Guía
-2	R2	Los estudiantes jugarán sin un tutor quien les guíe	Sin Guía
 4	R0	Aula virtual libre	Aula virtual libre
 \.
 
@@ -753,7 +749,6 @@ COPY public.escenario (id, codigo, descripcion, nombre) FROM stdin;
 
 COPY public.escuela (id, codigo, descripcion, nombre) FROM stdin;
 3	ES000	Para jugadores independientes	Escuela Libre
-4	ES001	Academia de boku no hero academia	Academia de Superhéroes
 \.
 
 
@@ -764,8 +759,6 @@ COPY public.escuela (id, codigo, descripcion, nombre) FROM stdin;
 --
 
 COPY public.game (id, nombre, descripcion) FROM stdin;
-18	The Legend of Zelda	Agregar definicion
-19	Escuela	descr
 \.
 
 
@@ -776,9 +769,6 @@ COPY public.game (id, nombre, descripcion) FROM stdin;
 --
 
 COPY public.jugador (id, avatar, nombre, id_room, puntos, id_registro, id_escuela) FROM stdin;
-147	costeño	Marco Xavier	14	0	147	4
-146	costeño	ES002-R1-Marco Xavier	13	30	146	3
-148	costeño	Marco	14	60	148	4
 \.
 
 
@@ -789,7 +779,6 @@ COPY public.jugador (id, avatar, nombre, id_room, puntos, id_registro, id_escuel
 --
 
 COPY public.learn_jugador (id, id_jugador, id_learning, fecha_inicio, fecha_fin, tiempo_juego, estado, num_play) FROM stdin;
-113	148	24	2018-01-31	2018-01-31	180	completado	1
 \.
 
 
@@ -800,8 +789,6 @@ COPY public.learn_jugador (id, id_jugador, id_learning, fecha_inicio, fecha_fin,
 --
 
 COPY public.learning (id, nombre, descripcion, id_chapter, duracion) FROM stdin;
-23	Bandera2	desc3	33	180
-24	Pistas de los sabios	Pasar por los templos	32	180
 \.
 
 
@@ -833,7 +820,6 @@ COPY public.metrica (id, nombre, proposito, formula, interpretacion, id_caracter
 --
 
 COPY public.nivel (id, nombre, descripcion, id_chapter, id_learning) FROM stdin;
-36	Espada Maestra	Mi parte favorita	32	24
 \.
 
 
@@ -844,7 +830,6 @@ COPY public.nivel (id, nombre, descripcion, id_chapter, id_learning) FROM stdin;
 --
 
 COPY public.nivel_usuario (id, id_usuario, id_nivel, fecha_inicio, fecha_fin, tiempo_juego, estado, correctas, incorrectas, intentos) FROM stdin;
-162	148	36	2018-01-02	2018-01-02	150	completado	10	0	1
 \.
 
 
@@ -855,9 +840,6 @@ COPY public.nivel_usuario (id, id_usuario, id_nivel, fecha_inicio, fecha_fin, ti
 --
 
 COPY public.room (id, nombre, descripcion, edad, id_escuela, id_escenario, id_juego) FROM stdin;
-13	The Legend of Zelda	Agregar definicion	\N	3	4	18
-14	The Legend of Zelda	Agregar definicion	\N	4	1	18
-15	Escuela	Agregar definicion	\N	3	4	19
 \.
 
 
@@ -879,10 +861,6 @@ COPY public."user" ("createdAt", "updatedAt", id, "emailAddress", password, "ful
 
 COPY public.usuarios ("createdAt", "updatedAt", id, correo, password, nombre, "passwordResetToken", "passwordResetTokenExpiresAt", "emailProofToken", "emailProofTokenExpiresAt", "emailStatus", "emailChangeCandidate", "tosAcceptedByIp", "isSuperAdmin") FROM stdin;
 1534785393237	1534785393237	4	mididashboard@gmail.com	$2a$10$2r3TrNcup5qxjFFEcnOqDe3hT2t3wA4pvp4P7R4AGcX8ioKJ1vUti	MIDI		0		0	confirmed			t
-1534726928373	1534726928373	1	mmendozaquelal@gmail.com	$2a$10$2YbqvSq0N3AY0FfG9TBlGO1oOPYGQ6ZnSbc9z/A5I0YkivE8Rd2Cu	Marco		0		0	confirmed			f
-\N	\N	8	marcoxavibsc@gmail.com	$2a$10$30D5kqeZa.wYJr9uXEGfS.KOhyMKSXihs.IWRjzXOvmz0kGdt2tsS	Marco		0		0	confirmed			f
-\N	\N	5	maxamend@espol.edu.ec	$2a$10$KUb9VB8GgYsnQMFEX23yPOcf5LD20xRKbUU1xIfO7Qs/cFOVWEk3G	Marco		0		0	confirmed			f
-\N	\N	9	nsolorza@espol.edu.ec	$2a$10$93brUNAl3.zxwXBuhbtceOgZ.Z6pLTAYBinNnAER8GdOAag4YXSKe	Nayeth Solorzano		0		0	confirmed			f
 \.
 
 
@@ -1387,7 +1365,7 @@ ALTER TABLE ONLY public.nivel_usuario
     ADD CONSTRAINT usuario_fkey FOREIGN KEY (id_usuario) REFERENCES public.jugador(id) ON UPDATE CASCADE ON DELETE CASCADE;
 
 
--- Completed on 2018-09-30 10:23:55
+-- Completed on 2018-10-01 12:04:18
 
 --
 -- PostgreSQL database dump complete
