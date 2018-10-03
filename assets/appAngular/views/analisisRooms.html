@@ -5,8 +5,17 @@
           <div class="name" id="tituloSelect"><strong class="text-uppercase">Elegir Escenario:</strong></div>
       </div>
       <div class="form-group col-md-2 col-ls-6">
-          <select class="form-control" id="game" name="game" ng-model="select.roomId" style="margin-top: 10px" ng-change="nivelesRoom()">
-            <option ng-value="room.id" value="room.id" ng-repeat="room in rooms">{{escenarios.nombre.trim()}}</option>
+          <select class="form-control" id="escenario" name="escenario" ng-model="select.escenarioId" style="margin-top: 10px" ng-change="gameEscenario()">
+            <option ng-value="escenario.id" value="escenario.id" ng-repeat="escenario in escenarios">{{escenario.nombre.trim()}}</option>
+          </select>
+      </div>
+
+      <div class="form-group col-md-2 col-ls-6" style="text-align: right; padding-top: 5px">
+          <div class="name" id="tituloSelect"><strong class="text-uppercase">Elegir Juego:</strong></div>
+      </div>
+      <div class="form-group col-md-2 col-ls-6">
+          <select class="form-control" id="game" name="game" ng-model="select.gameId" style="margin-top: 10px" ng-change="nivelesGame()">
+            <option ng-value="game.id" value="game.id" ng-repeat="game in games">{{game.nombre.trim()}}</option>
           </select>
       </div>
 
@@ -15,7 +24,7 @@
       </div>
       <div class="form-group col-md-2 col-ls-6">
           <select class="form-control" id="level" name="level" ng-model="select.levelId" style="margin-top: 10px">
-            <option ng-value="level.id" value="level.id" ng-repeat="level in levels_room">{{level.nombre.trim()}}</option>
+            <option ng-value="level.id" value="level.id" ng-repeat="level in levels_game">{{level.nombre.trim()}}</option>
           </select>
       </div>
 
@@ -31,7 +40,7 @@
   <div class="container-fluid">
     <div class="card" style="padding: 0 3rem">
       <div class="tituloTabla">
-        Evaluaciones del Room: {{room_actual.nombre}}
+        Evaluaciones del Escenario: {{escenario_actual.nombre}}
       </div>
       <hr>
       <table datatable="ng" class="table table-bordered text-center" id="mytable">

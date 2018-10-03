@@ -24,6 +24,7 @@ module.exports.routes = {
   'GET /niveles':                       { controller: 'dashboard/GetInformacionController', action:'niveles' },
   'GET /escuelas':                      { controller: 'dashboard/GetInformacionController', action:'escuelas' },
   'GET /escenarios':                    { controller: 'dashboard/GetInformacionController', action:'escenarios' },
+  'GET /escenario/:idEscenario':        { controller: 'dashboard/GetInformacionController', action:'escenarioById' },
   'GET /nivel/:id':                     { controller: 'dashboard/GetInformacionController', action:'nivel' },
   'GET /roomsByLevel/:idlevel':         { controller: 'dashboard/GetInformacionController', action:'roomsByLevel' },
   'GET /leveluser/:idLevel':            { controller: 'dashboard/GetInformacionController', action:'leveluserBylevel' },
@@ -41,11 +42,12 @@ module.exports.routes = {
   'GET /usersByRoom/:idRoom':           { controller: 'dashboard/GetInformacionController', action:'usersByRoom' },
   'GET /levelAnduser/:idLevelidUser':   { controller: 'dashboard/GetInformacionController', action:'leveluserByLevelUser' },
   'GET /levelsByRoom/:idRoom':          { controller: 'dashboard/GetInformacionController', action:'levelsByRoom' },
-  'GET /leveluserByRoom/:idRoom':       { controller: 'dashboard/GetInformacionController', action:'leveluserByRoom' },
+  'GET /levelUserByEscenario/:idEscenario':       { controller: 'dashboard/GetInformacionController', action:'levelUserByEscenario' },
   'GET /levelsByGame/:idGame':          { controller: 'dashboard/GetInformacionController', action:'levelsByGame' },
   'GET /room/:id':                      { controller: 'dashboard/GetInformacionController', action:'roomById' },
   'GET /roomByEscuela/:idEscuela':      { controller: 'dashboard/GetInformacionController', action:'roomByEscuela' },
   'GET /escuelaRoom':                   { controller: 'dashboard/GetInformacionController', action:'escuelaRoom' },
+  'GET /juegosByEscenario/:idEscenario':{ controller: 'dashboard/GetInformacionController', action:'juegosByEscenario' },
 
 
   //'GET /forms':            { action: 'dashboard/view-forms' },

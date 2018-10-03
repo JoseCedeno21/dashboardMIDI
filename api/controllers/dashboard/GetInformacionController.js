@@ -196,6 +196,11 @@ module.exports = {
     res.json(room);
   },
 
+  escenarioById: async function(req, res){
+    var escenario = await Escenario.find({id:req.params.idEscenario}).limit(1);
+    res.json(escenario);
+  },
+
   leveluserBylevel: async function(req, res){
     var level = await Nivel_usuario.find({id_nivel:req.params.idLevel});
     res.json(level);
@@ -358,20 +363,42 @@ module.exports = {
     res.json(levels);
   },
 
-  leveluserByRoom: async function(req, res){
-    var jugadores = await Jugador.find({id_room:req.params.idRoom});
-    var level_user_tmp = await Nivel_usuario.find();
-    var level_user = [];
+  levelUserByEscenario: async function(req, res){
+    var room = await Room.find({id_escenario:req.params.idEscenario});
+    var chapters = await Chapter.find();
 
-    for(var i = 0; i < level_user_tmp.length; i++){
-      for(var j = 0; j < jugadores.length; j++){
-        if (level_user_tmp[i].id_usuario == jugadores[j].id) {
-          level_user.push(level_user_tmp[i]);
+    var niveles = await Nivel.find();
+    var level_user = await Nivel_usuario.find();
+    var niveles_resp = [], chapter_resp = [], respuesta = [];
+
+
+    for(var i = 0; i < chapters.length; i++){
+      for(var j = 0; j < room.length; j++){
+        if (chapters[i].id_game == room[j].id_juego) {
+          chapter_resp.push(chapters[i]);
+          break;
         }
       }
     }
-    
-    res.json(level_user);
+
+    for(var i = 0; i < niveles.length; i++){
+      for(var j = 0; j < chapter_resp.length; j++){
+        if (niveles[i].id_chapter == chapter_resp[j].id) {
+          niveles_resp.push(niveles[i]);
+          break;
+        }
+      }
+    }
+
+    for(var i = 0; i < niveles_resp.length; i++){
+      for(var j = 0; j < level_user.length; j++){
+        if (niveles_resp[i].id == level_user[j].id_nivel) {
+          respuesta.push(level_user[j]);
+        }
+      }
+    }
+
+    res.json(respuesta);
   },
 
   roomByEscuela: async function(req, res){
@@ -389,6 +416,24 @@ module.exports = {
     }
     
     res.json(rooms);
+  },
+
+  juegosByEscenario: async function(req, res){
+    var room = await Room.find({id_escenario:req.params.idEscenario});
+    var game = await Game.find();
+    var games = [];
+
+    for(var i = 0; i < game.length; i++){
+      for(var j = 0; j < room.length; j++){
+        //room = await Room.find({id:escuela_room.id_room});
+        if (game[i].id == room[j].id_juego) {
+          games.push(game[i]);
+          break;
+        }
+      }
+    }
+
+    res.json(games);
   },
 };
 

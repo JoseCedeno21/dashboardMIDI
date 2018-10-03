@@ -225,9 +225,9 @@ app.service('TodoService', function($http, $q) {
       });
       return defer.promise;
     },
-    'getLevelUserByRoom': function(idRoom) {
+    'getLevelUserByEscenario': function(idEscenario) {
       var defer = $q.defer();
-      $http.get('/leveluserByRoom/' + idRoom).success(function(resp){
+      $http.get('/levelUserByEscenario/' + idEscenario).success(function(resp){
         defer.resolve(resp);
       }).error( function(err) {
         defer.reject(err);
@@ -255,6 +255,24 @@ app.service('TodoService', function($http, $q) {
     getEscenarios: function() {
       var defer = $q.defer();
       $http.get('/escenarios').success(function(resp){
+        defer.resolve(resp);
+      }).error( function(err) {
+        defer.reject(err);
+      });
+      return defer.promise;
+    },
+    getEscenarioById: function(idEscenario) {
+      var defer = $q.defer();
+      $http.get('/escenario/' + idEscenario).success(function(resp){
+        defer.resolve(resp);
+      }).error( function(err) {
+        defer.reject(err);
+      });
+      return defer.promise;
+    },
+    getJuegosByEscenario: function(idEscenario) {
+      var defer = $q.defer();
+      $http.get('/juegosByEscenario/' + idEscenario).success(function(resp){
         defer.resolve(resp);
       }).error( function(err) {
         defer.reject(err);

@@ -2,36 +2,39 @@ app.controller('analisisRoomsController', ['$scope', '$rootScope', 'TodoService'
 	$scope.metricas = [];
     $scope.resultados = [];
     $scope.level = [];
+    $scope.levels_game = [];
     $scope.learning = [];
     $scope.jugadores = [];  
-    $scope.rooms = [];
+    $scope.games = [];
     $scope.escenarios = [];
 
-    $scope.room_actual = {};
+    $scope.escenario_actual = {};
     $scope.nivel_actual = {};
 
     var efectividad_default = 0;
     var niveles = [], level_users = [];
+    var juego_actual;
 
-    var idRoomActual = 0;
+    var idEscenarioActual = 0;
 
     //se obtiene todos los room
-    TodoService.getRoom().then(function(response) {
-        $scope.rooms = response;
-    });
-
     TodoService.getEscenarios().then(function(response) {
         $scope.escenarios = response;
     });
 
-    $scope.nivelesRoom = function(){
-        idRoomActual = $scope.select.roomId;
-        TodoService.getNivelesByEscenario(idRoomActual).then(function(response) {
-            $scope.levels_room = response;
-            console.log($scope.levels_room);
-            TodoService.getRoomById(idRoomActual).then(function(response) {
-                $scope.room_actual = response;
+    $scope.gameEscenario = function(){
+        idEscenarioActual = $scope.select.escenarioId;
+        TodoService.getJuegosByEscenario(idEscenarioActual).then(function(response) {
+            $scope.games = response;
+            TodoService.getEscenarioById(idEscenarioActual).then(function(response) {
+                $scope.escenario_actual = response;
             });
+        });
+    }
+
+    $scope.nivelesGame = function(){
+        TodoService.getLevelsByGame($scope.select.gameId).then(function(response) {
+            $scope.levels_game = response;
         });
     }
 
@@ -99,13 +102,17 @@ app.controller('analisisRoomsController', ['$scope', '$rootScope', 'TodoService'
         });
 
         
-        for(var j=0; j < $scope.rooms.length; j++){
-            if ($scope.rooms[j].id == idRoomActual) {
-                rooms_default.push($scope.rooms[j]);
+        for(var j=0; j < $scope.escenarios.length; j++){
+            if ($scope.escenarios[j].id == idEscenarioActual) {
+                rooms_default.push($scope.escenarios[j]);
             } else{
-                rooms_rest.push($scope.rooms[j]);
+                rooms_rest.push($scope.escenarios[j]);
             }
         }
+        
+        console.log("$scope.jugadores");
+        console.log($scope.jugadores);
+
         //Aquí se guardan los jugadores del room por defecto y del resto
         for(var i = 0; i < rooms_default.length; i++){
             for(var j=0; j < $scope.jugadores.length; j++){
@@ -121,11 +128,22 @@ app.controller('analisisRoomsController', ['$scope', '$rootScope', 'TodoService'
                 }
             }
         }
-        TodoService.getLevelUserByRoom(idRoomActual).then(function(response) {
+        console.log("room_default");
+        console.log(rooms_default);
+        console.log("rooms_rest");
+        console.log(rooms_rest);
+
+        console.log("jugadores_room_default");
+        console.log(jugadores_room_default);
+        console.log("jugadores_room_rest");
+        console.log(jugadores_room_rest);
+
+        TodoService.getLevelUserByEscenario(idEscenarioActual).then(function(response) {
             $scope.resultados = [];
             $scope.level = [];
             //$scope.level = response;
 
+            //aqui se filtra al nivel seleccionado
             for(var i = 0; i < response.length; i++){
                 if (response[i].id_nivel == $scope.select.levelId) 
                     $scope.level.push(response[i]);
