@@ -2,7 +2,7 @@
   <div class="row" style="padding-top: 5px; padding-right: 30px">
 
       <div class="form-group col-md-2 col-ls-6" style="text-align: right; padding-top: 5px">
-          <div class="name" id="tituloSelect"><strong class="text-uppercase">Elegir Escenario:</strong></div>
+          <div class="name" id="tituloSelectEsc"><strong class="text-uppercase">Elegir Escenario:</strong></div>
       </div>
       <div class="form-group col-md-2 col-ls-6">
           <select class="form-control" id="escenario" name="escenario" ng-model="select.escenarioId" style="margin-top: 10px" ng-change="gameEscenario()">
@@ -11,7 +11,7 @@
       </div>
 
       <div class="form-group col-md-2 col-ls-6" style="text-align: right; padding-top: 5px">
-          <div class="name" id="tituloSelect"><strong class="text-uppercase">Elegir Juego:</strong></div>
+          <div class="name" id="tituloSelectGame"><strong class="text-uppercase">Elegir Juego:</strong></div>
       </div>
       <div class="form-group col-md-2 col-ls-6">
           <select class="form-control" id="game" name="game" ng-model="select.gameId" style="margin-top: 10px" ng-change="nivelesGame()">
@@ -20,7 +20,7 @@
       </div>
 
       <div class="form-group col-md-2 col-ls-6" style="text-align: right; padding-top: 5px">
-          <div class="name" id="tituloSelect"><strong class="text-uppercase">Elegir Nivel:</strong></div>
+          <div class="name" id="tituloSelectLevel"><strong class="text-uppercase">Elegir Nivel:</strong></div>
       </div>
       <div class="form-group col-md-2 col-ls-6">
           <select class="form-control" id="level" name="level" ng-model="select.levelId" style="margin-top: 10px">
@@ -40,7 +40,7 @@
   <div class="container-fluid">
     <div class="card" style="padding: 0 3rem">
       <div class="tituloTabla">
-        Evaluaciones del Escenario: {{escenario_actual.nombre}}
+        Evaluaciones por Escenario
       </div>
       <hr>
       <table datatable="ng" class="table table-bordered text-center" id="mytable">

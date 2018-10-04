@@ -435,5 +435,46 @@ module.exports = {
 
     res.json(games);
   },
+
+  jugadoresByEscenario: async function(req, res){
+    var room = await Room.find({id_escenario:req.params.idEscenario});
+    var jugadores = await Jugador.find();
+    var jugadores_resp = [];
+
+    for(var i = 0; i < room.length; i++){
+      for(var j = 0; j < jugadores.length; j++){
+        //room = await Room.find({id:escuela_room.id_room});
+        if (jugadores[j].id_room == room[i].id) {
+          jugadores_resp.push(jugadores[j]);
+          break;
+        }
+      }
+    }
+
+    res.json(jugadores_resp);
+  },
+
+  jugadoresExceptAnEscenario: async function(req, res){
+    var room = await Room.find();
+    var jugadores = await Jugador.find();
+    var jugadores_resp = [], room_resp = [];
+
+    for(var i = 0; i < room.length; i++){
+      if (room[i].id_escenario != req.params.idEscenario) {
+        room_resp.push(room[i]);
+      }
+    }
+
+    for(var i = 0; i < room_resp.length; i++){
+      for(var j = 0; j < jugadores.length; j++){
+        if (jugadores[j].id_room == room_resp[i].id) {
+          jugadores_resp.push(jugadores[j]);
+          break;
+        }
+      }
+    }
+
+    res.json(jugadores_resp);
+  },
 };
 

@@ -48,6 +48,8 @@ module.exports.routes = {
   'GET /roomByEscuela/:idEscuela':      { controller: 'dashboard/GetInformacionController', action:'roomByEscuela' },
   'GET /escuelaRoom':                   { controller: 'dashboard/GetInformacionController', action:'escuelaRoom' },
   'GET /juegosByEscenario/:idEscenario':{ controller: 'dashboard/GetInformacionController', action:'juegosByEscenario' },
+  'GET /jugadoresByEscenario/:idEscenario':{ controller: 'dashboard/GetInformacionController', action:'jugadoresByEscenario' },
+  'GET /jugadoresExceptAnEscenario/:idEscenario':{ controller: 'dashboard/GetInformacionController', action:'jugadoresExceptAnEscenario' },
 
 
   //'GET /forms':            { action: 'dashboard/view-forms' },

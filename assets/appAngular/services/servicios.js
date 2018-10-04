@@ -279,4 +279,22 @@ app.service('TodoService', function($http, $q) {
       });
       return defer.promise;
     },
+    getJugadoresByEscenario: function(idEscenario) {
+      var defer = $q.defer();
+      $http.get('/jugadoresByEscenario/' + idEscenario).success(function(resp){
+        defer.resolve(resp);
+      }).error( function(err) {
+        defer.reject(err);
+      });
+      return defer.promise;
+    },
+    getJugadoresExceptAnEscenario: function(idEscenario) {
+      var defer = $q.defer();
+      $http.get('/jugadoresExceptAnEscenario/' + idEscenario).success(function(resp){
+        defer.resolve(resp);
+      }).error( function(err) {
+        defer.reject(err);
+      });
+      return defer.promise;
+    },
 }});

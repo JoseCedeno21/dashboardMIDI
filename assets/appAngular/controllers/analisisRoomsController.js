@@ -17,6 +17,9 @@ app.controller('analisisRoomsController', ['$scope', '$rootScope', 'TodoService'
 
     var idEscenarioActual = 0;
 
+    //var comboGame = document.getElementById("game");
+    //var comboLevel = document.getElementById("level");
+
     //se obtiene todos los room
     TodoService.getEscenarios().then(function(response) {
         $scope.escenarios = response;
@@ -28,6 +31,7 @@ app.controller('analisisRoomsController', ['$scope', '$rootScope', 'TodoService'
             $scope.games = response;
             TodoService.getEscenarioById(idEscenarioActual).then(function(response) {
                 $scope.escenario_actual = response;
+                console.log($scope.escenario_actual);
             });
         });
     }
@@ -88,8 +92,8 @@ app.controller('analisisRoomsController', ['$scope', '$rootScope', 'TodoService'
         var incorrectas_ok = 0;
         var tiempo_juego_ok = 0;
 
-        var rooms_default = [];
-        var rooms_rest = [];
+        var escenario_default = [];
+        var escenario_rest = [];
         var jugadores_room_default = [], jugadores_room_rest = [];
 
                 
@@ -104,39 +108,19 @@ app.controller('analisisRoomsController', ['$scope', '$rootScope', 'TodoService'
         
         for(var j=0; j < $scope.escenarios.length; j++){
             if ($scope.escenarios[j].id == idEscenarioActual) {
-                rooms_default.push($scope.escenarios[j]);
+                escenario_default.push($scope.escenarios[j]);
             } else{
-                rooms_rest.push($scope.escenarios[j]);
+                escenario_rest.push($scope.escenarios[j]);
             }
         }
-        
-        console.log("$scope.jugadores");
-        console.log($scope.jugadores);
 
         //Aquí se guardan los jugadores del room por defecto y del resto
-        for(var i = 0; i < rooms_default.length; i++){
-            for(var j=0; j < $scope.jugadores.length; j++){
-                if ($scope.jugadores[j].id_room == rooms_default[i].id) {
-                    jugadores_room_default.push($scope.jugadores[j]);
-                }
-            }
-        }
-        for(var i = 0; i < rooms_rest.length; i++){
-            for(var j=0; j < $scope.jugadores.length; j++){
-                if ($scope.jugadores[j].id_room == rooms_rest[i].id) {
-                    jugadores_room_rest.push($scope.jugadores[j]);
-                }
-            }
-        }
-        console.log("room_default");
-        console.log(rooms_default);
-        console.log("rooms_rest");
-        console.log(rooms_rest);
-
-        console.log("jugadores_room_default");
-        console.log(jugadores_room_default);
-        console.log("jugadores_room_rest");
-        console.log(jugadores_room_rest);
+        TodoService.getJugadoresByEscenario(idEscenarioActual).then(function(response) {
+            jugadores_room_default = response;
+        });
+        TodoService.getJugadoresExceptAnEscenario(idEscenarioActual).then(function(response) {
+            jugadores_room_rest = response;
+        });
 
         TodoService.getLevelUserByEscenario(idEscenarioActual).then(function(response) {
             $scope.resultados = [];
@@ -260,11 +244,11 @@ app.controller('analisisRoomsController', ['$scope', '$rootScope', 'TodoService'
                         break;
                     //Flexibilidad
                     case 9:
-                        resultado = AccesibilidadPorMetas(rooms_default, rooms_rest, $scope.level, jugadores_room_default, jugadores_room_rest).toFixed(3);
+                        resultado = AccesibilidadPorMetas(escenario_default, escenario_rest, $scope.level, jugadores_room_default, jugadores_room_rest).toFixed(3);
                         $scope.resultados[i].resultado = resultado;
                         break;
                     case 10:
-                        resultado = AccesibilidadPorTiempo(rooms_default, rooms_rest, $scope.level, jugadores_room_default, jugadores_room_rest).toFixed(3);
+                        resultado = AccesibilidadPorTiempo(escenario_default, escenario_rest, $scope.level, jugadores_room_default, jugadores_room_rest).toFixed(3);
                         $scope.resultados[i].resultado = resultado;
                         break;
                     //Satisfaccion
