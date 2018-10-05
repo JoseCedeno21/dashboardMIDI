@@ -144,9 +144,9 @@ app.service('TodoService', function($http, $q) {
       });
       return defer.promise;
     },
-    'getRoomsByLevel': function(idlevel) {
+    'getEscenariosByLevel': function(idlevel) {
       var defer = $q.defer();
-      $http.get('/roomsByLevel/' + idlevel).success(function(resp){
+      $http.get('/escenariosByLevel/' + idlevel).success(function(resp){
         defer.resolve(resp);
       }).error( function(err) {
         defer.reject(err);

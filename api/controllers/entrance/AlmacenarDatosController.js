@@ -68,7 +68,7 @@ module.exports = {
 
 			if (!room){
 				await Room.create({
-					nombre: datos.nombre_juego,
+					nombre: cadena_escenario,
 					descripcion: descripcion,
 					id_escenario: escenario.id,
 					id_escuela: escuela.id,
@@ -154,7 +154,7 @@ module.exports = {
 			
 			if (!room){
 				await Room.create({
-					nombre: datos.nombre_juego,
+					nombre: cadena_escenario,
 					descripcion: descripcion,
 					id_escenario: escenario.id,
 					id_escuela: escuela.id,
@@ -307,7 +307,7 @@ module.exports = {
 			
 			if (!room){
 				await Room.create({
-					nombre: datos.nombre_juego,
+					nombre: cadena_escenario,
 					descripcion: descripcion,
 					id_escenario: escenario.id,
 					id_escuela: escuela.id,

@@ -93,10 +93,10 @@ app.controller('interpretacionController', ['$scope', '$rootScope', 'TodoService
 			$scope.learning = response;
 		});
 
-		TodoService.getRoomsByLevel($scope.select.levelId).then(function(response) {
+		TodoService.getEscenariosByLevel($scope.select.levelId).then(function(response) {
 			$scope.rooms_level = response;
 			for(var j=0; j < $scope.rooms_level.length; j++){
-				if ($scope.rooms_level[j].tipo == 'Default') {
+				if ($scope.rooms_level[j].tipo == 'Aula virtual sin guía') {
 					rooms_default.push($scope.rooms_level[j]);
 				} else{
 					rooms_rest.push($scope.rooms_level[j]);
