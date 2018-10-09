@@ -245,11 +245,13 @@ app.controller('analisisRoomsController', ['$scope', '$rootScope', 'TodoService'
                     //Flexibilidad
                     case 9:
                         resultado = AccesibilidadPorMetas(escenario_default, escenario_rest, $scope.level, jugadores_room_default, jugadores_room_rest).toFixed(3);
-                        $scope.resultados[i].resultado = resultado;
+                        if (isNaN(resultado)) $scope.resultados[i].resultado = "No hay Jugadores en Escenario por Default";
+                        else $scope.resultados[i].resultado = resultado;
                         break;
                     case 10:
                         resultado = AccesibilidadPorTiempo(escenario_default, escenario_rest, $scope.level, jugadores_room_default, jugadores_room_rest).toFixed(3);
-                        $scope.resultados[i].resultado = resultado;
+                        if (isNaN(resultado)) $scope.resultados[i].resultado = "No hay Jugadores en Escenario por Default";
+                        else $scope.resultados[i].resultado = resultado;
                         break;
                     //Satisfaccion
                     case 11:
