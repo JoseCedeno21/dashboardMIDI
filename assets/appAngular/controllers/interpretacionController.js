@@ -97,7 +97,7 @@ app.controller('interpretacionController', ['$scope', '$rootScope', 'TodoService
 			$scope.rooms_level = response;
 			var id_room = -100;
 			for(var j=0; j < $scope.rooms_level.length; j++){
-				if ($scope.rooms_level[j].nombre == 'Aula virtual sin guía') {
+				if ($scope.rooms_level[j].nombre == 'escenario-con-historia-guia') {
 					rooms_default.push($scope.rooms_level[j]);
 					id_room = rooms_default[0].id;
 				} else{
